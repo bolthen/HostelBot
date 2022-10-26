@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelBot", "HostelBot\HostelBot.csproj", "{4461DCC6-2589-4DFA-A3F0-585E73F7EE9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelBot.App", "HostelBot.App\HostelBot.App.csproj", "{A0465DDB-C3B7-4CB9-8CBF-B0D582D7ADB8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelBot.Test", "HostelBot.Test\HostelBot.Test.csproj", "{339C8519-6C3D-440A-BD30-49936FD41843}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4461DCC6-2589-4DFA-A3F0-585E73F7EE9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4461DCC6-2589-4DFA-A3F0-585E73F7EE9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4461DCC6-2589-4DFA-A3F0-585E73F7EE9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4461DCC6-2589-4DFA-A3F0-585E73F7EE9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0465DDB-C3B7-4CB9-8CBF-B0D582D7ADB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0465DDB-C3B7-4CB9-8CBF-B0D582D7ADB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0465DDB-C3B7-4CB9-8CBF-B0D582D7ADB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0465DDB-C3B7-4CB9-8CBF-B0D582D7ADB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{339C8519-6C3D-440A-BD30-49936FD41843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{339C8519-6C3D-440A-BD30-49936FD41843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{339C8519-6C3D-440A-BD30-49936FD41843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{339C8519-6C3D-440A-BD30-49936FD41843}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
