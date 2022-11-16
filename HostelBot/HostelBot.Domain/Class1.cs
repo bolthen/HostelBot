@@ -1,7 +1,5 @@
-﻿namespace HostelBot.Domain
+﻿namespace HostelBot.Domain;
+
+public class Class1
 {
-    public class Class1
-    {
-        
-    }
 }
