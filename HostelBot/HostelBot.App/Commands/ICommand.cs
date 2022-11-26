@@ -1,6 +1,10 @@
-﻿namespace HostelBot.App;
+﻿using HostelBot.Domain.Domain;
 
-public interface ICommand
+namespace HostelBot.App
 {
-    void HandleCommand(string message);
+    public interface ICommand
+    {
+        void HandleCommand(string message);
+        ICanFill GetObjectToFill();
+    }
 }
