@@ -1,8 +1,9 @@
-﻿using HostelBot.Domain.Infrastructure;
+﻿using System.Windows.Input;
+using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
-public class InformationInteractionScenario : IInteractionScenario
+public class ChooseServiceInteractionScenario : IInteractionScenario
 {
     public List<ICommand> GetSubcommands()
     {
@@ -19,7 +20,7 @@ public class InformationInteractionScenario : IInteractionScenario
         throw new NotImplementedException();
     }
 
-    public void HandleFilledClass()
+    public void HandleFilledClass(string data)
     {
         throw new NotImplementedException();
     }
