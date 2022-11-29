@@ -1,7 +1,8 @@
-﻿namespace HostelBot.App;
-
-public interface ICommand
+﻿namespace HostelBot.App
 {
-    string Name { get; }
-    IInteractionScenario GetScenario();
+    public interface ICommand
+    {
+        string Name { get; }
+        IInteractionScenario GetScenario();
+    }
 }

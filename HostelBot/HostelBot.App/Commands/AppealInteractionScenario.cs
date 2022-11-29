@@ -1,4 +1,5 @@
-﻿using HostelBot.Domain.Infrastructure;
+﻿using HostelBot.Domain.Domain;
+using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
@@ -14,10 +15,7 @@ public class AppealInteractionScenario : IInteractionScenario
         throw new NotImplementedException();
     }
 
-    public ICanFill? GetFillClass()
-    {
-        throw new NotImplementedException();
-    }
+    public ICanFill GetFillClass() => new Appeal();
 
     public void HandleFilledClass()
     {

@@ -10,6 +10,7 @@ public class TelegramUi : IUi
 {
     public TelegramUi(IApplication application)
     {
+        var tmp = application.GetBaseCommands().First().GetScenario();
         // получаешь ICommand'ы, по их Name'у рисуешь кнопки
     }
     

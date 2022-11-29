@@ -1,4 +1,5 @@
 ﻿using HostelBot.App;
+using HostelBot.Domain.Infrastructure;
 using HostelBot.Ui;
 using HostelBot.Ui.TelegramBot;
 using Ninject;

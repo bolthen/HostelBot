@@ -6,10 +6,6 @@ namespace HostelBot.Domain.Domain
 {
     public class Resident : Entity<string, Resident>, ICanFill
     {
-        public Resident(string id) : base(id)
-        {
-        }
-        
         [QuestionAttribute("Имя", ViewType.TextEnter)]
         [JsonPropertyName("Name")]
         public string Name { get; set; }

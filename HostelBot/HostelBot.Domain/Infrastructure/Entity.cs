@@ -5,12 +5,7 @@ namespace HostelBot.Domain.Infrastructure
     public class Entity<TId, TType> : DddObject<TType>
         where TType : Entity<TId, TType>
     {
-        public TId Id { get; }
-        
-        public Entity(TId id)
-        {
-            Id = id;
-        }
+        public TId Id { get; set; }
 
         protected bool Equals(Entity<TId, TType> other)
         {
