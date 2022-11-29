@@ -2,21 +2,14 @@
 
 namespace HostelBot.Domain.Infrastructure;
 
-public class ValueType<T> where T : class
+public class ValueType<T> : DddObject<T>
+    where T : ValueType<T>
 {
     private static readonly string ClassName;
-    private static readonly PropertyInfo[] Properties;
-		
+    
     static ValueType()
     {
-        var type = typeof(T);
-        ClassName = type.Name;
-        Properties = type.GetProperties(BindingFlags.Public |
-                                        BindingFlags.Instance | 
-                                        BindingFlags.DeclaredOnly)
-            .Where(property => property.CanRead)
-            .OrderBy(property => property.Name)
-            .ToArray();
+        ClassName = typeof(T).Name;
     }
 		
     public bool Equals(T other)

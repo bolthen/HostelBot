@@ -2,17 +2,17 @@
 
 namespace HostelBot.Domain.Infrastructure
 {
-    public class Entity<TId>
+    public class Entity<TId, TType> : DddObject<TType>
+        where TType : Entity<TId, TType>
     {
-    
+        public TId Id { get; }
+        
         public Entity(TId id)
         {
             Id = id;
         }
 
-        public TId Id { get; }
-
-        protected bool Equals(Entity<TId> other)
+        protected bool Equals(Entity<TId, TType> other)
         {
             return EqualityComparer<TId>.Default.Equals(Id, other.Id);
         }
@@ -22,7 +22,7 @@ namespace HostelBot.Domain.Infrastructure
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Entity<TId>)obj);
+            return Equals((Entity<TId, TType>)obj);
         }
 
         public override int GetHashCode()

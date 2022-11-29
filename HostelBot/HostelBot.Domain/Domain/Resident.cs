@@ -1,20 +1,25 @@
 ﻿using System.Reflection;
+using System.Text.Json.Serialization;
 using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain.Domain
 {
-    public class Resident : ValueType<Resident>, ICanFill
+    public class Resident : Entity<string, Resident>, ICanFill
     {
-        { "Comment"(JsonPropertyName): "Порвало трубу"}
-        [Filled("Имя")]
+        public Resident(string id) : base(id)
+        {
+        }
+        
+        [QuestionAttribute("Имя", ViewType.TextEnter)]
         [JsonPropertyName("Name")]
         public string Name { get; set; }
         
-        [Filled("Опишите вашу проблему")]
+        [QuestionAttribute("Фамилия", ViewType.TextEnter)]
         [JsonPropertyName("Surname")]
         public string Surname { get; private set; }
 
         public override string ToString() => $"{Name} {Surname}";
-        public IReadOnlyCollection<PropertyInfo> GetFields() => PropertiesToFill;
+        public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
+
     }
 }

@@ -2,12 +2,12 @@
 
 public class ServiceCommand : ICommand
 {
-    public ServiceCommand(IService service)
-    {
-        Name = service.Name;
-    }
+    public string Name => "Услуги";
     
-    public string Name { get; private set; }
+    public ServiceCommand(/*IService service*/)
+    {
+        //Name = service.Name;
+    }
 
     public IInteractionScenario GetScenario()
     {
