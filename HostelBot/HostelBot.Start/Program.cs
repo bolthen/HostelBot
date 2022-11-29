@@ -20,8 +20,8 @@ internal class Program
     public static StandardKernel ConfigureContainer()
     {
         var container = new StandardKernel();
-        container.Bind<IUi>().To<TelegramUi>();
-        container.Bind<IApplication>().To<Application>();
+        container.Bind<IUi>().To<TelegramUi>().InSingletonScope();
+        container.Bind<IApplication>().To<Application>().InSingletonScope();
         /*bind ICommand to AddResidentCommand
         bind ICommand to AddServiceCommand
         bind ICommand to MakeAnnouncmentCommand*/
