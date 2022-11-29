@@ -2,7 +2,8 @@ using System.Reflection;
 
 namespace HostelBot.Domain.Infrastructure;
 
-public class DddObject<TType> where TType : DddObject<TType>
+public class DddObject<TType>
+    where TType : DddObject<TType>
 {
     protected static readonly PropertyInfo[] Properties;
     

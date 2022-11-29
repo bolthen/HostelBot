@@ -1,4 +1,4 @@
-﻿namespace HostelBot.App;
+﻿namespace HostelBot.Domain.Infrastructure;
 
 public interface IService
 {
