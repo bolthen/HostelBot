@@ -1,4 +1,5 @@
 ﻿using System;
+using HostelBot.App;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -7,6 +8,11 @@ namespace HostelBot.Ui.TelegramBot;
 
 public class TelegramUi : IUi
 {
+    public TelegramUi(IApplication application)
+    {
+        // получаешь ICommand'ы, по их Name'у рисуешь кнопки
+    }
+    
     public void Run()
     {
         const string token = "5675497155:AAHJO952wpubgQiIf3WdOJ6eCAi2cgnIKIs";

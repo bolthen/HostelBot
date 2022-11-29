@@ -2,7 +2,7 @@
 
 public class ChooseServiceCommand : ICommand
 {
-    public string Description => "Услуги";
+    public string Name => "Услуги";
 
     public IInteractionScenario GetScenario()
     {

@@ -2,6 +2,6 @@
 
 public interface ICommand
 {
-    string Description { get; }
+    string Name { get; }
     IInteractionScenario GetScenario();
 }

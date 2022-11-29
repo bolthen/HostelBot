@@ -2,7 +2,7 @@
 
 public class InformationCommand : ICommand
 {
-    public string Description => "Информация";
+    public string Name => "Информация";
     public IInteractionScenario GetScenario()
     {
         return new InformationInteractionScenario();

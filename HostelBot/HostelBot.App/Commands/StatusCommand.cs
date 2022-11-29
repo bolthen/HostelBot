@@ -2,7 +2,7 @@
 
 public class StatusCommand : ICommand
 {
-    public string Description => "Статус";
+    public string Name => "Статус";
     public IInteractionScenario GetScenario()
     {
         throw new NotImplementedException();

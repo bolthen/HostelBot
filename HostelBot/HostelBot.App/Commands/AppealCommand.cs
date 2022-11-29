@@ -2,7 +2,7 @@
 
 public class AppealCommand : ICommand
 {
-    public string Description => "Обращение";
+    public string Name => "Обращение";
     public IInteractionScenario GetScenario()
     {
         throw new NotImplementedException();

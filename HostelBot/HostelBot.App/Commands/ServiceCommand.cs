@@ -4,10 +4,10 @@ public class ServiceCommand : ICommand
 {
     public ServiceCommand(IService service)
     {
-        Description = service.Name;
+        Name = service.Name;
     }
     
-    public string Description { get; private set; }
+    public string Name { get; private set; }
 
     public IInteractionScenario GetScenario()
     {
