@@ -2,5 +2,6 @@
 
 public interface ICommand
 {
-    void HandleCommand(string message);
+    string Description { get; }
+    IInteractionScenario GetScenario();
 }

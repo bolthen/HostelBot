@@ -4,6 +4,7 @@ namespace HostelBot.Domain.Infrastructure
 {
     public class Entity<TId>
     {
+    
         public Entity(TId id)
         {
             Id = id;
