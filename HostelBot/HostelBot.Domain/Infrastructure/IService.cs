@@ -1,6 +1,6 @@
 ﻿using HostelBot.Domain.Infrastructure;
 
-namespace HostelBot.App;
+namespace HostelBot.Domain;
 
 public interface IService : ICanFill
 {

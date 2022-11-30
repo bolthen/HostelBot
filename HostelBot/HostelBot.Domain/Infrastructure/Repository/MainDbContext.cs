@@ -1,4 +1,5 @@
-﻿using HostelBot.Domain.Domain;
+﻿
+using HostelBot.Domain.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 

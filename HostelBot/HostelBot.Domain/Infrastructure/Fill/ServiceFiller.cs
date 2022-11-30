@@ -1,5 +1,4 @@
 ﻿using System.Text.Json;
-using HostelBot.App;
 
 namespace HostelBot.Domain.Infrastructure;
 

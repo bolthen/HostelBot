@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using HostelBot.Domain.Infrastructure;
 
-namespace HostelBot.App;
+namespace HostelBot.Domain;
 
 public class Service : Entity<Service, int>, IService
 {

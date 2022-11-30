@@ -1,4 +1,6 @@
-﻿namespace HostelBot.App;
+﻿using HostelBot.Domain;
+
+namespace HostelBot.App;
 
 public class ServiceCommand : ICommand
 {
