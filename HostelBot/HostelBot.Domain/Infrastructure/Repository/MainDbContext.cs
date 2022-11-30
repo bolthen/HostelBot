@@ -8,8 +8,7 @@ namespace HostelBot.Domain.Infrastructure.Repository;
 public sealed class MainDbContext : DbContext
 {
     public DbSet<Resident> Residents { get; set; }
-    // public DbSet<Hostel> Hostels { get; set; }
-    // public DbSet<Room> Rooms { get; set; }
+    public DbSet<Room> Rooms { get; set; }
     public DbSet<Service> Services { get; set; }
     
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)

@@ -2,7 +2,7 @@
 
 public class Service : Entity<Service, int>, IService
 {
-    public string Name { get; private set; }
+    public string Name { get; }
     
     public Service(string name)
     {
