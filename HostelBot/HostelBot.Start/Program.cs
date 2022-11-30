@@ -26,7 +26,7 @@ internal class Program
         container.Bind<ICommand>().To<InformationCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         container.Bind<ICommand>().To<StatusCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         container.Bind<ICommand>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
-        container.Bind<ICommand>().To<ServiceCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
+        container.Bind<ICommand>().To<ChooseServiceCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         /*bind ICommand to AddResidentCommand
         bind ICommand to AddServiceCommand
         bind ICommand to MakeAnnouncmentCommand*/
