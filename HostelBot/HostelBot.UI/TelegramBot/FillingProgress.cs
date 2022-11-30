@@ -12,7 +12,7 @@ public class FillingProgress
 
     private readonly PropertyInfo[] properties;
 
-    private readonly Dictionary<string, string> result = new();
+    public readonly Dictionary<string, string> result = new();
 
     public FillingProgress(ICanFill fillClass)
     {
