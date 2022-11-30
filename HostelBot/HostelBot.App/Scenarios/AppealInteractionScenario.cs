@@ -8,7 +8,7 @@ public class AppealInteractionScenario : FilledScenario<Appeal>
     public override List<ICommand> GetSubcommands() => new();
     public override object[] GetStaticInfo() => Array.Empty<object>();
 
-    public override void HandleFilledClass(Appeal filledObject)
+    protected override void HandleFilledClass(Appeal filledObject)
     {
         throw new NotImplementedException();
     }

@@ -15,6 +15,6 @@ public abstract class FilledScenario<T> : IInteractionScenario
     {
         HandleFilledClass(JsonSerializer.Deserialize<T>(data));
     }
-    
-    public abstract void HandleFilledClass(T filledObject);
+
+    protected abstract void HandleFilledClass(T filledObject);
 }
