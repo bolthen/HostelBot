@@ -56,7 +56,7 @@ internal static class Processor
         ICanFill fillClass;
         try
         {
-            fillClass = scenario.GetFillClass()!;
+            fillClass = scenario.GetFiller().GetFillClass();
         }
         catch (NotImplementedException)
         {
