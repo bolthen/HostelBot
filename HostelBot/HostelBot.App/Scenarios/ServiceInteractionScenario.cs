@@ -2,24 +2,14 @@
 
 namespace HostelBot.App;
 
-public class ServiceInteractionScenario : IInteractionScenario
+public class ServiceInteractionScenario : FilledScenario<ServiceFiller>
 {
-    public List<ICommand> GetSubcommands()
+    public override List<ICommand> GetSubcommands()
     {
         throw new NotImplementedException();
     }
 
-    public object[] GetStaticInfo()
-    {
-        throw new NotImplementedException();
-    }
-
-    public ICanFill? GetFillClass()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void HandleFilledClass(string data)
+    public override object[] GetStaticInfo()
     {
         throw new NotImplementedException();
     }

@@ -8,7 +8,7 @@ namespace HostelBot.Domain.Domain
     {
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
         
-        [QuestionAttribute("Опишите Вашу проблему", ViewType.TextEnter)]
+        [Question("Опишите Вашу проблему", ViewType.TextEnter)]
         [JsonPropertyName("Content")]
         public string Content { get; set; }
     }

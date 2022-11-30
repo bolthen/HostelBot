@@ -5,6 +5,6 @@ public class StatusCommand : ICommand
     public string Name => "Статус";
     public IInteractionScenario GetScenario()
     {
-        throw new NotImplementedException();
+        return new StatusInteractionScenario();
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace HostelBot.App;
+﻿using HostelBot.Domain.Infrastructure;
 
-public interface IService
+namespace HostelBot.App;
+
+public interface IService : ICanFill
 {
     string Name { get; }
 }
