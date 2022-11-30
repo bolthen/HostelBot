@@ -1,4 +1,5 @@
-﻿using Telegram.Bot;
+﻿using HostelBot.App;
+using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
 
@@ -6,31 +7,51 @@ namespace HostelBot.Ui.TelegramBot;
 
 internal static class Processor
 {
-    public static async Task Start(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+    public static async Task Start(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken, 
+        CommandsHelper commandsHelper)
     {
-        var message = update.Message;
+        // var replyKeyboardMarkup = new ReplyKeyboardMarkup(new []
+        // {
+        //     new KeyboardButton[] { KeyboardButtons.Start.Info, KeyboardButtons.Start.Service },
+        //     new KeyboardButton[] { KeyboardButtons.Start.Question, KeyboardButtons.Start.Report }
+        // })
+        var buttons = commandsHelper.Names.Select(x => new [] { new KeyboardButton(x) });
         
-        var replyKeyboardMarkup = new ReplyKeyboardMarkup(new []
-        {
-            new KeyboardButton[] { KeyboardButtons.Start.Info, KeyboardButtons.Start.Service },
-            new KeyboardButton[] { KeyboardButtons.Start.Question, KeyboardButtons.Start.Report }
-        })
+        var replyKeyboardMarkup = new ReplyKeyboardMarkup(buttons)
         {
             ResizeKeyboard = true,
             OneTimeKeyboard = false
         };
         
-        await botClient.SendTextMessageAsync(message.Chat.Id, 
+        await botClient.SendTextMessageAsync(update.Message!.Chat.Id, 
             "Welcome!", 
             replyMarkup: replyKeyboardMarkup,
             cancellationToken: cancellationToken);
     }
-
-    public static async Task Info(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+    
+    public static async Task HandleICommand(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken, ICommand command)
     {
-        await botClient.SendTextMessageAsync(update.Message.Chat.Id,
-            "Information about this bot will be displayed here",
-            cancellationToken: cancellationToken);
+        IInteractionScenario scenario;
+        try
+        {
+            scenario = command.GetScenario();
+        }
+        catch (NotImplementedException)
+        {
+            await botClient.SendTextMessageAsync(update.Message.Chat.Id,
+                $"Scenario for '{command.GetType().Name}' not implemented",
+                cancellationToken: cancellationToken);
+            return;
+        }
+        catch (Exception e)
+        {
+            await botClient.SendTextMessageAsync(update.Message.Chat.Id,
+                e.ToString(),
+                cancellationToken: cancellationToken);
+            return;
+        }
+        
+        
     }
     
     public static async Task Service(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -49,16 +70,6 @@ internal static class Processor
             "Кого вы хотите вызвать?",
             replyMarkup: replyKeyboardMarkup,
             cancellationToken: cancellationToken);
-    }
-    
-    public static async Task Report(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
-    {
-        
-    }
-    
-    public static async Task Question(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
-    {
-        
     }
 
     public static async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callbackQuery)
