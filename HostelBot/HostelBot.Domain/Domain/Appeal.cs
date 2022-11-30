@@ -4,11 +4,11 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain.Domain
 {
-    public class Appeal : Entity<string, Appeal>, ICanFill
+    public class Appeal : Entity<Appeal, string>, ICanFill
     {
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
         
-        [QuestionAttribute("Опишите Вашу проблему", ViewType.TextEnter)]
+        [Question("Опишите Вашу проблему", ViewType.TextEnter)]
         [JsonPropertyName("Content")]
         public string Content { get; set; }
     }

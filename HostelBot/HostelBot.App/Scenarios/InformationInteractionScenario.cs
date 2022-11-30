@@ -14,12 +14,7 @@ public class InformationInteractionScenario : IInteractionScenario
         throw new NotImplementedException();
     }
 
-    public ICanFill? GetFillClass()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void HandleFilledClass(string data)
+    public IFiller GetFiller()
     {
         throw new NotImplementedException();
     }
