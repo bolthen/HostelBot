@@ -1,5 +1,4 @@
-﻿using System;
-using HostelBot.App;
+﻿using HostelBot.App;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -15,7 +14,7 @@ public class TelegramUi : IUi
 
     public void Run()
     {
-        const string token = "5675497155:AAHJO952wpubgQiIf3WdOJ6eCAi2cgnIKIs";
+        const string token = "5818008930:AAFyER7tuVgbwWyLgclM7BYMvBdnn3GLMjg";
         var client = new TelegramBotClient(token);
         client.StartReceiving(Update, Error);
         
@@ -34,7 +33,9 @@ public class TelegramUi : IUi
 
         if (update.Type == UpdateType.Message && update.Message?.Text != null)
         {
-            var text = update.Message.Text!;
+            var message = update.Message;
+            var text = message.Text!;
+            var chatId = message.Chat.Id;
             
             if (text == "/start")
             {
@@ -44,7 +45,25 @@ public class TelegramUi : IUi
 
             if (commandsHelper.NameToCommand.ContainsKey(text))
             {
-                await Processor.HandleICommand(botClient, update, cancellationToken, commandsHelper.NameToCommand[text]);
+                await Processor.HandleBaseICommands(botClient, update, cancellationToken, 
+                    commandsHelper.NameToCommand[text], commandsHelper);
+                return;
+            }
+
+            if (commandsHelper.ChatIdToFillingProgress.ContainsKey(chatId))
+            {
+                var progress = commandsHelper.ChatIdToFillingProgress[chatId];
+                progress.SaveResponse(text);
+                
+                if (progress.Completed)
+                {
+                    await botClient.SendTextMessageAsync(chatId, "Completed", cancellationToken: cancellationToken);
+                    commandsHelper.ChatIdToFillingProgress.Remove(chatId);
+                    return;
+                }
+                
+                await botClient.SendTextMessageAsync(chatId, progress.GetNextQuestion(), cancellationToken: cancellationToken); 
+                
                 return;
             }
         }

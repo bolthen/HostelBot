@@ -1,4 +1,5 @@
 ﻿using HostelBot.App;
+using HostelBot.Domain.Infrastructure;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -29,7 +30,8 @@ internal static class Processor
             cancellationToken: cancellationToken);
     }
     
-    public static async Task HandleICommand(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken, ICommand command)
+    public static async Task HandleBaseICommands(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken, 
+        ICommand command, CommandsHelper commandsHelper)
     {
         IInteractionScenario scenario;
         try
@@ -50,8 +52,32 @@ internal static class Processor
                 cancellationToken: cancellationToken);
             return;
         }
-        
-        
+
+        ICanFill fillClass;
+        try
+        {
+            fillClass = scenario.GetFillClass()!;
+        }
+        catch (NotImplementedException)
+        {
+            await botClient.SendTextMessageAsync(update.Message.Chat.Id,
+                $"ICanFill for '{scenario.GetType().Name}' not implemented",
+                cancellationToken: cancellationToken);
+            return;
+        }
+        catch (Exception e)
+        {
+            await botClient.SendTextMessageAsync(update.Message.Chat.Id,
+                e.ToString(),
+                cancellationToken: cancellationToken);
+            return;
+        }
+
+        var progress = new FillingProgress(fillClass);
+        commandsHelper.ChatIdToFillingProgress[update.Message.Chat.Id] = progress;
+
+        await botClient.SendTextMessageAsync(update.Message.Chat.Id, progress.GetNextQuestion(),
+            cancellationToken: cancellationToken);
     }
     
     public static async Task Service(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)

@@ -15,4 +15,6 @@ public class CommandsHelper
         foreach (var command in commands)
             NameToCommand[command.Name] = command;
     }
+
+    public readonly Dictionary<long, FillingProgress> ChatIdToFillingProgress = new();
 }
