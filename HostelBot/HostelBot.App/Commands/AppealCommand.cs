@@ -6,6 +6,6 @@ public class AppealCommand : ICommand
     
     public IInteractionScenario GetScenario()
     {
-        throw new NotImplementedException();
+        return new AppealInteractionScenario();
     }
 }
