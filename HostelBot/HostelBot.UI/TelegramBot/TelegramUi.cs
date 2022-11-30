@@ -10,9 +10,9 @@ public class TelegramUi : IUi
 {
     public TelegramUi(IApplication application)
     {
-        // получаешь ICommand'ы, по их Name'у рисуешь кнопки
+        commandsHelper = new CommandsHelper(application.GetBaseCommands());
     }
-    
+
     public void Run()
     {
         const string token = "5675497155:AAHJO952wpubgQiIf3WdOJ6eCAi2cgnIKIs";
@@ -22,42 +22,39 @@ public class TelegramUi : IUi
         Console.ReadLine();
     }
 
-    private static async Task Update(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
+    private readonly CommandsHelper commandsHelper;
+
+    private async Task Update(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         if (update.Type == UpdateType.CallbackQuery)
         {
-            await Processor.HandleCallbackQuery(botClient, update.CallbackQuery);
+            await Processor.HandleCallbackQuery(botClient, update.CallbackQuery!);
             return;
         }
-        
-        var message = update.Message;
-        
-        switch (message.Text)
-        {
-            case "/start":
-                await Processor.Start(botClient, update, cancellationToken);
-                return;
-            case KeyboardButtons.Start.Info:
-                await Processor.Info(botClient, update, cancellationToken);
-                return;
-            case KeyboardButtons.Start.Service:
-                await Processor.Service(botClient, update, cancellationToken);
-                return;
-            // case KeyboardButtons.Start.Question:
-            //     await Processor.Question(botClient, update, cancellationToken);
-            //     return;
-            // case KeyboardButtons.Start.Report:
-            //     await Processor.Report(botClient, update, cancellationToken);
-            //     return;
-        }
 
-        await botClient.SendTextMessageAsync(update.Message.Chat.Id, $"You said: {update.Message.Text}", 
+        if (update.Type == UpdateType.Message && update.Message?.Text != null)
+        {
+            var text = update.Message.Text!;
+            
+            if (text == "/start")
+            {
+                await Processor.Start(botClient, update, cancellationToken, commandsHelper);
+                return;
+            }
+
+            if (commandsHelper.NameToCommand.ContainsKey(text))
+            {
+                await Processor.HandleICommand(botClient, update, cancellationToken, commandsHelper.NameToCommand[text]);
+                return;
+            }
+        }
+        
+        await botClient.SendTextMessageAsync(update.Message.Chat.Id, $"UpdateType: {update.Type}", 
             cancellationToken: cancellationToken);
     }
 
-    private static Task Error(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+    private Task Error(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }
 }
-
