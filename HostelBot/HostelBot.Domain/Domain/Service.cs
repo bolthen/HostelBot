@@ -4,7 +4,7 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
-public class Service : Entity<int, Service>, IService
+public class Service : Entity<Service, int>, IService
 {
     public Service()
     {
