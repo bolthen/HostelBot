@@ -3,12 +3,14 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
-public class AppealInteractionScenario : FilledScenario<Appeal>
+public class AppealInteractionScenario : FilledScenario<AppealFiller>
 {
-    public override List<ICommand> GetSubcommands() => new();
-    public override object[] GetStaticInfo() => Array.Empty<object>();
+    public override List<ICommand> GetSubcommands()
+    {
+        throw new NotImplementedException();
+    }
 
-    public override void HandleFilledClass(Appeal filledObject)
+    public override object[] GetStaticInfo()
     {
         throw new NotImplementedException();
     }

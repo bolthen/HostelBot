@@ -2,15 +2,16 @@
 
 public class ServiceCommand : ICommand
 {
-    public string Name => "Услуги";
+    public string Name => service.Name;
+    private readonly IService service;
     
-    public ServiceCommand(/*IService service*/)
+    public ServiceCommand(IService service)
     {
-        //Name = service.Name;
+        this.service = service;
     }
 
     public IInteractionScenario GetScenario()
     {
-        throw new NotImplementedException();
+        return new ServiceInteractionScenario();
     }
 }

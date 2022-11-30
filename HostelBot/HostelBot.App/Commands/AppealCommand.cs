@@ -1,4 +1,7 @@
-﻿namespace HostelBot.App;
+﻿using HostelBot.Domain.Domain;
+using HostelBot.Domain.Infrastructure;
+
+namespace HostelBot.App;
 
 public class AppealCommand : ICommand
 {
@@ -6,6 +9,6 @@ public class AppealCommand : ICommand
     
     public IInteractionScenario GetScenario()
     {
-        throw new NotImplementedException();
+        return new AppealInteractionScenario();
     }
 }

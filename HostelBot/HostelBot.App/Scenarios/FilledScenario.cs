@@ -3,18 +3,14 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
-public abstract class FilledScenario<T> : IInteractionScenario 
-    where T : ICanFill, new()
+public abstract class FilledScenario<TFiller> : IInteractionScenario 
+    where TFiller : IFiller, new()
 {
     public abstract List<ICommand> GetSubcommands();
     public abstract object[] GetStaticInfo();
 
-    public ICanFill GetFillClass() => new T();
-
-    public void HandleFilledClass(string data)
+    public IFiller GetFiller()
     {
-        HandleFilledClass(JsonSerializer.Deserialize<T>(data));
+        return new TFiller();
     }
-    
-    public abstract void HandleFilledClass(T filledObject);
 }

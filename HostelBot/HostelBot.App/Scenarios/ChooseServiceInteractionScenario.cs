@@ -7,20 +7,15 @@ public class ChooseServiceInteractionScenario : IInteractionScenario
 {
     public List<ICommand> GetSubcommands()
     {
-        throw new NotImplementedException();
+        return new List<ICommand> {new ServiceCommand(new Service("Клининг"))};
     }
 
     public object[] GetStaticInfo()
     {
-        throw new NotImplementedException();
+        return Array.Empty<object>();
     }
 
-    public ICanFill? GetFillClass()
-    {
-        throw new NotImplementedException();
-    }
-
-    public void HandleFilledClass(string data)
+    public IFiller GetFiller()
     {
         throw new NotImplementedException();
     }

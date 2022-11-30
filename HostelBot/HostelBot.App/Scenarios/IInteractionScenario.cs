@@ -8,7 +8,5 @@ public interface IInteractionScenario
 
     public object[] GetStaticInfo();
 
-    public ICanFill? GetFillClass();
-
-    public void HandleFilledClass(string data);
+    public IFiller GetFiller();
 }

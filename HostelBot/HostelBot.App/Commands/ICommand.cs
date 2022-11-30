@@ -1,4 +1,6 @@
-﻿namespace HostelBot.App
+﻿using HostelBot.Domain.Infrastructure;
+
+namespace HostelBot.App
 {
     public interface ICommand
     {
