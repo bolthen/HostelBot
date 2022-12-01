@@ -1,21 +1,23 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain;
 
-public class Service : Entity<Service, int>, IService
+public class Service : Entity<Service, string>, IService
 {
-    public Service()
-    {
-    }
+    public new string Id => Name;
+    public Service() { }
     
     public Service(string name)
     {
         Name = name;
     }
     
-    public string Name { get; private set; }
+    [Key]
+    [JsonPropertyName("Name")]
+    public string Name { get; }
     
     [Question("Опишите Вашу проблему", ViewType.TextEnter)]
     [JsonPropertyName("Content")]

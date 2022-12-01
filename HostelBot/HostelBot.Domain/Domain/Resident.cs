@@ -9,15 +9,15 @@ namespace HostelBot.Domain.Domain
     public class Resident : Entity<Resident, int>, ICanFill
     {
         [Key]
-        private int telegramId;
-        public new int Id => telegramId; 
-        public Resident(int telegramId, string name, string surname, Hostel hostel, Room room)
+        public new int Id { get; }
+
+        public Resident(int telegramId, string name, string surname, Room room, Hostel hostel)
         {
-            this.telegramId = telegramId;
+            Id = telegramId;
             Name = name;
             Surname = surname;
-            Hostel = hostel;
             Room = room;
+            Hostel = hostel;
         }
         
         [Question("Имя", ViewType.TextEnter)]
@@ -31,12 +31,12 @@ namespace HostelBot.Domain.Domain
         [Required, RegularExpression(@"^([А-ЩЭ-Я][а-я]+-?)+$",
              ErrorMessage = "Фамилия должна начинаться с заглавной буквы, не иметь пробелов")]
         public string Surname { get; }
+
+        [ForeignKey("Room")]
+        public Room Room { get; }
         
         [ForeignKey("Hostel")]
         public Hostel Hostel { get; }
-        
-        [ForeignKey("Room")]
-        public Room Room { get; }
 
         public override string ToString() => $"{Name} {Surname}";
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;

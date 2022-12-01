@@ -8,7 +8,11 @@ public class Hostel : Entity<Hostel, string>
 {
     public new string Id => Name;
 
-    private List<Resident> residents = new List<Resident>();
+    private readonly List<Resident> residents = new ();
+    public IReadOnlyCollection<Resident> Residents => residents.AsReadOnly();
+    
+    private readonly List<Room> rooms = new ();
+    public IReadOnlyCollection<Room> Rooms => rooms.AsReadOnly();
 
     public Hostel(string name)
     {
@@ -19,11 +23,14 @@ public class Hostel : Entity<Hostel, string>
     [Question("Общежитие", ViewType.TextEnter)]
     [JsonPropertyName("Name")]
     public string Name { get; }
-
-    public IReadOnlyCollection<Resident> Residents => residents.AsReadOnly();
-
-    public void AddResident(Resident resident)
-    {
-        residents.Add(resident);
-    }
+    
+    // public void AddResident(int telegramId)
+    // {
+    //     residents.Add(ResidentsRepository.GetAsync(telegramId));
+    // }
+    
+    // public void AddRoom(int roomId)
+    // {
+    //     rooms.Add(RoomsRepository.GetAsync(roomId));
+    // }
 }

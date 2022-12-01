@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using HostelBot.Domain.Infrastructure;
 
@@ -6,18 +7,22 @@ namespace HostelBot.Domain.Domain;
 
 public class Room : Entity<Room, int>
 {
-    public new int Id => Number;
-    
-    public Room(int number, string hostelName)
+    public Room(int number, Hostel hostel)
     {
         Number = number;
-        HostelName = hostelName;
+        Hostel = hostel;
     }
     
-    [Key]
     [Question("Комната", ViewType.TextEnter)]
     [JsonPropertyName("Room")]
     public int Number { get; }
     
-    public string HostelName { get; }
+    [ForeignKey("Hostel")]
+    public Hostel Hostel { get; }
+
+    // public Resident GetResident(int telegramId)
+    // {
+    //     
+    // }
+    
 }
