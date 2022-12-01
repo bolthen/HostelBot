@@ -1,19 +1,14 @@
 ﻿using HostelBot.Domain;
+using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
-public class ServiceCommand : ICommand
+public class ServiceCommand : FillCommand<Service>
 {
-    public string Name => service.Name;
     private readonly IService service;
     
-    public ServiceCommand(IService service)
+    public ServiceCommand(Service service) : base(service.Name, service)
     {
         this.service = service;
-    }
-
-    public IInteractionScenario GetScenario()
-    {
-        return new ServiceInteractionScenario(service);
     }
 }

@@ -4,16 +4,14 @@ using HostelBot.Domain.Domain;
 
 namespace HostelBot.Domain.Infrastructure;
 
-public class AppealFiller : IFiller
+public class AppealFiller : Filler
 {
-    public IFillable GetFillClass()
+    public AppealFiller(Appeal fillable) : base(fillable)
     {
-        return new Appeal();
     }
 
-    public void HandleFilledClass(string data)
+    public override void HandleFilledClass(IFillable data)
     {
-        var a = JsonSerializer.Deserialize<Appeal>(data);
-        var temp = 1;
+        var filledAppeal = (Appeal) data;
     }
 }

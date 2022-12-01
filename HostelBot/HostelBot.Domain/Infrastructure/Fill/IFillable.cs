@@ -5,6 +5,7 @@ namespace HostelBot.Domain.Infrastructure
 {
     public interface IFillable
     {
+        bool Filled { get; set; }
         IReadOnlyCollection<PropertyInfo> GetFields();
     }
 }

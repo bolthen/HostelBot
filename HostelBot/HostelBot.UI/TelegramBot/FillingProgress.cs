@@ -14,13 +14,12 @@ public class FillingProgress
 
     public readonly Dictionary<string, string> Result = new();
 
-    public readonly IFiller? Filler;
+    public readonly IFillable Fillable;
 
-    public FillingProgress(IFiller filler)
+    public FillingProgress(IFillable fillable)
     {
-        Filler = filler;
-        properties = filler
-            .GetFillClass()
+        Fillable = fillable;
+        properties = fillable
             .GetFields()
             .Where(propertyInfo => propertyInfo.GetCustomAttribute<QuestionAttribute>() != null)
             .ToArray();

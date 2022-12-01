@@ -1,10 +1,10 @@
-﻿namespace HostelBot.App;
+﻿using HostelBot.Domain.Infrastructure;
 
-public class StatusCommand : ICommand
+namespace HostelBot.App;
+
+public class StatusCommand : Command
 {
-    public string Name => "Статус";
-    public IInteractionScenario GetScenario()
+    public StatusCommand(string name) : base("Статус")
     {
-        return new StatusInteractionScenario();
     }
 }

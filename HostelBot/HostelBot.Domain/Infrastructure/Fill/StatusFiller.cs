@@ -1,14 +1,15 @@
-﻿namespace HostelBot.Domain.Infrastructure;
+﻿using HostelBot.Domain.Domain;
 
-public class StatusFiller : IFiller
+namespace HostelBot.Domain.Infrastructure;
+
+public class StatusFiller : Filler
 {
-    public IFillable GetFillClass()
+    public StatusFiller(Status fillable) : base(fillable)
     {
-        throw new NotImplementedException();
     }
 
-    public void HandleFilledClass(string data)
+    public override void HandleFilledClass(IFillable data)
     {
-        throw new NotImplementedException();
+        var filledStatus = (Status) data;
     }
 }

@@ -21,5 +21,6 @@ public class Service : Entity<Service, int>, IService
     [JsonPropertyName("Content")]
     public string Content { get; set; }
 
+    public bool Filled { get; set; }
     public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
 }

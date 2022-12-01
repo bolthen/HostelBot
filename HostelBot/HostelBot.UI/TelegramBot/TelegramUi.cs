@@ -58,7 +58,7 @@ public class TelegramUi : IUi
                 
                 if (progress.Completed)
                 {
-                    commandsHelper.ChatIdToFillingProgress[chatId].Result.FillClass(progress.Filler!.GetFillClass());
+                    progress.Fillable.FillClass(commandsHelper.ChatIdToFillingProgress[chatId].Result);
                     //await botClient.SendTextMessageAsync(chatId, str, cancellationToken: cancellationToken);
                     commandsHelper.ChatIdToFillingProgress.Remove(chatId);
                     return;

@@ -10,17 +10,4 @@ public static class DictionaryExtensions
             .Select(item => $"\"{item.Key}\":\"{item.Value}\"");
         return $"{{{string.Join(',',values)}}}";
     }
-    
-    public static void FillClass(this IReadOnlyDictionary<string, string> data, IFillable fillableClass)
-    {
-        var propertiesToFill = fillableClass
-            .GetFields()
-            .Where(propertyInfo => propertyInfo.GetCustomAttribute<QuestionAttribute>() != null);
-        foreach (var property in propertiesToFill)
-        {
-            if (!data.ContainsKey(property.Name))
-                throw new ArgumentException($"Data do not contains {property.Name} key");
-            property.SetValue(fillableClass, data[property.Name]);
-        }
-    }
 }

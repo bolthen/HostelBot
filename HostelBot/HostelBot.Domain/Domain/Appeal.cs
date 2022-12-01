@@ -7,6 +7,7 @@ namespace HostelBot.Domain.Domain
 {
     public class Appeal : Entity<Appeal, string>, IFillable
     {
+        public bool Filled { get; set; }
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
         
         [Question("Как вас зовут", ViewType.TextEnter)]

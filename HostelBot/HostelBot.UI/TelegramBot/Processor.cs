@@ -31,9 +31,9 @@ internal static class Processor
     }
     
     public static async Task HandleBaseICommands(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken, 
-        ICommand command, CommandsHelper commandsHelper)
+        Command command, CommandsHelper commandsHelper)
     {
-        IInteractionScenario scenario;
+        /*IInteractionScenario scenario;
         try
         {
             scenario = command.GetScenario();
@@ -51,18 +51,18 @@ internal static class Processor
                 e.ToString(),
                 cancellationToken: cancellationToken);
             return;
-        }
+        }*/
 
-        IFiller filler;
+        IFillable? fillable;
         try
         {
-            filler = scenario.GetFiller();
+            fillable = command.GetFillable();
         }
         catch (NotImplementedException)
         {
-            await botClient.SendTextMessageAsync(update.Message.Chat.Id,
+            /*await botClient.SendTextMessageAsync(update.Message.Chat.Id,
                 $"ICanFill for '{scenario.GetType().Name}' not implemented",
-                cancellationToken: cancellationToken);
+                cancellationToken: cancellationToken);*/
             return;
         }
         catch (Exception e)
@@ -73,7 +73,7 @@ internal static class Processor
             return;
         }
 
-        var progress = new FillingProgress(filler);
+        var progress = new FillingProgress(fillable);
         commandsHelper.ChatIdToFillingProgress[update.Message.Chat.Id] = progress;
 
         await botClient.SendTextMessageAsync(update.Message.Chat.Id, progress.GetNextQuestion(),

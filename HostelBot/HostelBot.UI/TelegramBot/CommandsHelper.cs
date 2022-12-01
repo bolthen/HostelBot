@@ -4,11 +4,11 @@ namespace HostelBot.Ui.TelegramBot;
 
 public class CommandsHelper
 {
-    public Dictionary<string, ICommand> NameToCommand { get; } = new();
+    public Dictionary<string, Command> NameToCommand { get; } = new();
 
     public string[] Names { get; }
 
-    public CommandsHelper(IReadOnlyCollection<ICommand> commands)
+    public CommandsHelper(IReadOnlyCollection<Command> commands)
     {
         Names = commands.Select(x => x.Name).ToArray();
 

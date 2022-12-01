@@ -39,6 +39,7 @@ namespace HostelBot.Domain.Domain
         public Room Room { get; }
 
         public override string ToString() => $"{Name} {Surname}";
+        public bool Filled { get; set; }
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
 
     }

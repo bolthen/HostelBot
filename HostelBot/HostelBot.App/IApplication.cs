@@ -2,5 +2,5 @@
 
 public interface IApplication
 {
-    IReadOnlyCollection<ICommand> GetBaseCommands();
+    IReadOnlyCollection<Command> GetBaseCommands();
 }

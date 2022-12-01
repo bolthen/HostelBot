@@ -2,23 +2,14 @@
 
 namespace HostelBot.Domain.Infrastructure;
 
-public class ServiceFiller : IFiller
+public class ServiceFiller : Filler
 {
-    private IFillable fillable;
-
-    public ServiceFiller(IFillable fillable)
+    public ServiceFiller(Service fillable) : base(fillable)
     {
-        this.fillable = fillable;
-    }
-    
-    public IFillable GetFillClass()
-    {
-        return fillable;
     }
 
-    public void HandleFilledClass(IFillable filledClass)
+    public override void HandleFilledClass(IFillable data)
     {
-        //do something with filledClass...
-        //JsonSerializer.Deserialize<Service>(data);
+        var filledService = (Service) data;
     }
 }

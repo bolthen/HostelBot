@@ -21,10 +21,10 @@ internal class Program
         container.Bind<IUi>().To<TelegramUi>().InSingletonScope();
         container.Bind<IApplication>().To<Application>().InSingletonScope();
         
-        container.Bind<ICommand>().To<InformationCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
-        container.Bind<ICommand>().To<StatusCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
-        container.Bind<ICommand>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
-        container.Bind<ICommand>().To<ChooseServiceCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
+        container.Bind<Command>().To<InformationCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
+        container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
+        container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
+        container.Bind<Command>().To<ChooseServiceCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         
         return container;
     }

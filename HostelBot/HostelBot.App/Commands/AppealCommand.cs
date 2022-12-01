@@ -3,12 +3,9 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
-public class AppealCommand : ICommand
+public class AppealCommand : FillCommand<Appeal>/*<AppealFiller>*/
 {
-    public string Name => "Обращение";
-    
-    public IInteractionScenario GetScenario()
+    public AppealCommand(Appeal filler) : base("Обращение", filler)
     {
-        return new AppealInteractionScenario();
     }
 }

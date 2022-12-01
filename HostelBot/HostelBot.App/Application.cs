@@ -2,14 +2,14 @@
 
 public class Application : IApplication
 {
-    private readonly ICommand[] baseCommands;
+    private readonly Command[] baseCommands;
     
-    public Application(ICommand[] baseCommands)
+    public Application(Command[] baseCommands)
     {
         this.baseCommands = baseCommands;
     }
     
-    public IReadOnlyCollection<ICommand> GetBaseCommands()
+    public IReadOnlyCollection<Command> GetBaseCommands()
     {
         return baseCommands;
     }
