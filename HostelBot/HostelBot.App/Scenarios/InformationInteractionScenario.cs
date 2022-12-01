@@ -14,8 +14,8 @@ public class InformationInteractionScenario : IInteractionScenario
         throw new NotImplementedException();
     }
 
-    public IFiller GetFiller()
+    public IFiller? GetFiller()
     {
-        throw new NotImplementedException();
+        return null;
     }
 }

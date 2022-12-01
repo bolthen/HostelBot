@@ -11,10 +11,8 @@ internal class Program
     public static void Main(string[] args)
     {
         var container = ConfigureContainer();
-        foreach (var ui in  container.GetAll<IUi>())
-        {
+        foreach (var ui in container.GetAll<IUi>())
             ui.Run();
-        }
     }
 
     public static StandardKernel ConfigureContainer()
@@ -27,9 +25,7 @@ internal class Program
         container.Bind<ICommand>().To<StatusCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         container.Bind<ICommand>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         container.Bind<ICommand>().To<ChooseServiceCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
-        /*bind ICommand to AddResidentCommand
-        bind ICommand to AddServiceCommand
-        bind ICommand to MakeAnnouncmentCommand*/
+        
         return container;
     }
 }

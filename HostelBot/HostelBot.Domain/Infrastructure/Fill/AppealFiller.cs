@@ -6,13 +6,14 @@ namespace HostelBot.Domain.Infrastructure;
 
 public class AppealFiller : IFiller
 {
-    public ICanFill GetFillClass()
+    public IFillable GetFillClass()
     {
         return new Appeal();
     }
 
     public void HandleFilledClass(string data)
     {
-        JsonSerializer.Deserialize<Appeal>(data);
+        var a = JsonSerializer.Deserialize<Appeal>(data);
+        var temp = 1;
     }
 }

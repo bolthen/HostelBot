@@ -8,6 +8,6 @@
 
 public interface IFiller
 {
-    ICanFill GetFillClass();
-    void HandleFilledClass(string data);
+    IFillable GetFillClass();
+    void HandleFilledClass(IFillable data);
 }

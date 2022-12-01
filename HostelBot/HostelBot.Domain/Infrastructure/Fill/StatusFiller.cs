@@ -2,7 +2,7 @@
 
 public class StatusFiller : IFiller
 {
-    public ICanFill GetFillClass()
+    public IFillable GetFillClass()
     {
         throw new NotImplementedException();
     }

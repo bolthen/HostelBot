@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace HostelBot.Domain.Infrastructure
 {
-    public interface ICanFill
+    public interface IFillable
     {
         IReadOnlyCollection<PropertyInfo> GetFields();
     }

@@ -13,9 +13,4 @@ public class StatusInteractionScenario : FilledScenario<StatusFiller>
     {
         throw new NotImplementedException();
     }
-
-    public ICanFill? GetFillClass()
-    {
-        throw new NotImplementedException();
-    }
 }

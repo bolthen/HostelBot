@@ -12,11 +12,15 @@ public class FillingProgress
 
     private readonly PropertyInfo[] properties;
 
-    public readonly Dictionary<string, string> result = new();
+    public readonly Dictionary<string, string> Result = new();
 
-    public FillingProgress(ICanFill fillClass)
+    public readonly IFiller? Filler;
+
+    public FillingProgress(IFiller filler)
     {
-        properties = fillClass
+        Filler = filler;
+        properties = filler
+            .GetFillClass()
             .GetFields()
             .Where(propertyInfo => propertyInfo.GetCustomAttribute<QuestionAttribute>() != null)
             .ToArray();
@@ -25,7 +29,7 @@ public class FillingProgress
     public void SaveResponse(string response)
     {
         var key = properties[Stage].GetCustomAttribute<JsonPropertyNameAttribute>()!.Name;
-        result[key] = response.Trim();
+        Result[key] = response.Trim();
     }
 
     public string? GetNextQuestion()

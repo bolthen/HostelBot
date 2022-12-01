@@ -6,7 +6,7 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain.Domain
 {
-    public class Resident : Entity<Resident, int>, ICanFill
+    public class Resident : Entity<Resident, int>, IFillable
     {
         [Key]
         private int telegramId;

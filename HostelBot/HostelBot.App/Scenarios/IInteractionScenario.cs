@@ -8,5 +8,5 @@ public interface IInteractionScenario
 
     public object[] GetStaticInfo();
 
-    public IFiller GetFiller();
+    public IFiller? GetFiller();
 }

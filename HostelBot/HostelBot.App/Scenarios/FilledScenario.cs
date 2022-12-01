@@ -9,7 +9,7 @@ public abstract class FilledScenario<TFiller> : IInteractionScenario
     public abstract List<ICommand> GetSubcommands();
     public abstract object[] GetStaticInfo();
 
-    public IFiller GetFiller()
+    public virtual IFiller? GetFiller()
     {
         return new TFiller();
     }

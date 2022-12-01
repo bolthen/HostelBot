@@ -2,7 +2,7 @@
 
 namespace HostelBot.Domain;
 
-public interface IService : ICanFill
+public interface IService : IFillable
 {
     string Name { get; }
 }

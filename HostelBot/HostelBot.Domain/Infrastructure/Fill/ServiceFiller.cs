@@ -4,13 +4,21 @@ namespace HostelBot.Domain.Infrastructure;
 
 public class ServiceFiller : IFiller
 {
-    public ICanFill GetFillClass()
+    private IFillable fillable;
+
+    public ServiceFiller(IFillable fillable)
     {
-        return new Service();
+        this.fillable = fillable;
+    }
+    
+    public IFillable GetFillClass()
+    {
+        return fillable;
     }
 
-    public void HandleFilledClass(string data)
+    public void HandleFilledClass(IFillable filledClass)
     {
-        JsonSerializer.Deserialize<Service>(data);
+        //do something with filledClass...
+        //JsonSerializer.Deserialize<Service>(data);
     }
 }

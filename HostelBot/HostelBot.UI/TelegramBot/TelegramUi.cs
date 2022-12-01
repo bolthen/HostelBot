@@ -1,4 +1,5 @@
 ﻿using HostelBot.App;
+using HostelBot.Domain.Infrastructure;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -57,7 +58,8 @@ public class TelegramUi : IUi
                 
                 if (progress.Completed)
                 {
-                    await botClient.SendTextMessageAsync(chatId, "Completed", cancellationToken: cancellationToken);
+                    commandsHelper.ChatIdToFillingProgress[chatId].Result.FillClass(progress.Filler!.GetFillClass());
+                    //await botClient.SendTextMessageAsync(chatId, str, cancellationToken: cancellationToken);
                     commandsHelper.ChatIdToFillingProgress.Remove(chatId);
                     return;
                 }

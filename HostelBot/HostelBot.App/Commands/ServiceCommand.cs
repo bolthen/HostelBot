@@ -14,6 +14,6 @@ public class ServiceCommand : ICommand
 
     public IInteractionScenario GetScenario()
     {
-        return new ServiceInteractionScenario();
+        return new ServiceInteractionScenario(service);
     }
 }

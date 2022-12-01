@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using HostelBot.Domain;
+using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
@@ -8,7 +9,11 @@ public class ChooseServiceInteractionScenario : IInteractionScenario
 {
     public List<ICommand> GetSubcommands()
     {
-        return new List<ICommand> {new ServiceCommand(new Service("Клининг"))};
+        return ServiceManager
+            .GetServiceNames()
+            .Select(name => new ServiceCommand(new Service(name)))
+            .Cast<ICommand>()
+            .ToList();
     }
 
     public object[] GetStaticInfo()
@@ -16,8 +21,8 @@ public class ChooseServiceInteractionScenario : IInteractionScenario
         return Array.Empty<object>();
     }
 
-    public IFiller GetFiller()
+    public IFiller? GetFiller()
     {
-        throw new NotImplementedException();
+        return null;
     }
 }

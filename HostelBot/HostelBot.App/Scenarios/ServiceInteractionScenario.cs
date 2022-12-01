@@ -1,16 +1,29 @@
-﻿using HostelBot.Domain.Infrastructure;
+﻿using HostelBot.Domain;
+using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
-public class ServiceInteractionScenario : FilledScenario<ServiceFiller>
+public class ServiceInteractionScenario : IInteractionScenario//: FilledScenario<ServiceFiller>
 {
-    public override List<ICommand> GetSubcommands()
+    private IFiller filler;
+    
+    public ServiceInteractionScenario(IService service)
+    {
+        filler = new ServiceFiller(service);
+    }
+    
+    public List<ICommand> GetSubcommands()
     {
         throw new NotImplementedException();
     }
 
-    public override object[] GetStaticInfo()
+    public object[] GetStaticInfo()
     {
         throw new NotImplementedException();
+    }
+
+    public IFiller? GetFiller()
+    {
+        return filler;
     }
 }

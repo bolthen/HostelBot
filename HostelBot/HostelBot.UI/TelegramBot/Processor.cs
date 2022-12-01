@@ -53,10 +53,10 @@ internal static class Processor
             return;
         }
 
-        ICanFill fillClass;
+        IFiller filler;
         try
         {
-            fillClass = scenario.GetFiller().GetFillClass();
+            filler = scenario.GetFiller();
         }
         catch (NotImplementedException)
         {
@@ -73,7 +73,7 @@ internal static class Processor
             return;
         }
 
-        var progress = new FillingProgress(fillClass);
+        var progress = new FillingProgress(filler);
         commandsHelper.ChatIdToFillingProgress[update.Message.Chat.Id] = progress;
 
         await botClient.SendTextMessageAsync(update.Message.Chat.Id, progress.GetNextQuestion(),
