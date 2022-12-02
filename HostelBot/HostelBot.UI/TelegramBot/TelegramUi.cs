@@ -76,6 +76,7 @@ public class TelegramUi : IUi
 
     private Task Error(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return Task.CompletedTask;
+        //throw new NotImplementedException();
     }
 }

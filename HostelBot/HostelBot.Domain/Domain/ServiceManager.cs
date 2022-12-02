@@ -9,8 +9,9 @@ public class ServiceManager
         serviceNames.Add(name);
     }
 
-    public List<string> GetServiceNames()
+    public IReadOnlyList<string> GetServiceNames()
     {
-        return new List<string>(serviceNames);
+        return new List<string> {"Клининг", "Сантехник", "Электрик"};
+        //return new List<string>(serviceNames);
     }
 }

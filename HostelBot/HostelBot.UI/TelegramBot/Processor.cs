@@ -57,6 +57,8 @@ internal static class Processor
         try
         {
             fillable = command.GetFillable();
+            if (fillable is null)
+                throw new NotImplementedException();
         }
         catch (NotImplementedException)
         {

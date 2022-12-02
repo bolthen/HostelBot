@@ -17,7 +17,7 @@ public class ChooseServiceCommand : Command
     {
         return serviceManager
             .GetServiceNames()
-            .Select(name => new ServiceCommand(new Service("Клининг")))
+            .Select(name => new ServiceCommand(new Service(name)))
             .Cast<Command>()
             .ToList();
     }

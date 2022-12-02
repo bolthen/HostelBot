@@ -1,4 +1,5 @@
 ﻿using HostelBot.App;
+using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure;
 using HostelBot.Ui;
 using HostelBot.Ui.TelegramBot;
@@ -15,16 +16,18 @@ internal class Program
             ui.Run();
     }
 
-    public static StandardKernel ConfigureContainer()
+    private static StandardKernel ConfigureContainer()
     {
         var container = new StandardKernel();
         container.Bind<IUi>().To<TelegramUi>().InSingletonScope();
         container.Bind<IApplication>().To<Application>().InSingletonScope();
         
+        container.Bind<ServiceManager>().ToSelf().WhenInjectedInto<ChooseServiceCommand>().InSingletonScope();
+        
         container.Bind<Command>().To<InformationCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
-        container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         container.Bind<Command>().To<ChooseServiceCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
+        container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         
         return container;
     }
