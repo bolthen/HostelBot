@@ -1,8 +1,10 @@
-﻿namespace HostelBot.Domain.Domain;
+﻿using HostelBot.Domain.Infrastructure;
 
-public class ServiceManager
+namespace HostelBot.Domain.Domain;
+
+public class ServiceManager : Manager<Service>
 {
-    private readonly List<string> serviceNames = new List<string>();
+    private readonly List<string> serviceNames = new();
 
     public void AddService(string name)
     {
@@ -13,5 +15,10 @@ public class ServiceManager
     {
         return new List<string> {"Клининг", "Сантехник", "Электрик"};
         //return new List<string>(serviceNames);
+    }
+
+    protected override void Handle(Service value)
+    {
+        return;
     }
 }

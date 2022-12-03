@@ -15,6 +15,19 @@ public class ChooseServiceCommand : Command
     
     public override List<Command> GetSubcommands()
     {
+        var names = new List<string> {"Клининг", "Сантехник", "Электрик"};
+        var commands = new List<Command>();
+        
+        foreach (var name in names)
+        {
+            var observer = new ServiceManager();
+            var service = new Service(name);
+            observer.Subscribe(service);
+            commands.Add(new ServiceCommand(service));
+        }
+
+        return commands;
+        
         return serviceManager
             .GetServiceNames()
             .Select(name => new ServiceCommand(new Service(name)))
