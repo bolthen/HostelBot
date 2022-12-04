@@ -1,5 +1,4 @@
 ﻿using HostelBot.App;
-using HostelBot.Domain.Infrastructure;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -10,7 +9,7 @@ public class TelegramUi : IUi
 {
     public TelegramUi(IApplication application)
     {
-        commandsHelper = new CommandsHelper(application.GetBaseCommands());
+        Commands.AddCommands(application.GetBaseCommands());
     }
 
     public void Run()
@@ -22,13 +21,11 @@ public class TelegramUi : IUi
         Console.ReadLine();
     }
 
-    private readonly CommandsHelper commandsHelper;
-
     private async Task Update(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         if (update.Type == UpdateType.CallbackQuery)
         {
-            await Processor.HandleCallbackQuery(botClient, update.CallbackQuery!);
+            await Processor.HandleCallbackQuery(botClient, cancellationToken, update.CallbackQuery!);
             return;
         }
 
@@ -40,32 +37,19 @@ public class TelegramUi : IUi
             
             if (text == "/start")
             {
-                await Processor.Start(botClient, update, cancellationToken, commandsHelper);
+                await Processor.Start(botClient, update, cancellationToken);
                 return;
             }
 
-            if (commandsHelper.NameToCommand.ContainsKey(text))
+            if (FillingProgress.IsUserCurrentlyFilling(chatId))
             {
-                await Processor.HandleBaseICommands(botClient, update, cancellationToken, 
-                    commandsHelper.NameToCommand[text], commandsHelper);
+                await Processor.HandleProgress(botClient, cancellationToken, message);
                 return;
             }
 
-            if (commandsHelper.ChatIdToFillingProgress.ContainsKey(chatId))
+            if (Commands.Contains(text))
             {
-                var progress = commandsHelper.ChatIdToFillingProgress[chatId];
-                progress.SaveResponse(text);
-                
-                if (progress.Completed)
-                {
-                    progress.Fillable.FillClass(commandsHelper.ChatIdToFillingProgress[chatId].Result);
-                    //await botClient.SendTextMessageAsync(chatId, str, cancellationToken: cancellationToken);
-                    commandsHelper.ChatIdToFillingProgress.Remove(chatId);
-                    return;
-                }
-                
-                await botClient.SendTextMessageAsync(chatId, progress.GetNextQuestion(), cancellationToken: cancellationToken); 
-                
+                await Processor.HandleCommand(botClient, cancellationToken, Commands.Get(text), chatId);
                 return;
             }
         }

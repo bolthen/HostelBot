@@ -8,15 +8,14 @@ namespace HostelBot.Ui.TelegramBot;
 
 internal static class Processor
 {
-    public static async Task Start(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken, 
-        CommandsHelper commandsHelper)
+    public static async Task Start(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         // var replyKeyboardMarkup = new ReplyKeyboardMarkup(new []
         // {
         //     new KeyboardButton[] { KeyboardButtons.Start.Info, KeyboardButtons.Start.Service },
         //     new KeyboardButton[] { KeyboardButtons.Start.Question, KeyboardButtons.Start.Report }
         // })
-        var buttons = commandsHelper.Names.Select(x => new [] { new KeyboardButton(x) });
+        var buttons = Commands.Names.Select(x => new [] { new KeyboardButton(x) });
         
         var replyKeyboardMarkup = new ReplyKeyboardMarkup(buttons)
         {
@@ -30,79 +29,74 @@ internal static class Processor
             cancellationToken: cancellationToken);
     }
     
-    public static async Task HandleBaseICommands(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken, 
-        Command command, CommandsHelper commandsHelper)
+    public static async Task HandleCommand(ITelegramBotClient botClient, CancellationToken cancellationToken, 
+        Command command, long chatId)
     {
-        /*IInteractionScenario scenario;
-        try
+        var fillable = command.GetFillable();
+        if (fillable != null)
         {
-            scenario = command.GetScenario();
+            await HandleFillable(botClient, cancellationToken, fillable, chatId);
+            return;
         }
-        catch (NotImplementedException)
+
+        var subcommands = command.GetSubcommands();
+        if (subcommands.Count == 0)
         {
-            await botClient.SendTextMessageAsync(update.Message.Chat.Id,
-                $"Scenario for '{command.GetType().Name}' not implemented",
+            await botClient.SendTextMessageAsync(chatId, $"No info for {command.Name} Command",
                 cancellationToken: cancellationToken);
             return;
         }
-        catch (Exception e)
-        {
-            await botClient.SendTextMessageAsync(update.Message.Chat.Id,
-                e.ToString(),
-                cancellationToken: cancellationToken);
-            return;
-        }*/
-
-        IFillable? fillable;
-        try
-        {
-            fillable = command.GetFillable();
-            if (fillable is null)
-                throw new NotImplementedException();
-        }
-        catch (NotImplementedException)
-        {
-            /*await botClient.SendTextMessageAsync(update.Message.Chat.Id,
-                $"ICanFill for '{scenario.GetType().Name}' not implemented",
-                cancellationToken: cancellationToken);*/
-            return;
-        }
-        catch (Exception e)
-        {
-            await botClient.SendTextMessageAsync(update.Message.Chat.Id,
-                e.ToString(),
-                cancellationToken: cancellationToken);
-            return;
-        }
-
-        var progress = new FillingProgress(fillable);
-        commandsHelper.ChatIdToFillingProgress[update.Message.Chat.Id] = progress;
-
-        await botClient.SendTextMessageAsync(update.Message.Chat.Id, progress.GetNextQuestion(),
-            cancellationToken: cancellationToken);
-    }
-    
-    public static async Task Service(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
-    {
-        var replyKeyboardMarkup = new InlineKeyboardMarkup(new[]
-        {
-            new[]
-            {
-                InlineKeyboardButton.WithCallbackData(KeyboardButtons.Services.Electrician),
-                InlineKeyboardButton.WithCallbackData(KeyboardButtons.Services.Janitor),
-            },
-            new[] { InlineKeyboardButton.WithCallbackData(KeyboardButtons.Services.Santekhnik) }
-        });
-
-        await botClient.SendTextMessageAsync(update.Message.Chat.Id, 
-            "Кого вы хотите вызвать?",
+        
+        Commands.AddCommands(subcommands);
+        
+        var buttons = subcommands.Select(x => InlineKeyboardButton.WithCallbackData(x.Name));
+        var replyKeyboardMarkup = new InlineKeyboardMarkup(buttons);
+        
+        await botClient.SendTextMessageAsync(chatId, 
+            command.Name,
             replyMarkup: replyKeyboardMarkup,
             cancellationToken: cancellationToken);
     }
 
-    public static async Task HandleCallbackQuery(ITelegramBotClient botClient, CallbackQuery callbackQuery)
+    private static async Task HandleFillable(ITelegramBotClient botClient, CancellationToken cancellationToken, 
+        IFillable fillable, long chatId)
     {
-        await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id,
-            $"Вызываем сервис: {callbackQuery.Data}");
+        var progress = new FillingProgress(fillable, chatId);
+
+        await botClient.SendTextMessageAsync(chatId, progress.GetNextQuestion(),
+            cancellationToken: cancellationToken);
+    }
+
+    public static async Task HandleProgress(ITelegramBotClient botClient, CancellationToken cancellationToken, 
+        Message message)
+    {
+        var chatId = message.Chat.Id;
+        var text = message.Text!;
+        
+        var progress = FillingProgress.GetProgress(chatId);
+        progress.SaveResponse(text);
+                
+        if (progress.Completed)
+        {
+            await botClient.SendTextMessageAsync(chatId, progress.Result.ToJsonFormat(), cancellationToken: cancellationToken);
+            FillingProgress.FinishFilling(chatId);
+            return;
+        }
+                
+        await botClient.SendTextMessageAsync(chatId, progress.GetNextQuestion(), cancellationToken: cancellationToken);
+    }
+
+    public static async Task HandleCallbackQuery(ITelegramBotClient botClient, CancellationToken cancellationToken, 
+        CallbackQuery callbackQuery)
+    {
+        if (Commands.Contains(callbackQuery.Data!))
+        {
+            await HandleCommand(botClient, cancellationToken, Commands.Get(callbackQuery.Data!), 
+                callbackQuery.Message!.Chat.Id);
+            return;
+        }
+        
+        await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, $"Unknown Data: {callbackQuery.Data}",
+            cancellationToken: cancellationToken);
     }
 }

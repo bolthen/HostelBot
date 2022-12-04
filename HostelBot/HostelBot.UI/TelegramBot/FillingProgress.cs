@@ -16,13 +16,15 @@ public class FillingProgress
 
     public readonly IFillable Fillable;
 
-    public FillingProgress(IFillable fillable)
+    public FillingProgress(IFillable fillable, long chatId)
     {
         Fillable = fillable;
         properties = fillable
             .GetFields()
             .Where(propertyInfo => propertyInfo.GetCustomAttribute<QuestionAttribute>() != null)
             .ToArray();
+        
+        ChatIdToFillingProgress[chatId] = this;
     }
 
     public void SaveResponse(string response)
@@ -39,5 +41,25 @@ public class FillingProgress
         Stage++;
 
         return properties[Stage].GetCustomAttribute<QuestionAttribute>()!.Question;
+    }
+    
+    
+    private static readonly Dictionary<long, FillingProgress> ChatIdToFillingProgress = new();
+    
+    public static bool IsUserCurrentlyFilling(long chatId)
+    {
+        return ChatIdToFillingProgress.ContainsKey(chatId);
+    }
+
+    public static FillingProgress GetProgress(long chatId)
+    {
+        return ChatIdToFillingProgress[chatId];
+    }
+    
+    public static void FinishFilling(long chatId)
+    {
+        var progress = GetProgress(chatId);
+        progress.Fillable.FillClass(progress.Result);
+        ChatIdToFillingProgress.Remove(chatId);
     }
 }
