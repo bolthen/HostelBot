@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using HostelBot.Domain.Infrastructure;
 
@@ -31,6 +32,18 @@ public class FillingProgress
     {
         var key = properties[Stage].GetCustomAttribute<JsonPropertyNameAttribute>()!.Name;
         Result[key] = response.Trim();
+    }
+
+    public bool TryValidateRegex(string response, out string? errorMessage)
+    {
+        errorMessage = null;
+        
+        var regex = properties[Stage].GetCustomAttribute<RegularExpressionAttribute>();
+        if (regex is null || regex.IsValid(response))
+            return true;
+
+        errorMessage = regex.ErrorMessage;
+        return false;
     }
 
     public string? GetNextQuestion()

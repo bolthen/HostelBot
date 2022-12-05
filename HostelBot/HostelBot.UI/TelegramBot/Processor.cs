@@ -72,8 +72,15 @@ internal static class Processor
     {
         var chatId = message.Chat.Id;
         var text = message.Text!;
-        
+
         var progress = FillingProgress.GetProgress(chatId);
+        
+        if (!progress.TryValidateRegex(text, out var errorMessage))
+        {
+            await botClient.SendTextMessageAsync(chatId, errorMessage!, cancellationToken: cancellationToken);
+            return;
+        }
+        
         progress.SaveResponse(text);
                 
         if (progress.Completed)
