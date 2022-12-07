@@ -6,32 +6,17 @@ namespace HostelBot.App;
 
 public class ChooseServiceCommand : Command
 {
-    private readonly ServiceManager serviceManager;
-    
-    public ChooseServiceCommand(ServiceManager serviceManager): base("Услуги")
+    private readonly IEnumerable<Manager<Service>> managers;
+
+    public ChooseServiceCommand(IEnumerable<Manager<Service>> managers): base("Услуги")
     {
-        this.serviceManager = serviceManager;
+        this.managers = managers;
     }
     
     public override List<Command> GetSubcommands()
     {
         var names = new List<string> {"Клининг", "Сантехник", "Электрик"};
-        var commands = new List<Command>();
-        
-        foreach (var name in names)
-        {
-            var observer = new ServiceManager();
-            var service = new Service(name);
-            observer.Subscribe(service);
-            commands.Add(new ServiceCommand(service));
-        }
 
-        return commands;
-        
-        return serviceManager
-            .GetServiceNames()
-            .Select(name => new ServiceCommand(new Service(name)))
-            .Cast<Command>()
-            .ToList();
+        return names.Select(name => new ServiceCommand(name, managers)).Cast<Command>().ToList();
     }
 }

@@ -1,19 +1,12 @@
 ﻿using HostelBot.Domain;
+using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
 public class ServiceCommand : FillCommand<Service>
 {
-    private readonly IService service;
-    
-    public ServiceCommand(IService service) : base(service.Name/*, service*/)
+    public ServiceCommand(string name, IEnumerable<Manager<Service>> managers) : base(name, managers, new Service(name))
     {
-        this.service = service;
-    }
-    
-    public override IFillable? GetFillable()
-    {
-        return service;
     }
 }

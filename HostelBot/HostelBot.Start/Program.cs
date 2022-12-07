@@ -1,4 +1,5 @@
 ﻿using HostelBot.App;
+using HostelBot.Domain;
 using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure;
 using HostelBot.Ui;
@@ -28,6 +29,8 @@ internal class Program
         container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         container.Bind<Command>().To<ChooseServiceCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
+        container.Bind<Manager<Service>>().To<ServiceManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
+        container.Bind<Manager<Appeal>>().To<AppealManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
         
         return container;
     }

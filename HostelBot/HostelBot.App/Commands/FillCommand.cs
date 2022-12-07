@@ -1,20 +1,24 @@
-﻿using HostelBot.Domain.Infrastructure;
+﻿using HostelBot.Domain.Domain;
+using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
 public abstract class FillCommand<TFillable> : Command
-    where TFillable : IFillable, new()/*<TFiller> : Command
-    where TFiller : Filler<IFillable>*/
+    where TFillable : IFillable, Domain.Infrastructure.IObservable<TFillable>, new()
 {
-    //private TFillable filler;
+    private IEnumerable<Manager<TFillable>> managers;
+    protected TFillable Fillable;
     
-    public FillCommand(string name/*, TFillable filler*/) : base(name)
+    public FillCommand(string name, IEnumerable<Manager<TFillable>> managers, TFillable fillable) : base(name)
     {
-        //this.filler = filler;
+        this.managers = managers;
+        Fillable = fillable;
     }
     
     public override IFillable? GetFillable()
     {
-        return new TFillable();
+        foreach (var manager in managers)
+            manager.Subscribe(Fillable);
+        return Fillable;
     }
 }

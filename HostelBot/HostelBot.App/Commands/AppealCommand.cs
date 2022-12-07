@@ -5,15 +5,7 @@ namespace HostelBot.App;
 
 public class AppealCommand : FillCommand<Appeal>
 {
-    public AppealCommand(/*Appeal filler*/) : base("Обращение"/*, filler*/)
+    public AppealCommand(IEnumerable<Manager<Appeal>> managers) : base("Обращения", managers, new Appeal())
     {
-    }
-
-    public override IFillable? GetFillable()
-    {
-        var observer = new AppealManager();
-        var appeal = new Appeal();
-        observer.Subscribe(appeal);
-        return appeal;
     }
 }
