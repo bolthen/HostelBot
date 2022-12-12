@@ -1,5 +1,6 @@
 ﻿using System.Windows.Input;
 using HostelBot.Domain;
+using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;

@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using HostelBot.Domain.Infrastructure;
+using HostelBot.Domain.Infrastructure.Repository;
 
 namespace HostelBot.Domain.Domain;
 
@@ -13,10 +14,17 @@ public class Hostel : Entity<Hostel, string>
     
     private readonly List<Room> rooms = new ();
     public IReadOnlyCollection<Room> Rooms => rooms.AsReadOnly();
+    
+    private readonly List<Service> services = new ();
+    public IReadOnlyCollection<Service> Services => services.AsReadOnly();
 
     public Hostel(string name)
     {
         Name = name;
+    }
+    
+    public Hostel()
+    {
     }
     
     [Key]
@@ -24,13 +32,13 @@ public class Hostel : Entity<Hostel, string>
     [JsonPropertyName("Name")]
     public string Name { get; }
     
-    // public void AddResident(int telegramId)
+    // public void AddResident(Resident resident)
     // {
-    //     residents.Add(ResidentsRepository.GetAsync(telegramId));
+    //     residents.Add(resident);
     // }
-    
-    // public void AddRoom(int roomId)
+    //
+    // public void AddRoom(Room room)
     // {
-    //     rooms.Add(RoomsRepository.GetAsync(roomId));
+    //     rooms.Add(room);
     // }
 }

@@ -11,7 +11,7 @@ namespace HostelBot.Domain.Domain
         [Key]
         public new int Id { get; }
 
-        public Resident(int telegramId, string name, string surname, Room room, Hostel hostel)
+        public Resident(int telegramId, string name, string surname, Room room, Hostel? hostel)
         {
             Id = telegramId;
             Name = name;
@@ -19,6 +19,8 @@ namespace HostelBot.Domain.Domain
             Room = room;
             Hostel = hostel;
         }
+        
+        public Resident(){}
         
         [Question("Имя", ViewType.TextEnter)]
         [JsonPropertyName("Name")]
@@ -36,7 +38,7 @@ namespace HostelBot.Domain.Domain
         public Room Room { get; }
         
         [ForeignKey("Hostel")]
-        public Hostel Hostel { get; }
+        public Hostel? Hostel { get; }
 
         public override string ToString() => $"{Name} {Surname}";
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
