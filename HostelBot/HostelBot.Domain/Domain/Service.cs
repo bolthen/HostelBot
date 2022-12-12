@@ -5,9 +5,8 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain.Domain;
 
-public class Service : Entity<Service, string>, IService
+public class Service : Entity<Service>, IService
 {
-    public new string Id => Name;
     public Service() { }
     
     public Service(string name)
@@ -15,9 +14,8 @@ public class Service : Entity<Service, string>, IService
         Name = name;
     }
     
-    [Key]
     [JsonPropertyName("Name")]
-    public string Name { get; }
+    public string Name { get; set;}
     
     [Question("Опишите Вашу проблему", ViewType.TextEnter)]
     [JsonPropertyName("Content")]

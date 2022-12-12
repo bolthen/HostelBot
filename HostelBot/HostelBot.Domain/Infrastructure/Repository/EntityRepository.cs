@@ -2,8 +2,8 @@
 
 namespace HostelBot.Domain.Infrastructure.Repository;
 
-public class EntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>
-    where TEntity : Entity<TEntity, TId>
+public class EntityRepository<TEntity> : IEntityRepository<TEntity>
+    where TEntity : Entity<TEntity>
 {
     private readonly MainDbContext context;
     
@@ -11,7 +11,7 @@ public class EntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>
     {
         this.context = context;
     }
-    public async Task<TEntity?> GetAsync(TId id)
+    public async Task<TEntity?> GetAsync(int id)
     {
         var foundEntity = await context.Set<TEntity>().FindAsync(id);
 
@@ -33,7 +33,7 @@ public class EntityRepository<TEntity, TId> : IEntityRepository<TEntity, TId>
         return true;
     }
 
-    public async Task<bool> DeleteAsync(TId id)
+    public async Task<bool> DeleteAsync(int id)
     {
         var foundEntity = await context.Set<TEntity>().FindAsync(id);
 

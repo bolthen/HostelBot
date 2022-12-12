@@ -6,7 +6,7 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain.Domain
 {
-    public class Resident : Entity<Resident, int>, ICanFill
+    public class Resident : Entity<Resident>, ICanFill
     {
         [Key]
         public new int Id { get; }
@@ -26,19 +26,17 @@ namespace HostelBot.Domain.Domain
         [JsonPropertyName("Name")]
         [Required, RegularExpression(@"^([А-ЩЭ-Я][а-я]+-?)+$",
              ErrorMessage = "Имя должно начинаться с заглавной буквы, не иметь пробелов")]
-        public string Name { get; }
+        public string Name { get; set; }
         
         [Question("Фамилия", ViewType.TextEnter)]
         [JsonPropertyName("Surname")]
         [Required, RegularExpression(@"^([А-ЩЭ-Я][а-я]+-?)+$",
              ErrorMessage = "Фамилия должна начинаться с заглавной буквы, не иметь пробелов")]
-        public string Surname { get; }
-
-        [ForeignKey("Room")]
-        public Room Room { get; }
+        public string Surname { get; set; }
         
-        [ForeignKey("Hostel")]
-        public Hostel? Hostel { get; }
+        public Room? Room { get; set; }
+        
+        public Hostel? Hostel { get; set; }
 
         public override string ToString() => $"{Name} {Surname}";
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;

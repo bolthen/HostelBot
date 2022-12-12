@@ -6,17 +6,17 @@ public class CoreRepository
 {
     private MainDbContext context;
     
-    public EntityRepository<Resident, int> Residents { get; set; }
+    public EntityRepository<Resident> Residents { get; set; }
     
-    public EntityRepository<Hostel, string> Hostels { get; set; }
+    public EntityRepository<Hostel> Hostels { get; set; }
     
-    public EntityRepository<Room, int> Rooms { get; set; }
+    public EntityRepository<Room> Rooms { get; set; }
     
-    public EntityRepository<Service, string> Services { get; set; }
+    public EntityRepository<Service> Services { get; set; }
 
-    public CoreRepository(MainDbContext mainDbContext, EntityRepository<Resident, int> residents,
-        EntityRepository<Hostel, string> hostels, EntityRepository<Room, int> rooms,
-        EntityRepository<Service, string> services)
+    public CoreRepository(MainDbContext mainDbContext, EntityRepository<Resident> residents,
+        EntityRepository<Hostel> hostels, EntityRepository<Room> rooms,
+        EntityRepository<Service> services)
     {
         context = mainDbContext;
         Residents = residents;
@@ -24,9 +24,4 @@ public class CoreRepository
         Rooms = rooms;
         Services = services;
     }
-
-    // public async Task<Hostel?> GetHostelByName(string hostelName)
-    // {
-    //     return await context.Set<Hostel>();
-    // }
 }

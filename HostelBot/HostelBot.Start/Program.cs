@@ -14,25 +14,32 @@ internal class Program
 {
     public static void Main(string[] args)
     {
-        // var container = ConfigureContainer();
-        // foreach (var ui in  container.GetAll<IUi>())
-        // {
-        //     ui.Run();
-        // }
+        var container = ConfigureContainer();
+        foreach (var ui in  container.GetAll<IUi>())
+        {
+            ui.Run();
+        }
         
 
-        var mainDbContext = new MainDbContext();
-        var coreRepository = new CoreRepository(mainDbContext, new EntityRepository<Resident, int>(mainDbContext),
-            new EntityRepository<Hostel, string>(mainDbContext), new EntityRepository<Room, int>(mainDbContext),
-            new EntityRepository<Service, string>(mainDbContext));
-        
-        var residentService = new ResidentService(coreRepository);
-        var hostel = new Hostel("6 общага");
-        var room = new Room(708, hostel);
-        var res = new Resident(13, "Egor", "Loparev", room, hostel);
-        var k = residentService.CreateAsync(res);
-        var g= residentService.GetAsync(13);
-        Console.WriteLine(k.Result);
+        // var mainDbContext = new MainDbContext();
+        // var coreRepository = new CoreRepository(mainDbContext, new EntityRepository<Resident>(mainDbContext),
+        //     new EntityRepository<Hostel>(mainDbContext), new EntityRepository<Room>(mainDbContext),
+        //     new EntityRepository<Service>(mainDbContext));
+        //
+        // var residentService = new ResidentService(coreRepository);
+        // var hostelService = new HostelService(coreRepository);
+        // var hostel = new Hostel("16 общага");
+        //
+        // var f = hostelService.CreateAsync(hostel);
+        //
+        // var room = new Room(502, hostel);
+        // var res = new Resident(143223, "Local", "User", room, hostel);
+        // var k = residentService.CreateAsync(res);
+        // var g= residentService.GetAsync(13);
+        //
+        // var utility = new Service("Электрик");
+        //
+        // Console.WriteLine(g.Result);
     }
 
     public static StandardKernel ConfigureContainer()

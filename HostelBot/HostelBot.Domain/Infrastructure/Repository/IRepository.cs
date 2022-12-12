@@ -1,13 +1,13 @@
 ﻿namespace HostelBot.Domain.Infrastructure.Repository;
 
-public interface IEntityRepository<TEntity, TId>
-    where TEntity : Entity<TEntity, TId>
+public interface IEntityRepository<TEntity>
+    where TEntity : Entity<TEntity>
 {
-    Task<TEntity?> GetAsync(TId id);
+    Task<TEntity?> GetAsync(int id);
         
     Task<bool> CreateAsync(TEntity entity);
         
-    Task<bool> DeleteAsync(TId id);
+    Task<bool> DeleteAsync(int id);
 
     Task<bool> UpdateAsync(TEntity entity);
 

@@ -1,15 +1,17 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace HostelBot.Domain.Infrastructure
 {
-    public class Entity<TType, TId> : DddObject<TType>
-        where TType : Entity<TType, TId>
+    public class Entity<TType> : DddObject<TType>
+        where TType : Entity<TType>
     {
-        public TId Id { get; set; }
+        [Key]
+        public int Id { get; set; }
 
-        protected bool Equals(Entity<TType, TId> other)
+        protected bool Equals(Entity<TType> other)
         {
-            return EqualityComparer<TId>.Default.Equals(Id, other.Id);
+            return EqualityComparer<int>.Default.Equals(Id, other.Id);
         }
 
         public override bool Equals(object obj)
@@ -17,12 +19,12 @@ namespace HostelBot.Domain.Infrastructure
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((Entity<TType, TId>)obj);
+            return Equals((Entity<TType>)obj);
         }
 
         public override int GetHashCode()
         {
-            return EqualityComparer<TId>.Default.GetHashCode(Id);
+            return EqualityComparer<int>.Default.GetHashCode(Id);
         }
 
         public override string ToString()

@@ -5,7 +5,7 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain.Domain;
 
-public class Room : Entity<Room, int>
+public class Room : Entity<Room>
 {
     public Room(int number, Hostel? hostel)
     {
@@ -17,8 +17,7 @@ public class Room : Entity<Room, int>
 
     [Question("Комната", ViewType.TextEnter)]
     [JsonPropertyName("Room")]
-    public int Number { get; }
+    public int Number { get; set;}
     
-    [ForeignKey("Hostel")]
-    public Hostel? Hostel { get; }
+    public Hostel? Hostel { get; set;}
 }

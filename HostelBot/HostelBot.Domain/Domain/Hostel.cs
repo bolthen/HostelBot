@@ -5,10 +5,8 @@ using HostelBot.Domain.Infrastructure.Repository;
 
 namespace HostelBot.Domain.Domain;
 
-public class Hostel : Entity<Hostel, string>
+public class Hostel : Entity<Hostel>
 {
-    public new string Id => Name;
-
     private readonly List<Resident> residents = new ();
     public IReadOnlyCollection<Resident> Residents => residents.AsReadOnly();
     
@@ -27,10 +25,9 @@ public class Hostel : Entity<Hostel, string>
     {
     }
     
-    [Key]
     [Question("Общежитие", ViewType.TextEnter)]
     [JsonPropertyName("Name")]
-    public string Name { get; }
+    public string Name { get; set; }
     
     // public void AddResident(Resident resident)
     // {
