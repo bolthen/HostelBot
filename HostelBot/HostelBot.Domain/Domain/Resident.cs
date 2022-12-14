@@ -18,8 +18,6 @@ namespace HostelBot.Domain.Domain
             Room = room;
             Hostel = hostel;
         }
-        
-        public List<Utility> Utilities { get; set; }
 
         public Resident(){}
         
@@ -38,6 +36,8 @@ namespace HostelBot.Domain.Domain
         public Room? Room { get; set; }
         
         public Hostel? Hostel { get; set; }
+        
+        public List<Utility> Utilities { get; set; }
 
         
         private readonly List<Infrastructure.IObserver<Resident>> observers = new();

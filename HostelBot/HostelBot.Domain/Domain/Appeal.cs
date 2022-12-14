@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using HostelBot.Domain.Infrastructure;
@@ -10,7 +11,7 @@ namespace HostelBot.Domain.Domain
         public Resident Resident { get; set;}
         
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
-        
+
         public Appeal() { }
     
         public Appeal(string name, Resident resident)
@@ -29,7 +30,9 @@ namespace HostelBot.Domain.Domain
         [JsonPropertyName("Content")]
         public string Content { get; set; }
         
-        private bool filled;
+        [ResidentId] public int ResidentId;
+        
+        /*private bool filled;
         public bool Filled
         {
             get => filled;
@@ -39,7 +42,7 @@ namespace HostelBot.Domain.Domain
                 if (value)
                     OnFilled();
             }
-        }
+        }*/
         
         private readonly List<Infrastructure.IObserver<Appeal>> observers = new();
 

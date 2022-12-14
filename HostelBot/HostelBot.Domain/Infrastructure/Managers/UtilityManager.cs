@@ -5,10 +5,13 @@ namespace HostelBot.Domain.Domain;
 
 public class UtilityManager : Manager<Utility>
 {
-    private UtilityService utilityService;
-    public UtilityManager(UtilityService utilityService)
+    private readonly UtilityService utilityService;
+    private readonly ResidentService residentService;
+
+    public UtilityManager(UtilityService utilityService, ResidentService residentService)
     {
         this.utilityService = utilityService;
+        this.residentService = residentService;
     }
 
     private readonly List<string> serviceNames = new();
@@ -26,7 +29,8 @@ public class UtilityManager : Manager<Utility>
 
     protected override void Handle(Utility value)
     {
-        utilityService.CreateAsync(value);
-        return;
+        var resident = residentService.GetAsync(value.ResidentId).Result;
+        resident.AddUtility(value);
+        residentService.UpdateAsync(resident);
     }
 }

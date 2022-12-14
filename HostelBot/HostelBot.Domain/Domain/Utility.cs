@@ -16,11 +16,13 @@ public class Utility : Entity<Utility>, IService, Infrastructure.IObservable<Uti
     [Question("Опишите Вашу проблему", ViewType.TextEnter)]
     [JsonPropertyName("Content")]
     public string Content { get; set; }
+
+    [ResidentId] public int ResidentId;
     
     public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
     private readonly List<Infrastructure.IObserver<Utility>> observers = new();
     
-    private bool filled;
+    /*private bool filled;
     [NotMapped]
     public bool Filled
     {
@@ -31,7 +33,7 @@ public class Utility : Entity<Utility>, IService, Infrastructure.IObservable<Uti
             if (value)
                 OnFilled();
         }
-    }
+    }*/
     
     public IDisposable Subscribe(Infrastructure.IObserver<Utility> observer)
     {

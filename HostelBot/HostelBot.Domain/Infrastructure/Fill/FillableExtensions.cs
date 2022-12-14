@@ -15,7 +15,8 @@ public static class FillableExtensions
                 throw new ArgumentException($"Data do not contains {property.Name} key");
             property.SetValue(fillableClass, data[property.Name]);
         }
-
-        fillableClass.Filled = true;
+        
+        fillableClass.OnFilled();
+        //fillableClass.Filled = true; старая версия
     }
 }

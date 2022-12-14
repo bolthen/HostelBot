@@ -6,7 +6,8 @@ namespace HostelBot.App;
 
 public class ServiceCommand : FillCommand<Utility>
 {
-    public ServiceCommand(string name, IEnumerable<Manager<Utility>> managers) : base(name, managers, new Utility(name))
+    public ServiceCommand(string name, IEnumerable<Manager<Utility>> managers) 
+        : base(name, managers, new Utility(name))
     {
     }
 }
