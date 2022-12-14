@@ -13,7 +13,12 @@
 </head>
 <body>
 <div>
-    <h2>Зарегестрированные услуги</h2>
+    <h2>Услуги</h2>
+    <div class="row">
+        <a asp-page="/Utilities/AddPage" class="col-4 text-center align-self-center btn btn-outline-primary">
+            Добавить новую услугу
+        </a>
+    </div>
     @foreach (var utility in Model.Utilities)
     {
         <div class="row">

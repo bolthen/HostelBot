@@ -17,7 +17,7 @@ namespace WebUi.Pages.Utilities
         {
             this.hostelRepository = hostelRepository;
             this.utilityNameRepository = utilityNameRepository;
-
+            return;
             if (flag)
                 return;
             flag = true;
@@ -36,7 +36,6 @@ namespace WebUi.Pages.Utilities
         public void OnGet()
         {
             Utilities = hostelRepository.GetUtilityNames("№6").Result.ToArray();
-            //Utilities = utilitiesName.GetAll().ToArray();
         }
     }
 }
