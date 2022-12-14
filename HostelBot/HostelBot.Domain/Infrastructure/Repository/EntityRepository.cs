@@ -2,60 +2,60 @@
 
 namespace HostelBot.Domain.Infrastructure.Repository;
 
-public class EntityRepository<TEntity> : IEntityRepository<TEntity>
+public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
     where TEntity : Entity<TEntity>
 {
-    public MainDbContext Context;
+    protected readonly MainDbContext context;
     
     public EntityRepository(MainDbContext context)
     {
-        this.Context = context;
+        this.context = context;
     }
     public async Task<TEntity?> GetAsync(int id)
     {
-        var foundEntity = await Context.Set<TEntity>().FindAsync(id);
+        var foundEntity = await context.Set<TEntity>().FindAsync(id);
 
-        if (foundEntity != null)
-            Context.Entry(foundEntity).State = EntityState.Detached;
-            
-        return foundEntity;
+        if (foundEntity == null) return foundEntity;
+        
+        context.Entry(foundEntity).State = EntityState.Detached;
+        throw new Exception($"The {typeof(TEntity)} with the given id was not found in the database");
     }
 
     public async Task<bool> CreateAsync(TEntity entity)
     {
-        var foundEntity = await Context.Set<TEntity>().FindAsync(entity.Id);
+        var foundEntity = await context.Set<TEntity>().FindAsync(entity.Id);
 
         if (foundEntity != null)
             return false;
 
-        await Context.Set<TEntity>().AddAsync(entity);
-        await Context.SaveChangesAsync();
+        await context.Set<TEntity>().AddAsync(entity);
+        await context.SaveChangesAsync();
         return true;
     }
 
     public async Task<bool> DeleteAsync(int id)
     {
-        var foundEntity = await Context.Set<TEntity>().FindAsync(id);
+        var foundEntity = await context.Set<TEntity>().FindAsync(id);
 
         if (foundEntity == null)
             return false;
 
-        Context.Set<TEntity>().Remove(foundEntity);
-        await Context.SaveChangesAsync();
+        context.Set<TEntity>().Remove(foundEntity);
+        await context.SaveChangesAsync();
         return true;
     }
 
     public async Task<bool> UpdateAsync(TEntity entity)
     {
-        var foundEntity = await Context.Set<TEntity>().FindAsync(entity.Id);
+        var foundEntity = await context.Set<TEntity>().FindAsync(entity.Id);
 
         if (foundEntity == null)
             return false;
 
         foundEntity = entity;
 
-        Context.Entry(foundEntity).State = EntityState.Modified;
-        await Context.SaveChangesAsync();
+        context.Entry(foundEntity).State = EntityState.Modified;
+        await context.SaveChangesAsync();
         return true;
     }
 }

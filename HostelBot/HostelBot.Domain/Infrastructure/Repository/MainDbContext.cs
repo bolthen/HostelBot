@@ -12,7 +12,8 @@ public sealed class MainDbContext : DbContext
     public DbSet<Resident> Residents { get; set; }
     public DbSet<Room> Rooms { get; set; }
     public DbSet<Utility> Utilities { get; set; }
-    
+    public DbSet<UtilityName> UtilityNames { get; set; }
+ 
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
     {
         Database.EnsureCreated();
