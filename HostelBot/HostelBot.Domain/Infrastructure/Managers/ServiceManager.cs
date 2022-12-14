@@ -2,7 +2,7 @@
 
 namespace HostelBot.Domain.Domain;
 
-public class ServiceManager : Manager<Service>
+public class ServiceManager : Manager<Utility>
 {
     private readonly List<string> serviceNames = new();
 
@@ -17,7 +17,7 @@ public class ServiceManager : Manager<Service>
         //return new List<string>(serviceNames);
     }
 
-    protected override void Handle(Service value)
+    protected override void Handle(Utility value)
     {
         return;
     }

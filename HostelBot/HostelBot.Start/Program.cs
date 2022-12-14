@@ -29,7 +29,7 @@ internal class Program
         container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         container.Bind<Command>().To<ChooseServiceCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
-        container.Bind<Manager<Service>>().To<ServiceManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
+        container.Bind<Manager<Utility>>().To<ServiceManager>().WhenInjectedInto<ChooseServiceCommand>().InSingletonScope();
         container.Bind<Manager<Appeal>>().To<AppealManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
         
         return container;

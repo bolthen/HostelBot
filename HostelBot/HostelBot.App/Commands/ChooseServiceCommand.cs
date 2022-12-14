@@ -6,9 +6,9 @@ namespace HostelBot.App;
 
 public class ChooseServiceCommand : Command
 {
-    private readonly IEnumerable<Manager<Service>> managers;
+    private readonly IEnumerable<Manager<Utility>> managers;
 
-    public ChooseServiceCommand(IEnumerable<Manager<Service>> managers): base("Услуги")
+    public ChooseServiceCommand(IEnumerable<Manager<Utility>> managers): base("Услуги")
     {
         this.managers = managers;
     }

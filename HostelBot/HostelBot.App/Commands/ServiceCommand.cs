@@ -4,9 +4,9 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
-public class ServiceCommand : FillCommand<Service>
+public class ServiceCommand : FillCommand<Utility>
 {
-    public ServiceCommand(string name, IEnumerable<Manager<Service>> managers) : base(name, managers, new Service(name))
+    public ServiceCommand(string name, IEnumerable<Manager<Utility>> managers) : base(name, managers, new Utility(name))
     {
     }
 }

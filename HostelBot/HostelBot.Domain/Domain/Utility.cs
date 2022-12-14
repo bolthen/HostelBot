@@ -4,13 +4,13 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain;
 
-public class Service : Entity<Service, int>, IService, Infrastructure.IObservable<Service>
+public class Utility : Entity<Utility, int>, IService, Infrastructure.IObservable<Utility>
 {
-    public Service()
+    public Utility()
     {
     }
     
-    public Service(string name) => Name = name;
+    public Utility(string name) => Name = name;
 
     public string Name { get; private set; }
     
@@ -19,7 +19,7 @@ public class Service : Entity<Service, int>, IService, Infrastructure.IObservabl
     public string Content { get; set; }
     
     public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
-    private readonly List<Infrastructure.IObserver<Service>> observers = new();
+    private readonly List<Infrastructure.IObserver<Utility>> observers = new();
     
     private bool filled;
     public bool Filled
@@ -33,11 +33,11 @@ public class Service : Entity<Service, int>, IService, Infrastructure.IObservabl
         }
     }
     
-    public IDisposable Subscribe(Infrastructure.IObserver<Service> observer)
+    public IDisposable Subscribe(Infrastructure.IObserver<Utility> observer)
     {
         if (!observers.Contains(observer))
             observers.Add(observer);
-        return new Unsubscriber<Service>(observers, observer);
+        return new Unsubscriber<Utility>(observers, observer);
     }
     
     private void OnCompleted()
