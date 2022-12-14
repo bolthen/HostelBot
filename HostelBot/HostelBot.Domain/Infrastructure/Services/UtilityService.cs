@@ -6,4 +6,6 @@ namespace HostelBot.Domain.Infrastructure.Services;
 public class UtilityService : EntityService<Utility>
 {
     public UtilityService(EntityRepository<Utility> repository) : base(repository) { }
+
+    
 }

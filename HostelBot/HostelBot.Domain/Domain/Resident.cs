@@ -38,6 +38,8 @@ namespace HostelBot.Domain.Domain
         public Hostel? Hostel { get; set; }
         
         public List<Utility> Utilities { get; set; }
+        
+        public List<Appeal> Appeals { get; set; }
 
         
         private readonly List<Infrastructure.IObserver<Resident>> observers = new();
@@ -48,19 +50,6 @@ namespace HostelBot.Domain.Domain
             return new Unsubscriber<Resident>(observers, observer);
         }
 
-        private bool filled;
-        [NotMapped]
-        public bool Filled
-        {
-            get => filled;
-            set
-            {
-                filled = value;
-                if (value)
-                    OnFilled();
-            }
-        }
-        
         public void OnFilled()
         {
             foreach (var observer in observers.ToArray())
@@ -72,6 +61,11 @@ namespace HostelBot.Domain.Domain
         public void AddUtility(Utility utility)
         {
             Utilities.Add(utility);
+        }
+        
+        public void AddAppeal(Appeal appeal)
+        {
+            Appeals.Add(appeal);
         }
         
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;

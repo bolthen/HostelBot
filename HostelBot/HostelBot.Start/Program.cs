@@ -2,6 +2,7 @@
 using HostelBot.Domain;
 using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure;
+using HostelBot.Domain.Infrastructure.Managers;
 using HostelBot.Domain.Infrastructure.Repository;
 using HostelBot.Domain.Infrastructure.Services;
 using HostelBot.Ui;
@@ -33,7 +34,8 @@ internal class Program
         container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
         container.Bind<Manager<Utility>>().To<UtilityManager>().WhenInjectedInto<ChooseServiceCommand>().InSingletonScope();
         container.Bind<Manager<Appeal>>().To<AppealManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
-
+        container.Bind<Manager<Resident>>().To<ResidentManager>().WhenInjectedInto<ResidentRegistrationCommand>().InSingletonScope();
+        
         container.Bind<MainDbContext>().ToSelf().InSingletonScope();
         
         container.Bind<IEntityRepository<Hostel>>().To<EntityRepository<Hostel>>().InSingletonScope();

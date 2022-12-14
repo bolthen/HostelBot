@@ -1,4 +1,7 @@
-﻿namespace HostelBot.App;
+﻿using HostelBot.Domain.Domain;
+using HostelBot.Domain.Infrastructure;
+
+namespace HostelBot.App;
 
 public class Application : IApplication
 {
@@ -12,5 +15,10 @@ public class Application : IApplication
     public IReadOnlyCollection<Command> GetBaseCommands()
     {
         return baseCommands;
+    }
+    
+    public Command GetRegistrationCommands(string name, IEnumerable<Manager<Resident>> managers)
+    {
+        return new ResidentRegistrationCommand(name, managers);
     }
 }
