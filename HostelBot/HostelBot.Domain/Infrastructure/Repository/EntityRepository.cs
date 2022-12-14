@@ -11,6 +11,7 @@ public class EntityRepository<TEntity> : IEntityRepository<TEntity>
     {
         this.context = context;
     }
+    
     public async Task<TEntity?> GetAsync(int id)
     {
         var foundEntity = await context.Set<TEntity>().FindAsync(id);

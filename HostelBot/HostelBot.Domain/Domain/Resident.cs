@@ -8,12 +8,9 @@ namespace HostelBot.Domain.Domain
 {
     public class Resident : Entity<Resident>, IFillable
     {
-        [Key]
-        private int telegramId;
-        public new int Id => telegramId; 
         public Resident(int telegramId, string name, string surname, Hostel hostel, Room room)
         {
-            this.telegramId = telegramId;
+            Id = telegramId;
             Name = name;
             Surname = surname;
             Hostel = hostel;
@@ -40,6 +37,8 @@ namespace HostelBot.Domain.Domain
         public Hostel? Hostel { get; set; }
 
         public override string ToString() => $"{Name} {Surname}";
+        
+        [NotMapped]
         public bool Filled { get; set; }
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
 

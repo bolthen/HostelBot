@@ -23,6 +23,11 @@ public class ResidentService
         return createSuccessful;
     }
 
+    public IQueryable<Resident> GetAll()
+    {
+        return coreRepository.Context.Set<Resident>();
+    }
+
     public async Task<Resident> GetAsync(int id)
     {
         var resident = await coreRepository.Residents.GetAsync(id);

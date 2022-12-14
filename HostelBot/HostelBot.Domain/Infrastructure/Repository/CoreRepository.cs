@@ -4,7 +4,7 @@ namespace HostelBot.Domain.Infrastructure.Repository;
 
 public class CoreRepository
 {
-    private MainDbContext context;
+    public readonly MainDbContext Context;
     
     public EntityRepository<Resident> Residents { get; set; }
     
@@ -18,7 +18,7 @@ public class CoreRepository
         EntityRepository<Hostel> hostels, EntityRepository<Room> rooms,
         EntityRepository<Utility> utilities)
     {
-        context = mainDbContext;
+        Context = mainDbContext;
         Residents = residents;
         Hostels = hostels;
         Rooms = rooms;
