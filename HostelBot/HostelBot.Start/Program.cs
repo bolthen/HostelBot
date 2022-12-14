@@ -47,6 +47,7 @@ internal class Program
         container.Bind<UtilityRepository>().ToSelf().InSingletonScope();
         container.Bind<ResidentRepository>().ToSelf().InSingletonScope();
         container.Bind<HostelRepository>().ToSelf().InSingletonScope();
+        
         return container;
     }
 }

@@ -1,0 +1,32 @@
+@page
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model WebUi.Pages.Utilities.DeletePage
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <div class="row">
+        <h4>Услуга: <span class="text-primary">@Model.Utility.Name</span></h4>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <h5>Вы действительно хотите удалить услугу?</h5>
+            
+            <form method="post">
+                <button type="submit" class="btn btn-danger">Да</button>
+                <a class="btn btn-success" asp-page="/Utilities/UtilitiesPage">Нет</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

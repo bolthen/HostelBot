@@ -4,6 +4,10 @@ namespace HostelBot.Domain.Domain;
 
 public class UtilityName : Entity<UtilityName>
 {
+    public UtilityName()
+    {
+    }
+    
     public UtilityName(string name, string hostelName)
     {
         Name = name;
