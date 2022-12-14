@@ -3,7 +3,7 @@ using HostelBot.Domain.Infrastructure.Repository;
 
 namespace HostelBot.Domain.Infrastructure.Services;
 
-public class UtilityService : EntityService<Utility>
+public class UtilityRepository : EntityRepository<Utility>
 {
-    public UtilityService(EntityRepository<Utility> repository) : base(repository) { }
+    public UtilityRepository(MainDbContext context) : base(context) { }
 }

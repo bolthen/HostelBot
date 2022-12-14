@@ -3,7 +3,7 @@ using HostelBot.Domain.Infrastructure.Repository;
 
 namespace HostelBot.Domain.Infrastructure.Services;
 
-public class HostelService : EntityService<Hostel>
+public class ResidentRepository : EntityRepository<Resident>
 {
-    public HostelService(EntityRepository<Hostel> repository) : base(repository) { }
+    public ResidentRepository(MainDbContext context) : base(context) { }
 }

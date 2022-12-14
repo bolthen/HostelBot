@@ -2,10 +2,10 @@
 
 namespace HostelBot.Domain.Infrastructure.Repository;
 
-public class EntityRepository<TEntity> : IEntityRepository<TEntity>
+public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
     where TEntity : Entity<TEntity>
 {
-    private readonly MainDbContext context;
+    protected readonly MainDbContext context;
     
     public EntityRepository(MainDbContext context)
     {
@@ -15,10 +15,10 @@ public class EntityRepository<TEntity> : IEntityRepository<TEntity>
     {
         var foundEntity = await context.Set<TEntity>().FindAsync(id);
 
-        if (foundEntity != null)
-            context.Entry(foundEntity).State = EntityState.Detached;
-            
-        return foundEntity;
+        if (foundEntity == null) return foundEntity;
+        
+        context.Entry(foundEntity).State = EntityState.Detached;
+        throw new Exception($"The {typeof(TEntity)} with the given id was not found in the database");
     }
 
     public async Task<bool> CreateAsync(TEntity entity)
