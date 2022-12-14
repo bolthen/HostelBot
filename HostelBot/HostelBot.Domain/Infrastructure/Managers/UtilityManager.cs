@@ -1,9 +1,16 @@
 ﻿using HostelBot.Domain.Infrastructure;
+using HostelBot.Domain.Infrastructure.Services;
 
 namespace HostelBot.Domain.Domain;
 
-public class ServiceManager : Manager<Utility>
+public class UtilityManager : Manager<Utility>
 {
+    private UtilityService utilityService;
+    public UtilityManager(UtilityService utilityService)
+    {
+        this.utilityService = utilityService;
+    }
+
     private readonly List<string> serviceNames = new();
 
     public void AddService(string name)
@@ -19,6 +26,7 @@ public class ServiceManager : Manager<Utility>
 
     protected override void Handle(Utility value)
     {
+        utilityService.CreateAsync(value);
         return;
     }
 }

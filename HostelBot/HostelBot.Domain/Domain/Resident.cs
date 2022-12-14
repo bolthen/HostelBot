@@ -3,17 +3,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using HostelBot.Domain.Infrastructure;
+using HostelBot.Domain.Infrastructure.Services;
 
 namespace HostelBot.Domain.Domain
 {
-    public class Resident : Entity<Resident>, IFillable
+    public class Resident : Entity<Resident>, IFillable, Infrastructure.IObservable<Resident>
     {
-        [Key]
-        private int telegramId;
-        public new int Id => telegramId; 
         public Resident(int telegramId, string name, string surname, Hostel hostel, Room room)
         {
-            this.telegramId = telegramId;
+            Id = telegramId;
             Name = name;
             Surname = surname;
             Hostel = hostel;
@@ -21,6 +19,8 @@ namespace HostelBot.Domain.Domain
             Hostel = hostel;
         }
         
+        public List<Utility> Utilities { get; set; }
+
         public Resident(){}
         
         [Question("Имя", ViewType.TextEnter)]
@@ -39,8 +39,41 @@ namespace HostelBot.Domain.Domain
         
         public Hostel? Hostel { get; set; }
 
+        
+        private readonly List<Infrastructure.IObserver<Resident>> observers = new();
+        public IDisposable Subscribe(Infrastructure.IObserver<Resident> observer)
+        {
+            if (!observers.Contains(observer))
+                observers.Add(observer);
+            return new Unsubscriber<Resident>(observers, observer);
+        }
+
+        private bool filled;
+        [NotMapped]
+        public bool Filled
+        {
+            get => filled;
+            set
+            {
+                filled = value;
+                if (value)
+                    OnFilled();
+            }
+        }
+        
+        public void OnFilled()
+        {
+            foreach (var observer in observers.ToArray())
+                observer.OnCompleted(this);
+        }
+        
         public override string ToString() => $"{Name} {Surname}";
-        public bool Filled { get; set; }
+
+        public void AddUtility(Utility utility)
+        {
+            Utilities.Add(utility);
+        }
+        
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
 
     }

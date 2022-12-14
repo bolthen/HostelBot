@@ -37,7 +37,7 @@ namespace HostelBot.Domain.Domain
             {
                 filled = value;
                 if (value)
-                    OnCompleted();
+                    OnFilled();
             }
         }
         
@@ -50,7 +50,7 @@ namespace HostelBot.Domain.Domain
             return new Unsubscriber<Appeal>(observers, observer);
         }
         
-        private void OnCompleted()
+        public void OnFilled()
         {
             foreach (var observer in observers.ToArray())
                 observer.OnCompleted(this);
