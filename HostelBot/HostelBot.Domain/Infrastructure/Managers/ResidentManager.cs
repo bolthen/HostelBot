@@ -5,9 +5,9 @@ namespace HostelBot.Domain.Infrastructure.Managers;
 
 public class ResidentManager : Manager<Resident>
 {
-    private readonly ResidentService residentService;
+    private readonly ResidentRepository residentService;
 
-    public ResidentManager(ResidentService residentService)
+    public ResidentManager(ResidentRepository residentService)
     {
         this.residentService = residentService;
     }

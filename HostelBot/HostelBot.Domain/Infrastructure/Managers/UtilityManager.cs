@@ -8,7 +8,7 @@ public class UtilityManager : Manager<Utility>
     private readonly ResidentRepository residentRepository;
 
     
-    public UtilityManager(ResidentService residentService)
+    public UtilityManager(ResidentRepository residentRepository)
     {
         this.residentRepository = residentRepository;
     }

@@ -5,9 +5,9 @@ namespace HostelBot.Domain.Infrastructure;
 
 public class AppealManager : Manager<Appeal>
 {
-    private readonly ResidentService residentService;
+    private readonly ResidentRepository residentService;
 
-    public AppealManager(ResidentService residentService)
+    public AppealManager(ResidentRepository residentService)
     {
         this.residentService = residentService;
     }
