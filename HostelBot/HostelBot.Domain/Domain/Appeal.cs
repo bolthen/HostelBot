@@ -29,9 +29,9 @@ namespace HostelBot.Domain.Domain
         [Question("Опишите Вашу проблему", ViewType.TextEnter)]
         [JsonPropertyName("Content")]
         public string Content { get; set; }
-        
-        [ResidentId] public int ResidentId;
-        
+
+        public int ResidentId { get; set; }
+
         /*private bool filled;
         public bool Filled
         {

@@ -40,7 +40,8 @@ namespace HostelBot.Domain.Domain
         public List<Utility> Utilities { get; set; }
         
         public List<Appeal> Appeals { get; set; }
-
+        
+        public int ResidentId { get; set; }
         
         private readonly List<Infrastructure.IObserver<Resident>> observers = new();
         public IDisposable Subscribe(Infrastructure.IObserver<Resident> observer)

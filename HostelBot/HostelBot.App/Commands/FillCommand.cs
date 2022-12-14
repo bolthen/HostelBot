@@ -19,6 +19,7 @@ public abstract class FillCommand<TFillable> : Command
     {
         foreach (var manager in managers)
             manager.Subscribe(Fillable);
+        Fillable.ResidentId = residentId;
         return Fillable;
     }
 }

@@ -17,7 +17,7 @@ public class Utility : Entity<Utility>, IService, Infrastructure.IObservable<Uti
     [JsonPropertyName("Content")]
     public string Content { get; set; }
 
-    [ResidentId] public int ResidentId;
+    public int ResidentId { get; set; }
     
     public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
     private readonly List<Infrastructure.IObserver<Utility>> observers = new();

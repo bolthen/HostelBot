@@ -8,5 +8,6 @@ namespace HostelBot.Domain.Infrastructure
         //bool Filled { get; set; }
         void OnFilled();
         IReadOnlyCollection<PropertyInfo> GetFields();
+        int ResidentId { get; set; }
     }
 }
