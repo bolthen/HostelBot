@@ -15,7 +15,7 @@ public abstract class FillCommand<TFillable> : Command
         Fillable = fillable;
     }
     
-    public override IFillable? GetFillable()
+    public override IFillable? GetFillable(int residentId)
     {
         foreach (var manager in managers)
             manager.Subscribe(Fillable);

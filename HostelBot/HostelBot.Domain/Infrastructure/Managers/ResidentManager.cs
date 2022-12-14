@@ -5,15 +5,15 @@ namespace HostelBot.Domain.Infrastructure.Managers;
 
 public class ResidentManager : Manager<Resident>
 {
-    private readonly ResidentRepository residentService;
+    private readonly ResidentRepository residentRepository;
 
-    public ResidentManager(ResidentRepository residentService)
+    public ResidentManager(ResidentRepository residentRepository)
     {
-        this.residentService = residentService;
+        this.residentRepository = residentRepository;
     }
     
     protected override void Handle(Resident value)
     {
-        residentService.CreateAsync(value);
+        residentRepository.CreateAsync(value);
     }
 }

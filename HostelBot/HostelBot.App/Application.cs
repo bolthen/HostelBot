@@ -17,8 +17,9 @@ public class Application : IApplication
         return baseCommands;
     }
     
-    public Command GetRegistrationCommands(string name, IEnumerable<Manager<Resident>> managers)
+    public Command GetRegistrationCommands(string name, IEnumerable<Manager<Resident>> managers,
+        List<Command> commands)
     {
-        return new ResidentRegistrationCommand(name, managers);
+        return new ResidentRegistrationCommand(name, managers, commands);
     }
 }

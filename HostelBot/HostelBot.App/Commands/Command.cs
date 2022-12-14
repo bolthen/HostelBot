@@ -11,17 +11,17 @@ namespace HostelBot.App
             Name = name;
         }
 
-        public virtual List<Command> GetSubcommands()
+        public virtual List<Command> GetSubcommands(int residentId)
         {
             return new List<Command>();
         }
 
-        public virtual object[] GetStaticInfo()
+        public virtual object[] GetStaticInfo(int residentId)
         {
             return Array.Empty<object>();
         }
 
-        public virtual IFillable? GetFillable()
+        public virtual IFillable? GetFillable(int residentId)
         {
             return null;
         }

@@ -20,7 +20,7 @@ namespace HostelBot.Domain.Domain
         }
 
         public Resident(){}
-        
+
         [Question("Имя", ViewType.TextEnter)]
         [JsonPropertyName("Name")]
         [Required, RegularExpression(@"^([А-ЩЭ-Я][а-я]+-?)+$",
