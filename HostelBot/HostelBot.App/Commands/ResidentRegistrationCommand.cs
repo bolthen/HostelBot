@@ -14,7 +14,7 @@ public class ResidentRegistrationCommand : FillCommand<Resident>
 
     private List<Command> subcommands;
 
-    public override List<Command> GetSubcommands(int residentId)
+    public override List<Command> GetSubcommands(long residentId)
     {
         return subcommands;
     }

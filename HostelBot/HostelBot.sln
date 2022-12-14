@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelBot.Ui", "HostelBot.Ui\HostelBot.Ui.csproj", "{9594D65E-74AA-4196-85CC-42D88B99FCBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelBot.Start", "HostelBot.Start\HostelBot.Start.csproj", "{8C855969-C570-498B-9515-D4FAF04638FE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelBot.App", "HostelBot.App\HostelBot.App.csproj", "{956DB923-6B2A-4081-BC41-E61C6BC6C9FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HostelBot.Domain", "HostelBot.Domain\HostelBot.Domain.csproj", "{AB1831A8-B146-4142-9E88-EF4D34313283}"
@@ -25,10 +23,6 @@ Global
 		{9594D65E-74AA-4196-85CC-42D88B99FCBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9594D65E-74AA-4196-85CC-42D88B99FCBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9594D65E-74AA-4196-85CC-42D88B99FCBD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8C855969-C570-498B-9515-D4FAF04638FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8C855969-C570-498B-9515-D4FAF04638FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8C855969-C570-498B-9515-D4FAF04638FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8C855969-C570-498B-9515-D4FAF04638FE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{956DB923-6B2A-4081-BC41-E61C6BC6C9FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{956DB923-6B2A-4081-BC41-E61C6BC6C9FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{956DB923-6B2A-4081-BC41-E61C6BC6C9FA}.Release|Any CPU.ActiveCfg = Release|Any CPU

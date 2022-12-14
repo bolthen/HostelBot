@@ -17,9 +17,9 @@ public class ChooseServiceCommand : Command
         this.hostelNameRepository = hostelNameRepository;
     }
     
-    public override List<Command> GetSubcommands(int residentId)
+    public override List<Command> GetSubcommands(long residentId)
     {
-        var names = hostelNameRepository.GetUtilityNames(residentId).Result;
+        var names = hostelNameRepository.GetUtilityNames("№6").Result; // TODO
 
         return names.Select(name => new ServiceCommand(name.Name, managers)).Cast<Command>().ToList();
     }

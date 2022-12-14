@@ -5,7 +5,7 @@ namespace HostelBot.Domain.Domain;
 
 public class Status : ValueType<Status>, IFillable
 {
-    public int ResidentId { get; set; }
+    public long ResidentId { get; set; }
 
     public void OnFilled()
     {

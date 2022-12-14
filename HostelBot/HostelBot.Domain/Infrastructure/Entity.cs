@@ -7,11 +7,11 @@ namespace HostelBot.Domain.Infrastructure
         where TType : Entity<TType>
     {
         [Key]
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         protected bool Equals(Entity<TType> other)
         {
-            return EqualityComparer<int>.Default.Equals(Id, other.Id);
+            return EqualityComparer<long>.Default.Equals(Id, other.Id);
         }
 
         public override bool Equals(object obj)
@@ -24,7 +24,7 @@ namespace HostelBot.Domain.Infrastructure
 
         public override int GetHashCode()
         {
-            return EqualityComparer<int>.Default.GetHashCode(Id);
+            return EqualityComparer<long>.Default.GetHashCode(Id);
         }
 
         public override string ToString()

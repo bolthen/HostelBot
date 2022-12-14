@@ -30,7 +30,7 @@ namespace HostelBot.Domain.Domain
         [JsonPropertyName("Content")]
         public string Content { get; set; }
 
-        public int ResidentId { get; set; }
+        public long ResidentId { get; set; }
 
         /*private bool filled;
         public bool Filled

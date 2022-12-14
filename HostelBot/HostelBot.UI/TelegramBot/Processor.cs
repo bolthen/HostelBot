@@ -32,14 +32,14 @@ internal static class Processor
     public static async Task HandleCommand(ITelegramBotClient botClient, CancellationToken cancellationToken, 
         Command command, long chatId)
     {
-        var fillable = command.GetFillable();
+        var fillable = command.GetFillable(chatId);
         if (fillable != null)
         {
             await HandleFillable(botClient, cancellationToken, fillable, chatId);
             return;
         }
 
-        var subcommands = command.GetSubcommands();
+        var subcommands = command.GetSubcommands(chatId);
         if (subcommands.Count == 0)
         {
             await botClient.SendTextMessageAsync(chatId, $"No info for {command.Name} Command",

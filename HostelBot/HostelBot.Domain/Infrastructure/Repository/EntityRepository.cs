@@ -12,7 +12,7 @@ public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
         this.context = context;
     }
     
-    public async Task<TEntity?> GetAsync(int id)
+    public async Task<TEntity?> GetAsync(long id)
     {
         var foundEntity = await context.Set<TEntity>().FindAsync(id);
 
@@ -34,7 +34,7 @@ public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
         return true;
     }
 
-    public async Task<bool> DeleteAsync(int id)
+    public async Task<bool> DeleteAsync(long id)
     {
         var foundEntity = await context.Set<TEntity>().FindAsync(id);
 

@@ -22,8 +22,8 @@ builder.Services.AddRazorPages();
 // builder.Services.AddSingleton<ResidentService>();
 
 var container = ConfigureContainer();
-//foreach (var ui in container.GetAll<IUi>())
-//    Task.Run(() => ui.Run());
+foreach (var ui in container.GetAll<IUi>())
+    Task.Run(() => ui.Run());
 
 builder.Services.AddSingleton(_ => container.Get<ResidentRepository>());
 builder.Services.AddSingleton(_ => container.Get<HostelRepository>());

@@ -3,11 +3,11 @@
 public interface IEntityRepository<TEntity>
     where TEntity : Entity<TEntity>
 {
-    Task<TEntity?> GetAsync(int id);
+    Task<TEntity?> GetAsync(long id);
         
     Task<bool> CreateAsync(TEntity entity);
         
-    Task<bool> DeleteAsync(int id);
+    Task<bool> DeleteAsync(long id);
 
     Task<bool> UpdateAsync(TEntity entity);
 

@@ -41,7 +41,7 @@ namespace HostelBot.Domain.Domain
         
         public List<Appeal> Appeals { get; set; }
         
-        public int ResidentId { get; set; }
+        public long ResidentId { get; set; }
         
         private readonly List<Infrastructure.IObserver<Resident>> observers = new();
         public IDisposable Subscribe(Infrastructure.IObserver<Resident> observer)

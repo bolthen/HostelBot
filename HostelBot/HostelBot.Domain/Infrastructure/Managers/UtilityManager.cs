@@ -6,7 +6,6 @@ namespace HostelBot.Domain.Domain;
 public class UtilityManager : Manager<Utility>
 {
     private readonly ResidentRepository residentRepository;
-
     
     public UtilityManager(ResidentRepository residentRepository)
     {

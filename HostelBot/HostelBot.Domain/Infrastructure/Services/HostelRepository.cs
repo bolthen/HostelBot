@@ -7,7 +7,7 @@ public class HostelRepository : EntityRepository<Hostel>
 {
     public HostelRepository(MainDbContext context) : base(context) { }
 
-    public Task<List<UtilityName>> GetUtilityNames(int id)
+    public Task<List<UtilityName>> GetUtilityNames(long id)
     {
         var hostel = GetAsync(id);
         return GetUtilityNames(hostel.Result?.Name);
