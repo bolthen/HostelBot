@@ -41,7 +41,6 @@ internal class Program
         container.Bind<IEntityRepository<Room>>().To<EntityRepository<Room>>().InSingletonScope();
         container.Bind<IEntityRepository<Utility>>().To<EntityRepository<Utility>>().InSingletonScope();
 
-        container.Bind<CoreRepository>().To<CoreRepository>().InSingletonScope();
 
         container.Bind<UtilityService>().ToSelf().InSingletonScope();
         container.Bind<ResidentService>().ToSelf().InSingletonScope();
