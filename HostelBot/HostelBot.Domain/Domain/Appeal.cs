@@ -5,8 +5,30 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain.Domain
 {
-    public class Appeal : Entity<Appeal, string>, IFillable, Infrastructure.IObservable<Appeal>
+    public class Appeal : Entity<Appeal>, IFillable, Infrastructure.IObservable<Appeal>
     {
+        public Resident Resident { get; set;}
+        
+        public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
+        
+        public Appeal() { }
+    
+        public Appeal(string name, Resident resident)
+        {
+            Resident = resident;
+            Name = name;
+        }
+        
+        [Question("Как вас зовут", ViewType.TextEnter)]
+        [JsonPropertyName("Name")]
+        [RegularExpression(@"^([А-ЩЭ-Я][а-я]+-?)+$",
+            ErrorMessage = "Имя должно начинаться с заглавной буквы, не иметь пробелов")]
+        public string Name { get; set; }
+
+        [Question("Опишите Вашу проблему", ViewType.TextEnter)]
+        [JsonPropertyName("Content")]
+        public string Content { get; set; }
+        
         private bool filled;
         public bool Filled
         {
@@ -18,18 +40,6 @@ namespace HostelBot.Domain.Domain
                     OnCompleted();
             }
         }
-        
-        public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
-        
-        [Question("Как вас зовут", ViewType.TextEnter)]
-        [JsonPropertyName("Name")]
-        [RegularExpression(@"^([А-ЩЭ-Я][а-я]+-?)+$",
-            ErrorMessage = "Имя должно начинаться с заглавной буквы, не иметь пробелов")]
-        public string Name { get; set; }
-
-        [Question("Опишите Вашу проблему", ViewType.TextEnter)]
-        [JsonPropertyName("Content")]
-        public string Content { get; set; }
         
         private readonly List<Infrastructure.IObserver<Appeal>> observers = new();
 

@@ -1,23 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain.Domain;
 
-public class Room : Entity<Room, int>
+public class Room : Entity<Room>
 {
-    public new int Id => Number;
-    
-    public Room(int number, string hostelName)
+    public Room(int number, Hostel? hostel)
     {
         Number = number;
-        HostelName = hostelName;
+        Hostel = hostel;
     }
     
-    [Key]
+    public Room(){}
+
     [Question("Комната", ViewType.TextEnter)]
     [JsonPropertyName("Room")]
-    public int Number { get; }
+    public int Number { get; set;}
     
-    public string HostelName { get; }
+    public Hostel? Hostel { get; set;}
 }

@@ -4,7 +4,7 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain;
 
-public class Utility : Entity<Utility, int>, IService, Infrastructure.IObservable<Utility>
+public class Utility : Entity<Utility>, IService, Infrastructure.IObservable<Utility>
 {
     public Utility()
     {
@@ -12,7 +12,7 @@ public class Utility : Entity<Utility, int>, IService, Infrastructure.IObservabl
     
     public Utility(string name) => Name = name;
 
-    public string Name { get; private set; }
+    public string Name { get; set; }
     
     [Question("Опишите Вашу проблему", ViewType.TextEnter)]
     [JsonPropertyName("Content")]

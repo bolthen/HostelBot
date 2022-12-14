@@ -6,7 +6,7 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain.Domain
 {
-    public class Resident : Entity<Resident, int>, IFillable
+    public class Resident : Entity<Resident>, IFillable
     {
         [Key]
         private int telegramId;
@@ -18,25 +18,26 @@ namespace HostelBot.Domain.Domain
             Surname = surname;
             Hostel = hostel;
             Room = room;
+            Hostel = hostel;
         }
+        
+        public Resident(){}
         
         [Question("Имя", ViewType.TextEnter)]
         [JsonPropertyName("Name")]
         [Required, RegularExpression(@"^([А-ЩЭ-Я][а-я]+-?)+$",
              ErrorMessage = "Имя должно начинаться с заглавной буквы, не иметь пробелов")]
-        public string Name { get; }
+        public string Name { get; set; }
         
         [Question("Фамилия", ViewType.TextEnter)]
         [JsonPropertyName("Surname")]
         [Required, RegularExpression(@"^([А-ЩЭ-Я][а-я]+-?)+$",
              ErrorMessage = "Фамилия должна начинаться с заглавной буквы, не иметь пробелов")]
-        public string Surname { get; }
+        public string Surname { get; set; }
         
-        [ForeignKey("Hostel")]
-        public Hostel Hostel { get; }
+        public Room? Room { get; set; }
         
-        [ForeignKey("Room")]
-        public Room Room { get; }
+        public Hostel? Hostel { get; set; }
 
         public override string ToString() => $"{Name} {Surname}";
         public bool Filled { get; set; }
