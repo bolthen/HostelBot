@@ -1,4 +1,5 @@
 ﻿using HostelBot.App;
+using HostelBot.Domain.Infrastructure.Repository;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -61,6 +62,5 @@ public class TelegramUi : IUi
     private Task Error(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
         return Task.CompletedTask;
-        //throw new NotImplementedException();
     }
 }

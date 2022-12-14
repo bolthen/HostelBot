@@ -19,7 +19,11 @@ public sealed class MainDbContext : DbContext
         Database.EnsureCreated();
     }
 
-    public MainDbContext() => Database.EnsureCreated();
+    public MainDbContext()
+    {
+        //Database.EnsureDeleted(); // TODO DELETE
+        Database.EnsureCreated();
+    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

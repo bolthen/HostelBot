@@ -1,0 +1,33 @@
+@page
+@model WebUi.Pages.Residents.ResidentsPage
+
+@{
+    // Layout = null; // Это стирает весь Layout.cshtml, отображается только страница снизу
+    ViewData["Title"] = "Жители в адрсесной строке"; // TODO
+}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <title>Жители</title>
+</head>
+<body>
+<div>
+    <h2>Жители</h2>
+    <h3>Количество: @Model.Residents.Count</h3>
+
+    <div class="container">
+        @foreach (var item in Model.Residents)
+        {
+            <div class="row">
+                <div class="col-1">@item.Id</div>
+                <div class="col-2">@item.Name</div>
+                <div class="col-2">@item.Surname</div>
+            </div>
+        }
+    </div>
+
+</div>
+</body>
+</html>
