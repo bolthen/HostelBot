@@ -5,9 +5,9 @@ namespace HostelBot.App;
 
 public class ResidentRegistrationCommand : FillCommand<Resident>
 {
-    public ResidentRegistrationCommand(string name, IEnumerable<Manager<Resident>> managers,
+    public ResidentRegistrationCommand(IEnumerable<Manager<Resident>> managers,
         List<Command> subcommands)
-        : base(name, managers, new Resident())
+        : base("Регистрация", managers, new Resident())
     {
         this.subcommands = subcommands;
     }

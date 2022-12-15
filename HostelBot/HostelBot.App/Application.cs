@@ -6,10 +6,12 @@ namespace HostelBot.App;
 public class Application : IApplication
 {
     private readonly Command[] baseCommands;
+    private readonly ResidentRegistrationCommand residentRegistrationCommand;
     
-    public Application(Command[] baseCommands)
+    public Application(Command[] baseCommands, string name, IEnumerable<Manager<Resident>> managers)
     {
         this.baseCommands = baseCommands;
+        residentRegistrationCommand = new ResidentRegistrationCommand(managers, baseCommands.ToList());
     }
     
     public IReadOnlyCollection<Command> GetBaseCommands()
@@ -17,9 +19,8 @@ public class Application : IApplication
         return baseCommands;
     }
     
-    public Command GetRegistrationCommands(string name, IEnumerable<Manager<Resident>> managers,
-        List<Command> commands)
+    public Command GetRegistrationCommands()
     {
-        return new ResidentRegistrationCommand(name, managers, commands);
+        return residentRegistrationCommand;
     }
 }
