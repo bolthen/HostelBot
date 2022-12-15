@@ -71,6 +71,11 @@ static StandardKernel ConfigureContainer()
     container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
     container.Bind<Command>().To<ChooseServiceCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
     container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
+    container.Bind<Command>().To<InformationCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
+    container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
+    container.Bind<Command>().To<ChooseServiceCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
+    container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
+    container.Bind<Command>().To<CheckRegistrationCommand>().WhenInjectedInto<ResidentRegistrationCommand>().InSingletonScope();
     container.Bind<Manager<Utility>>().To<UtilityManager>().WhenInjectedInto<ChooseServiceCommand>().InSingletonScope();
     container.Bind<Manager<Appeal>>().To<AppealManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
     container.Bind<Manager<Resident>>().To<ResidentManager>().WhenInjectedInto<ResidentRegistrationCommand>().InSingletonScope();
