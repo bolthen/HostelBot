@@ -15,8 +15,12 @@ internal static class Processor
         //     new KeyboardButton[] { KeyboardButtons.Start.Info, KeyboardButtons.Start.Service },
         //     new KeyboardButton[] { KeyboardButtons.Start.Question, KeyboardButtons.Start.Report }
         // })
-        var buttons = Commands.Names.Select(x => new [] { new KeyboardButton(x) });
+
+        await HandleCommand(botClient, cancellationToken, Commands.StartCommand, update.Message!.Chat.Id);
+        await botClient.SendTextMessageAsync(update.Message!.Chat.Id, "Верифицируем вас, ждите...",
+            cancellationToken: cancellationToken);
         
+        var buttons = Commands.Names.Select(x => new [] { new KeyboardButton(x) });
         var replyKeyboardMarkup = new ReplyKeyboardMarkup(buttons)
         {
             ResizeKeyboard = true,
@@ -24,7 +28,7 @@ internal static class Processor
         };
         
         await botClient.SendTextMessageAsync(update.Message!.Chat.Id, 
-            "Welcome!", 
+            "Верификация прошла успешно", 
             replyMarkup: replyKeyboardMarkup,
             cancellationToken: cancellationToken);
     }

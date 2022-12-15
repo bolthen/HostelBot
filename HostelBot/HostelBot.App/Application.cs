@@ -19,7 +19,7 @@ public class Application : IApplication
         return baseCommands;
     }
     
-    public Command GetRegistrationCommands()
+    public Command GetRegistrationCommand()
     {
         return residentRegistrationCommand;
     }

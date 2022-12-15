@@ -1,5 +1,4 @@
 ﻿using HostelBot.App;
-using HostelBot.Domain.Infrastructure.Repository;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -11,6 +10,7 @@ public class TelegramUi : IUi
     public TelegramUi(IApplication application)
     {
         Commands.AddCommands(application.GetBaseCommands());
+        Commands.SetStartCommand(application.GetRegistrationCommand());
     }
 
     public void Run()
