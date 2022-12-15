@@ -42,6 +42,12 @@ public class TelegramUi : IUi
                 return;
             }
 
+            if (text == "/checkstatus")
+            {
+                await Processor.CheckVerificationStatus(botClient, update, cancellationToken);
+                return;
+            }
+
             if (FillingProgress.IsUserCurrentlyFilling(chatId))
             {
                 await Processor.HandleProgress(botClient, cancellationToken, message);
