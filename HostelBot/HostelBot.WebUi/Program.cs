@@ -13,6 +13,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddAuthentication().AddCookie("CookieAuth", options =>
+{
+    options.Cookie.Name = "CookieAuth";
+});
 // builder.Services.AddSingleton<MainDbContext>();
 // builder.Services.AddSingleton<EntityRepository<Resident>>();
 // builder.Services.AddSingleton<EntityRepository<Hostel>>();
