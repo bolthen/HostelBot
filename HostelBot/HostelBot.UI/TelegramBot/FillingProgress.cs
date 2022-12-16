@@ -34,7 +34,7 @@ public class FillingProgress
 
     public void SaveResponse(string response)
     {
-        var key = properties[Stage].GetCustomAttribute<JsonPropertyNameAttribute>()!.Name;
+        var key = properties[Stage].Name;
         Result[key] = response.Trim();
     }
 

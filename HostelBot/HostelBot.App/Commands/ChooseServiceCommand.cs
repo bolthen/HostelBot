@@ -7,10 +7,10 @@ namespace HostelBot.App;
 
 public class ChooseServiceCommand : Command
 {
-    private readonly IEnumerable<Manager<Utility>> managers;
+    private readonly IEnumerable<Manager<UtilityFiller>> managers;
     private readonly HostelRepository hostelNameRepository;
 
-    public ChooseServiceCommand(IEnumerable<Manager<Utility>> managers, HostelRepository hostelNameRepository)
+    public ChooseServiceCommand(IEnumerable<Manager<UtilityFiller>> managers, HostelRepository hostelNameRepository)
         : base("Услуги")
     {
         this.managers = managers;
@@ -21,6 +21,6 @@ public class ChooseServiceCommand : Command
     {
         var names = hostelNameRepository.GetUtilityNames("№6").Result; // TODO
 
-        return names.Select(name => new ServiceCommand(name.Name, managers)).Cast<Command>().ToList();
+        return names.Select(name => new UtilityCommand(name.Name, managers)).Cast<Command>().ToList();
     }
 }

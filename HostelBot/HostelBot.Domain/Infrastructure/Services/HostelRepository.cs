@@ -1,5 +1,6 @@
 ﻿using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure.Repository;
+using iTextSharp.text.pdf;
 
 namespace HostelBot.Domain.Infrastructure.Services;
 
@@ -17,4 +18,10 @@ public class HostelRepository : EntityRepository<Hostel>
     {
         return context.UtilityNames.Where(x => x.HostelName == hostelName).ToList();
     }
+
+    public async Task<Hostel> GetByName(string hostelName)
+    {
+        return context.Hostels.Where(x => x.Name == hostelName).FirstOrDefault();
+    }
+    
 }

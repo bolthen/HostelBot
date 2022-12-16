@@ -8,10 +8,10 @@ public class Application : IApplication
     private readonly Command[] baseCommands;
     private readonly ResidentRegistrationCommand residentRegistrationCommand;
     
-    public Application(Command[] baseCommands, IEnumerable<Manager<Resident>> managers)
+    public Application(Command[] baseCommands, ResidentRegistrationCommand residentRegistrationCommand)
     {
         this.baseCommands = baseCommands;
-        residentRegistrationCommand = new ResidentRegistrationCommand(managers, baseCommands.ToList());
+        this.residentRegistrationCommand = residentRegistrationCommand;
     }
     
     public IReadOnlyCollection<Command> GetBaseCommands()
