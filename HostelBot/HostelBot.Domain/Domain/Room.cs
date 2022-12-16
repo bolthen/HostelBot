@@ -12,8 +12,10 @@ public class Room : Entity<Room>
         Number = number;
         HostelName = hostelName;
     }
-    
-    public Room(){}
+
+    public Room()
+    {
+    }
 
     [Question("Комната", ViewType.TextEnter)]
     [JsonPropertyName("Room")]

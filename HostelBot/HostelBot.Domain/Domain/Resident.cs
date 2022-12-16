@@ -9,7 +9,7 @@ namespace HostelBot.Domain.Domain
 {
     public class Resident : Entity<Resident>, IFillable, Infrastructure.IObservable<Resident>
     {
-        public Resident(int telegramId, string name, string surname, Hostel hostel, Room room)
+        public Resident(long telegramId, string name, string surname, Hostel hostel, Room room)
         {
             Id = telegramId;
             Name = name;
@@ -70,6 +70,5 @@ namespace HostelBot.Domain.Domain
         }
         
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
-
     }
 }

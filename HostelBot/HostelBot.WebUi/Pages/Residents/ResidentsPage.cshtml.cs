@@ -26,6 +26,7 @@ namespace WebUi.Pages.Residents
                 new (5, "Sam", "Samson", hostel, a),
                 new (3, "Shon", "Shonson", hostel, b),
                 new (4, "Wayn", "Waynson", hostel, b)
+                
             };
 
             foreach (var resident in mockBd)
