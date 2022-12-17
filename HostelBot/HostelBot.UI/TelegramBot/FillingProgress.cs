@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using System.Text.Json.Serialization;
 using HostelBot.App;
 using HostelBot.Domain.Infrastructure;
 
@@ -76,7 +75,9 @@ public class FillingProgress
     public static void FinishFilling(long chatId)
     {
         var progress = GetProgress(chatId);
+        Console.WriteLine("Before FillClass");
         progress.fillable.FillClass(progress.Result);
+        Console.WriteLine("After FillClass");
         ChatIdToFillingProgress.Remove(chatId);
     }
 }
