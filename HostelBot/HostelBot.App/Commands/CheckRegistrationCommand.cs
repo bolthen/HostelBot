@@ -1,9 +1,12 @@
-﻿namespace HostelBot.App;
+﻿using HostelBot.Domain.Infrastructure;
 
-public class CheckRegistrationCommand : Command
+namespace HostelBot.App;
+
+public class CheckRegistrationCommand : FillCommand<ResidentFiller>
 {
     private List<Command> subcommands;
-    public CheckRegistrationCommand(List<Command> subcommands) : base("Проверка регистрации")
+    public CheckRegistrationCommand(IEnumerable<Manager<ResidentFiller>> managers, List<Command> subcommands) 
+        : base("Проверка регистрации", managers, new ResidentFiller())
     {
         this.subcommands = subcommands;
     }

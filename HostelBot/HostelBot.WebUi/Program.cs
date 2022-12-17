@@ -75,10 +75,10 @@ static StandardKernel ConfigureContainer()
     container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<Command>().To<ChooseServiceCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
-    container.Bind<Command>().To<CheckRegistrationCommand>().WhenInjectedInto<ResidentRegistrationCommand>().InSingletonScope();
+    container.Bind<CheckRegistrationCommand>().ToSelf().WhenInjectedInto<Application>().InSingletonScope();
     container.Bind<Manager<UtilityFiller>>().To<UtilityManager>().WhenInjectedInto<ChooseServiceCommand>().InSingletonScope();
     container.Bind<Manager<AppealFiller>>().To<AppealManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
-    container.Bind<Manager<ResidentFiller>>().To<ResidentManager>().WhenInjectedInto<ResidentRegistrationCommand>().InSingletonScope();
+    container.Bind<Manager<ResidentFiller>>().To<ResidentManager>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
 
     container.Bind<MainDbContext>().ToSelf().InSingletonScope();
     container.Bind<IEntityRepository<Resident>>().To<EntityRepository<Resident>>().InSingletonScope();
