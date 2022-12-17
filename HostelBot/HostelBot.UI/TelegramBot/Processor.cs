@@ -21,7 +21,7 @@ internal static class Processor
         catch (NotRegisteredResidentException)
         {
             var fillable = Commands.StartCommand.GetFillable(chatId);
-            await HandleFillable(botClient, cancellationToken, fillable, chatId, Commands.StartCommand);
+            await HandleFillable(botClient, cancellationToken, fillable!, chatId, Commands.StartCommand);
             return;
         }
         catch (Exception e)
