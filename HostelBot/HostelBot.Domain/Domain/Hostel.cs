@@ -7,11 +7,11 @@ namespace HostelBot.Domain.Domain;
 
 public class Hostel : Entity<Hostel>
 {
-    public readonly List<Resident> Residents = new ();
+    public List<Resident> Residents { get; set; } = new ();
 
-    public readonly List<Room> Rooms = new ();
+    public List<Room> Rooms { get; set; }= new ();
 
-    public readonly List<Utility> Utilities = new ();
+    public List<UtilityName> UtilityNames { get; set; } = new ();
 
     public Hostel(string name)
     {
@@ -23,7 +23,12 @@ public class Hostel : Entity<Hostel>
     }
 
     public string Name { get; set; }
-    
+
+    public void AddUtilityName(UtilityName utilityName)
+    {
+        UtilityNames.Add(utilityName);
+    }
+
     public void AddResident(Resident resident)
     {
         Residents.Add(resident);

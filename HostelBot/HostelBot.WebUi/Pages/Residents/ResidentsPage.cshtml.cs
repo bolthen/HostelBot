@@ -15,14 +15,14 @@ namespace WebUi.Pages.Residents
             this.residentRepository = residentRepository;
         
             var hostel = new Hostel("№6");
-            var a = new Room(718, "№6");
-            var b = new Room(719, "№6");
+            var a = new Room(718, hostel);
+            var b = new Room(719, hostel);
         
         
             var mockBd = new List<Resident>
             {
-                new (1, "John", "Johnson", hostel, new Room(718, "№6")),
-                new (1, "John", "Johnson", hostel, new Room(718, "№6")),
+                new (1, "John", "Johnson", hostel, new Room(718, hostel)),
+                new (1, "John", "Johnson", hostel, new Room(718, hostel)),
                 new (5, "Sam", "Samson", hostel, a),
                 new (3, "Shon", "Shonson", hostel, b),
                 new (4, "Wayn", "Waynson", hostel, b)

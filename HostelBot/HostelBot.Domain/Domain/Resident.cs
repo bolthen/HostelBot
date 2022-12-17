@@ -17,8 +17,6 @@ namespace HostelBot.Domain.Domain
             Hostel = hostel;
             Room = room;
             Hostel = hostel;
-            Utilities = new List<Utility>();
-            Appeals = new List<Appeal>();
         }
 
         public Resident(){}
@@ -30,10 +28,10 @@ namespace HostelBot.Domain.Domain
         public Room? Room { get; set; }
         
         public Hostel? Hostel { get; set; }
-        
-        public List<Utility> Utilities { get; set; }
-        
-        public List<Appeal> Appeals { get; set; }
+
+        public List<Utility> Utilities { get; set; } = new ();
+
+        public List<Appeal> Appeals { get; set; } = new();
         
         public override string ToString() => $"{Name} {Surname}";
 

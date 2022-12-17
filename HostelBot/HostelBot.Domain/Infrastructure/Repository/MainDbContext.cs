@@ -21,12 +21,18 @@ public sealed class MainDbContext : DbContext
 
     public MainDbContext()
     {
-        Database.EnsureDeleted(); // TODO DELETE
+        //Database.EnsureDeleted(); // TODO DELETE
         Database.EnsureCreated();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        
         optionsBuilder.UseSqlite("Data Source=helloapp.db");
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Hostel>().HasIndex(u => u.Name).IsUnique();
     }
 }

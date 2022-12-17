@@ -17,7 +17,7 @@ public class ResidentManager : Manager<ResidentFiller>
     protected override void Handle(ResidentFiller value)
     {
         var hostel = hostelRepository.GetByName($"№{value.HostelNumber}").Result;
-        var room = new Room(value.RoomNumber, hostel.Name);
+        var room = new Room(value.RoomNumber, hostel);
         hostel.AddRoom(room);
         hostelRepository.UpdateAsync(hostel);
         var resident = new Resident(value.ResidentId, value.Name, value.Surname, hostel, room);
