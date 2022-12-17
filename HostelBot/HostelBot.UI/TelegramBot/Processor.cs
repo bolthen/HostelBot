@@ -126,8 +126,9 @@ internal static class Processor
     }
 
     public static async Task HandleCallbackQuery(ITelegramBotClient botClient, CancellationToken cancellationToken, 
-        CallbackQuery callbackQuery, long chatId)
+        CallbackQuery callbackQuery)
     {
+        var chatId = callbackQuery.Message!.Chat.Id;
         if (Commands.Contains(callbackQuery.Data!, chatId))
         {
             await HandleCommand(botClient, cancellationToken, Commands.Get(callbackQuery.Data!, chatId), 
@@ -135,7 +136,7 @@ internal static class Processor
             return;
         }
         
-        await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, $"Unknown Data: {callbackQuery.Data}",
+        await botClient.SendTextMessageAsync(chatId, $"Unknown Data: {callbackQuery.Data}",
             cancellationToken: cancellationToken);
     }
 }

@@ -23,8 +23,14 @@ public class TelegramUi : IUi
 
     private async Task Update(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
-        if (update.Message.Chat.Id != null)
+        if (update.Message?.Chat.Id != null)
             Commands.AddUser(update.Message.Chat.Id);
+        
+        if (update.Type == UpdateType.CallbackQuery)
+        {
+            await Processor.HandleCallbackQuery(botClient, cancellationToken, update.CallbackQuery!);
+            return;
+        }
         
         if (!Commands.IsUserRegistered(update.Message.Chat.Id)
             && update.Message.Text != "/start" 
@@ -32,12 +38,6 @@ public class TelegramUi : IUi
         {
             await botClient.SendTextMessageAsync(update.Message!.Chat.Id, "Зарегистрируйтесь /start",
                 cancellationToken: cancellationToken);
-            return;
-        }
-        
-        if (update.Type == UpdateType.CallbackQuery)
-        {
-            await Processor.HandleCallbackQuery(botClient, cancellationToken, update.CallbackQuery!, update.CallbackQuery!.Message.Chat.Id);
             return;
         }
 
