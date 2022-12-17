@@ -15,8 +15,7 @@ public class Room : Entity<Room>
     
     public Room(){}
 
-    [Question("Комната", ViewType.TextEnter)]
-    [JsonPropertyName("Room")]
+    [Question("Номер комнаты", ViewType.TextEnter)]
     public int Number { get; set;}
     
     public Hostel? Hostel { get; set;}

@@ -20,7 +20,6 @@ public class Utility : Entity<Utility>, Infrastructure.IObservable<Utility>, IFi
     public string Name { get; set; }
     
     [Question("Опишите Вашу проблему", ViewType.TextEnter)]
-    [JsonPropertyName("Content")]
     public string Content { get; set; }
 
     public long ResidentId { get; set; }
