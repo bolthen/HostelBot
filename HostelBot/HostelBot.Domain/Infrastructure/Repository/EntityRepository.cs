@@ -12,14 +12,21 @@ public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
         this.context = context;
     }
     
-    public async Task<TEntity?> GetAsync(long id)
+    public async Task<TEntity> GetAsync(long id)
     {
         var foundEntity = await context.Set<TEntity>().FindAsync(id);
 
         if (foundEntity != null) return foundEntity;
         
         context.Entry(foundEntity).State = EntityState.Detached;
-        throw new Exception($"The {typeof(TEntity)} with the given id was not found in the database");
+        throw new ArgumentException($"The {typeof(TEntity)} with the given id({id}) was not found in the database");
+    }
+    
+    public async Task<bool> CheckAsync(long id)
+    {
+        var foundEntity = await context.Set<TEntity>().FindAsync(id);
+
+        return foundEntity != null;
     }
 
     public async Task<bool> CreateAsync(TEntity entity)
