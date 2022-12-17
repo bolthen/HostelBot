@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using HostelBot.App;
 using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Ui.TelegramBot;
@@ -15,11 +16,14 @@ public class FillingProgress
 
     public readonly Dictionary<string, string> Result = new();
 
-    public readonly IFillable Fillable;
+    private readonly IFillable fillable;
+    public Command Command { get; }
 
-    public FillingProgress(IFillable fillable, long chatId)
+    public FillingProgress(IFillable fillable, long chatId, Command command)
     {
-        Fillable = fillable;
+        Command = command;
+        
+        this.fillable = fillable;
         properties = fillable
             .GetFields()
             .Where(propertyInfo => propertyInfo.GetCustomAttribute<QuestionAttribute>() != null)
@@ -30,7 +34,7 @@ public class FillingProgress
 
     public void SaveResponse(string response)
     {
-        var key = properties[Stage].GetCustomAttribute<JsonPropertyNameAttribute>()!.Name;
+        var key = properties[Stage].Name;
         Result[key] = response.Trim();
     }
 
@@ -72,7 +76,7 @@ public class FillingProgress
     public static void FinishFilling(long chatId)
     {
         var progress = GetProgress(chatId);
-        progress.Fillable.FillClass(progress.Result);
+        progress.fillable.FillClass(progress.Result);
         ChatIdToFillingProgress.Remove(chatId);
     }
 }

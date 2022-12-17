@@ -7,10 +7,10 @@ namespace HostelBot.Domain.Domain;
 
 public class Room : Entity<Room>
 {
-    public Room(int number, string hostelName)
+    public Room(int number, Hostel hostel)
     {
         Number = number;
-        HostelName = hostelName;
+        Hostel = hostel;
     }
 
     public Room()
@@ -21,5 +21,5 @@ public class Room : Entity<Room>
     [JsonPropertyName("Room")]
     public int Number { get; set;}
     
-    public string? HostelName { get; set;}
+    public Hostel? Hostel { get; set;}
 }

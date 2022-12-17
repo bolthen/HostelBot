@@ -11,11 +11,11 @@ namespace WebUi.Pages.Utilities;
 [Authorize]
 public class AddPage : PageModel
 {
-    private readonly UtilityNameRepository utilityNameRepository;
+    private readonly HostelRepository hostelRepository;
     
-    public AddPage(UtilityNameRepository utilityNameRepository)
+    public AddPage(HostelRepository hostelRepository)
     {
-        this.utilityNameRepository = utilityNameRepository;
+        this.hostelRepository = hostelRepository;
     }
     
     public void OnGet()
@@ -25,7 +25,9 @@ public class AddPage : PageModel
     public IActionResult OnPost()
     {
         var name = HttpContext.Request.Form["Workable"].ToString();
-        utilityNameRepository.CreateAsync(new UtilityName(name, "№6"));
+        var hostel = hostelRepository.GetByName("№6").Result;
+        hostel.AddUtilityName(new UtilityName(name));
+        hostelRepository.UpdateAsync(hostel);
         return RedirectToPage("/Utilities/UtilitiesPage");
     }
 }

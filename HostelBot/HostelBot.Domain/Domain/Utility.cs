@@ -5,12 +5,18 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain;
 
-public class Utility : Entity<Utility>, IService, Infrastructure.IObservable<Utility>
+public class Utility : Entity<Utility>, Infrastructure.IObservable<Utility>, IFillable
 {
     public Utility() { }
     
     public Utility(string name) => Name = name;
 
+    public Utility(string name, string content)
+    {
+        Name = name;
+        Content = content;
+    } 
+    
     public string Name { get; set; }
     
     [Question("Опишите Вашу проблему", ViewType.TextEnter)]

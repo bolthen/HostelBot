@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel;
+using System.Reflection;
 
 namespace HostelBot.Domain.Infrastructure;
 
@@ -13,7 +14,10 @@ public static class FillableExtensions
         {
             if (!data.ContainsKey(property.Name))
                 throw new ArgumentException($"Data do not contains {property.Name} key");
-            property.SetValue(fillableClass, data[property.Name]);
+            // здесь может быть ошибка, если заполняемый тип особенный
+            var converter = TypeDescriptor.GetConverter(property.PropertyType);
+            var result = converter.ConvertFrom(data[property.Name]);
+            property.SetValue(fillableClass, result);
         }
         
         fillableClass.OnFilled();

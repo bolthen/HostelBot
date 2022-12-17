@@ -1,23 +1,35 @@
-﻿namespace HostelBot.Domain.Infrastructure;
+﻿using System.Reflection;
 
-/*public interface IFiller
+namespace HostelBot.Domain.Infrastructure;
+
+public abstract class Filler<T> : DddObject<T>, IObservable<T>, IFillable
+    where T : DddObject<T>
 {
-    ICanFill GetFillClass();
-    public void HandleFilledClass(string data);
-}*/
-
-public abstract class Filler
-{
-    private readonly IFillable fillable;
-
-    public Filler(IFillable fillable)
+    protected readonly List<IObserver<T>> observers = new();
+    
+    public IDisposable Subscribe(IObserver<T> observer)
     {
-        this.fillable = fillable;
+        if (!observers.Contains(observer))
+            observers.Add(observer);
+        return new Unsubscriber<T>(observers, observer);
     }
-
-    public virtual IFillable GetFillClass()
+    
+    /*public IDisposable Subscribe(IObserver<T> observer)
     {
-        return fillable;
-    }
-    public abstract void HandleFilledClass(IFillable data);
+        if (!observers.Contains(observer))
+            observers.Add(observer);
+        return new Unsubscriber<T>(observers, observer);
+    }*/
+
+    public abstract void OnFilled();
+    /*{
+        foreach (var observer in observers.ToArray())
+            observer.OnCompleted(this);
+    }*/
+
+    public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
+
+    public long ResidentId { get; set; }
+
+    //public abstract TEntity GetFilledEntity(Manager<TEntity> manager);
 }

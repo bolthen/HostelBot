@@ -15,18 +15,8 @@ internal static class Processor
         //     new KeyboardButton[] { KeyboardButtons.Start.Info, KeyboardButtons.Start.Service },
         //     new KeyboardButton[] { KeyboardButtons.Start.Question, KeyboardButtons.Start.Report }
         // })
-        var buttons = Commands.Names.Select(x => new [] { new KeyboardButton(x) });
-        
-        var replyKeyboardMarkup = new ReplyKeyboardMarkup(buttons)
-        {
-            ResizeKeyboard = true,
-            OneTimeKeyboard = false
-        };
-        
-        await botClient.SendTextMessageAsync(update.Message!.Chat.Id, 
-            "Welcome!", 
-            replyMarkup: replyKeyboardMarkup,
-            cancellationToken: cancellationToken);
+
+        await HandleCommand(botClient, cancellationToken, Commands.StartCommand, update.Message!.Chat.Id);
     }
     
     public static async Task HandleCommand(ITelegramBotClient botClient, CancellationToken cancellationToken, 
@@ -35,7 +25,7 @@ internal static class Processor
         var fillable = command.GetFillable(chatId);
         if (fillable != null)
         {
-            await HandleFillable(botClient, cancellationToken, fillable, chatId);
+            await HandleFillable(botClient, cancellationToken, fillable, chatId, command);
             return;
         }
 
@@ -59,9 +49,9 @@ internal static class Processor
     }
 
     private static async Task HandleFillable(ITelegramBotClient botClient, CancellationToken cancellationToken, 
-        IFillable fillable, long chatId)
+        IFillable fillable, long chatId, Command command)
     {
-        var progress = new FillingProgress(fillable, chatId);
+        var progress = new FillingProgress(fillable, chatId, command);
 
         await botClient.SendTextMessageAsync(chatId, progress.GetNextQuestion(),
             cancellationToken: cancellationToken);
@@ -86,11 +76,56 @@ internal static class Processor
         if (progress.Completed)
         {
             await botClient.SendTextMessageAsync(chatId, progress.Result.ToJsonFormat(), cancellationToken: cancellationToken);
+            
+            // progress.Command is Commands.StartCommand не робит
+            if (progress.Command.GetType().Name == Commands.StartCommand.GetType().Name)
+            {
+                await OutputWaitVerification(botClient, chatId, cancellationToken);
+            }
+            
             FillingProgress.FinishFilling(chatId);
             return;
         }
                 
         await botClient.SendTextMessageAsync(chatId, progress.GetNextQuestion(), cancellationToken: cancellationToken);
+    }
+
+    private static async Task OutputWaitVerification(ITelegramBotClient botClient, long chatId, 
+        CancellationToken cancellationToken)
+    {
+        await botClient.SendTextMessageAsync(chatId, 
+            "Подождите пока вас верифицируют.\nЧтобы проверить статус верификации, нажмите /checkstatus.",
+            cancellationToken: cancellationToken);
+    }
+
+    public static async Task CheckVerificationStatus(ITelegramBotClient botClient, Update update,
+        CancellationToken cancellationToken)
+    {
+        var chatId = update.Message!.Chat.Id;
+        List<Command> subcommands;
+        try
+        {
+            //TODO: артем попуск реализуй чек
+            subcommands = new CheckRegistrationCommand(new List<Command>()).GetSubcommands(chatId);
+            // throw new NullReferenceException();
+        }
+        catch
+        {
+            await OutputWaitVerification(botClient, chatId, cancellationToken);
+            return;
+        }
+        // TODO: ты вроде говорил шо сабкоманды CheckRegistrationCommand будут BaseCommand`ами 
+        var buttons = Commands.Names.Select(x => new [] { new KeyboardButton(x) });
+        var replyKeyboardMarkup = new ReplyKeyboardMarkup(buttons)
+        {
+            ResizeKeyboard = true,
+            OneTimeKeyboard = false
+        };
+        
+        await botClient.SendTextMessageAsync(chatId, 
+            "Верификация прошла успешно", 
+            replyMarkup: replyKeyboardMarkup,
+            cancellationToken: cancellationToken); 
     }
 
     public static async Task HandleCallbackQuery(ITelegramBotClient botClient, CancellationToken cancellationToken, 

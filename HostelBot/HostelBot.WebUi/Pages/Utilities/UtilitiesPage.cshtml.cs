@@ -13,31 +13,29 @@ namespace WebUi.Pages.Utilities
         public UtilityName[] Utilities { get; set; }
     
         private readonly HostelRepository hostelRepository;
-        private readonly UtilityNameRepository utilityNameRepository;
 
-        public UtilitiesPage(HostelRepository hostelRepository, UtilityNameRepository utilityNameRepository)
+        public UtilitiesPage(HostelRepository hostelRepository)
         {
             this.hostelRepository = hostelRepository;
-            this.utilityNameRepository = utilityNameRepository;
             return;
-            if (flag)
-                return;
-            flag = true;
-            var first = new UtilityName("Сантехник", "№6");
-            first.Id = 5;
-            var second = new UtilityName("Электрик", "№6");
-            second.Id = 6;
-            var third = new UtilityName("Клининг", "№6");
-            third.Id = 2;
-
-            this.utilityNameRepository.CreateAsync(first);
-            this.utilityNameRepository.CreateAsync(second);
-            this.utilityNameRepository.CreateAsync(third);
+            // if (flag)
+            //     return;
+            // flag = true;
+            // var first = new UtilityName("Сантехник", "№6");
+            // first.Id = 5;
+            // var second = new UtilityName("Электрик", "№6");
+            // second.Id = 6;
+            // var third = new UtilityName("Клининг", "№6");
+            // third.Id = 2;
+            //
+            // this.utilityNameRepository.CreateAsync(first);
+            // this.utilityNameRepository.CreateAsync(second);
+            // this.utilityNameRepository.CreateAsync(third);
         }
     
         public void OnGet()
         {
-            Utilities = hostelRepository.GetUtilityNames("№6").Result.ToArray();
+            Utilities = hostelRepository.GetByName("№6").Result.UtilityNames.ToArray();
         }
     }
 }

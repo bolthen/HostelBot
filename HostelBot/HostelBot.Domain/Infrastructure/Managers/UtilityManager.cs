@@ -3,7 +3,7 @@ using HostelBot.Domain.Infrastructure.Services;
 
 namespace HostelBot.Domain.Domain;
 
-public class UtilityManager : Manager<Utility>
+public class UtilityManager : Manager<UtilityFiller>
 {
     private readonly ResidentRepository residentRepository;
     
@@ -11,17 +11,12 @@ public class UtilityManager : Manager<Utility>
     {
         this.residentRepository = residentRepository;
     }
-    
-    public IReadOnlyList<string> GetServiceNames()
-    {
-        return new List<string> {"Клининг", "Сантехник", "Электрик"};
-        //return new List<string>(serviceNames);
-    }
 
-    protected override void Handle(Utility value)
+    protected override void Handle(UtilityFiller value)
     {
+        var utility = new Utility(value.Name, value.Content);
         var resident = residentRepository.GetAsync(value.ResidentId).Result;
-        resident.AddUtility(value);
+        resident.AddUtility(utility);
         residentRepository.UpdateAsync(resident);
     }
 }

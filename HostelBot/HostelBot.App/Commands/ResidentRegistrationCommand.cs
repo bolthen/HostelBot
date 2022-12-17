@@ -3,16 +3,16 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
-public class ResidentRegistrationCommand : FillCommand<Resident>
+public class ResidentRegistrationCommand : FillCommand<ResidentFiller>
 {
-    public ResidentRegistrationCommand(string name, IEnumerable<Manager<Resident>> managers,
-        List<Command> subcommands)
-        : base(name, managers, new Resident())
+    private List<Command> subcommands;
+
+    public ResidentRegistrationCommand(IEnumerable<Manager<ResidentFiller>> managers, List<Command> subcommands)
+        : base("Регистрация", managers, new ResidentFiller())
     {
         this.subcommands = subcommands;
     }
-
-    private List<Command> subcommands;
+    
 
     public override List<Command> GetSubcommands(long residentId)
     {

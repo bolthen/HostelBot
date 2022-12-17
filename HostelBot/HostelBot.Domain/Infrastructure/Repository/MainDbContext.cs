@@ -27,6 +27,12 @@ public sealed class MainDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
+        
         optionsBuilder.UseSqlite("Data Source=helloapp.db");
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Hostel>().HasIndex(u => u.Name).IsUnique();
     }
 }

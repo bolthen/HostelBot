@@ -3,7 +3,7 @@ using HostelBot.Domain.Infrastructure.Services;
 
 namespace HostelBot.Domain.Infrastructure;
 
-public class AppealManager : Manager<Appeal>
+public class AppealManager : Manager<AppealFiller>
 {
     private readonly ResidentRepository residentService;
 
@@ -12,10 +12,11 @@ public class AppealManager : Manager<Appeal>
         this.residentService = residentService;
     }
     
-    protected override void Handle(Appeal value)
+    protected override void Handle(AppealFiller value)
     {
         var resident = residentService.GetAsync(value.ResidentId).Result;
-        resident.AddAppeal(value);
+        var appeal = new Appeal(value.Name, resident, value.Content);
+        resident.AddAppeal(appeal);
         residentService.UpdateAsync(resident);
     }
 }

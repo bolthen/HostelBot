@@ -5,13 +5,19 @@ namespace HostelBot.Ui.TelegramBot;
 public static class Commands
 {
     private static Dictionary<string, Command> NameToCommand { get; } = new();
-
+    public static Command StartCommand { get; private set; }
+    
     public static IEnumerable<string> Names => NameToCommand.Keys;
 
     public static void AddCommands(IEnumerable<Command> commands)
     {
         foreach (var command in commands)
             NameToCommand[command.Name] = command;
+    }
+
+    public static void SetStartCommand(Command command)
+    {
+        StartCommand = command;
     }
 
     public static bool Contains(string commandName)

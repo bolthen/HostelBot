@@ -3,4 +3,5 @@
 public interface IApplication
 {
     IReadOnlyCollection<Command> GetBaseCommands();
+    Command GetRegistrationCommand();
 }
