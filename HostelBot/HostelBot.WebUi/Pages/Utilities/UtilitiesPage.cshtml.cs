@@ -1,10 +1,12 @@
 using HostelBot.Domain;
 using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebUi.Pages.Utilities
 {
+    [Authorize]
     public class UtilitiesPage : PageModel
     {
         private static bool flag;

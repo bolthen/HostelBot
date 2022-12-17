@@ -6,7 +6,7 @@ namespace WebUi.Pages;
 public class IndexModel : PageModel
 {
     private readonly ILogger<IndexModel> logger;
-    public string WelcomeMessage => "Добро пожаловать, Галина Михайловна";
+    public string WelcomeMessage => "Добро пожаловать";
     //public string Message { get; set; }
     
     public IndexModel(ILogger<IndexModel> logger)

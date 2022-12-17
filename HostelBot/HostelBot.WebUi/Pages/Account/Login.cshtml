@@ -2,6 +2,7 @@
 @model WebUi.Pages.Account.Login
 
 @{
+    ViewData["Title"] = "Вход";
 }
 
 <!DOCTYPE html>
@@ -17,12 +18,12 @@
             <div class="text-danger" asp-validation-summary="ModelOnly"></div>
             <div class="form-group row m-3">
                 <div class="col-2">
-                    <label asp-for="Manager.UserName"></label>
+                    <label asp-for="Manager.Login"></label>
                 </div>
                 <div class="col-5">
-                    <input type="text" asp-for="Manager.UserName"/>
+                    <input type="text" asp-for="Manager.Login"/>
                 </div>
-                <span class="text-danger" asp-validation-for="Manager.UserName"></span>
+                <span class="text-danger" asp-validation-for="Manager.Login"></span>
             </div>
             <div class="form-group row m-3">
                 <div class="col-2">

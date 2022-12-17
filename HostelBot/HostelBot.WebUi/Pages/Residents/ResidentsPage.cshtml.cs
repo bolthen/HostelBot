@@ -1,9 +1,11 @@
 using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebUi.Pages.Residents
 {
+    [Authorize]
     public class ResidentsPage : PageModel
     {
         public IReadOnlyCollection<Resident> Residents { get; set; }
@@ -12,6 +14,7 @@ namespace WebUi.Pages.Residents
 
         public ResidentsPage(ResidentRepository residentRepository)
         {
+            //var hostel = hostelRepository.GetAsync("№6").Result.Residents;
             this.residentRepository = residentRepository;
         
             var hostel = new Hostel("№6");

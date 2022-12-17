@@ -1,12 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace WebUi.Pages.Utilities;
 
+[Authorize]
 public class AddPage : PageModel
 {
     private readonly UtilityNameRepository utilityNameRepository;
