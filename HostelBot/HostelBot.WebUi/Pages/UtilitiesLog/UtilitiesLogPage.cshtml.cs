@@ -8,20 +8,15 @@ public class UtilitiesLogPage : PageModel
 {
     public UtilityName[] Utilities { get; set; }
     
-    private readonly HostelRepository hostelRepository;
+    private readonly Hostel? hostel;
     
     public UtilitiesLogPage(HostelRepository hostelRepository)
     {
-        this.hostelRepository = hostelRepository;
+        hostel = hostelRepository.GetAsync(1L).Result;
     }
     
     public void OnGet()
     {
-        Utilities = new[]
-        {
-            new UtilityName("Сантехник"),
-            new UtilityName("Клининг"),
-            new UtilityName("Электрик")
-        };
+        Utilities = hostel?.UtilityNames.ToArray() ?? Array.Empty<UtilityName>();
     }
 }
