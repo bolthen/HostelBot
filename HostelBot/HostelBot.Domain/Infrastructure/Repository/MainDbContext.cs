@@ -33,6 +33,9 @@ public sealed class MainDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Hostel>().HasIndex(u => u.Name).IsUnique();
+        modelBuilder.Entity<Hostel>(hostel => 
+                hostel
+                    .HasMany(a => a.Residents)
+                    .WithOne(x => x.Hostel));
     }
 }
