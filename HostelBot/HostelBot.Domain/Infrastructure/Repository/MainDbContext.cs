@@ -1,4 +1,5 @@
 ﻿using HostelBot.Domain.Domain;
+using iTextSharp.text.pdf;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
@@ -37,5 +38,6 @@ public sealed class MainDbContext : DbContext
                 hostel
                     .HasMany(a => a.Residents)
                     .WithOne(x => x.Hostel));
+        modelBuilder.Entity<Room>().HasIndex(x => x.Number).IsUnique();
     }
 }
