@@ -13,10 +13,12 @@ namespace WebUi.Pages.Utilities
         public UtilityName[] Utilities { get; set; }
     
         private readonly HostelRepository hostelRepository;
+        private readonly ResidentRepository residentRepository;
 
-        public UtilitiesPage(HostelRepository hostelRepository)
+        public UtilitiesPage(HostelRepository hostelRepository, ResidentRepository residentRepository)
         {
             this.hostelRepository = hostelRepository;
+            this.residentRepository = residentRepository;
             return;
             // if (flag)
             //     return;
@@ -35,6 +37,7 @@ namespace WebUi.Pages.Utilities
     
         public void OnGet()
         {
+            var k = residentRepository.GetAsync(1).Result;
             Utilities = hostelRepository.GetByName("№6").Result.UtilityNames.ToArray();
         }
     }
