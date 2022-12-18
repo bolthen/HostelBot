@@ -25,7 +25,7 @@ public class TelegramUi : IUi
     {
         if (update.Message?.Chat.Id != null)
             Commands.AddUser(update.Message.Chat.Id);
-        
+        //
         if (update.Type == UpdateType.CallbackQuery)
         {
             await Processor.HandleCallbackQuery(botClient, cancellationToken, update.CallbackQuery!);
