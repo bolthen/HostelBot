@@ -46,6 +46,5 @@ namespace HostelBot.Domain.Domain
         }
         
         public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
-
     }
 }

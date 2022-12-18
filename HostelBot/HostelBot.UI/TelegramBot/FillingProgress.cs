@@ -75,9 +75,7 @@ public class FillingProgress
     public static void FinishFilling(long chatId)
     {
         var progress = GetProgress(chatId);
-        Console.WriteLine("Before FillClass");
         progress.fillable.FillClass(progress.Result);
-        Console.WriteLine("After FillClass");
         ChatIdToFillingProgress.Remove(chatId);
     }
 }

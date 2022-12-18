@@ -12,8 +12,10 @@ public class Room : Entity<Room>
         Number = number;
         Hostel = hostel;
     }
-    
-    public Room(){}
+
+    public Room()
+    {
+    }
 
     [Question("Номер комнаты", ViewType.TextEnter)]
     public int Number { get; set;}
