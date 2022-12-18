@@ -11,15 +11,13 @@ using Ninject;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddRazorPages();
-// builder.Services.AddSingleton<MainDbContext>();
-// builder.Services.AddSingleton<EntityRepository<Resident>>();
-// builder.Services.AddSingleton<EntityRepository<Hostel>>();
-// builder.Services.AddSingleton<EntityRepository<Utility>>();
-// builder.Services.AddSingleton<EntityRepository<Room>>();
-// builder.Services.AddSingleton<CoreRepository>();
-// builder.Services.AddSingleton<ResidentService>();
+builder.Services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", options =>
+{
+    options.Cookie.Name = "CookieAuth";
+    options.LoginPath = "/Account/Login";
+});
+
 
 var container = ConfigureContainer();
 foreach (var ui in container.GetAll<IUi>())
@@ -44,20 +42,13 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
 
-//StartTgUi();
-
 app.Run();
 
-static void StartTgUi()
-{
-    var container = ConfigureContainer();
-    foreach (var ui in container.GetAll<IUi>())
-        Task.Run(() => ui.Run());
-}
 
 static StandardKernel ConfigureContainer()
 {

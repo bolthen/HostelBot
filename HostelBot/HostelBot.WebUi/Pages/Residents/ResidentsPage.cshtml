@@ -2,8 +2,7 @@
 @model WebUi.Pages.Residents.ResidentsPage
 
 @{
-    // Layout = null; // Это стирает весь Layout.cshtml, отображается только страница снизу
-    ViewData["Title"] = "Жители в адрсесной строке"; // TODO
+    ViewData["Title"] = "Жители";
 }
 
 <!DOCTYPE html>
@@ -17,17 +16,42 @@
     <h2>Жители</h2>
     <h3>Количество: @Model.Residents.Count</h3>
 
-    <div class="container">
-        @foreach (var item in Model.Residents)
-        {
-            <div class="row">
-                <div class="col-1">@item.Id</div>
-                <div class="col-2">@item.Name</div>
-                <div class="col-2">@item.Surname</div>
-            </div>
-        }
-    </div>
-
+    <table class="table table-bordered table-hover table-inverse table-striped" id="residents">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Комната</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Residents)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Surname</td>
+                    <td></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<script>
+$(document).ready(function () {
+    $('#residents').DataTable();
+});
+$('table').dataTable({searching: true, paging: false, info: false});
+</script>
+
 </body>
 </html>
+
