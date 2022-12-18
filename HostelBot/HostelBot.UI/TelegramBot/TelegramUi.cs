@@ -23,7 +23,7 @@ public class TelegramUi : IUi
 
     private async Task Update(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
-        if (update.Message.Chat.Id != null)
+        if (update.Message?.Chat.Id != null)
             Commands.AddUser(update.Message.Chat.Id);
         
         if (!Commands.IsUserRegistered(update.Message.Chat.Id)

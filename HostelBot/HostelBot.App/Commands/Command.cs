@@ -26,12 +26,4 @@ namespace HostelBot.App
             return null;
         }
     }
-
-    public class UtilityRegistration
-    {
-        public void AddUtility(string name)
-        {
-            
-        }
-    }
 }
