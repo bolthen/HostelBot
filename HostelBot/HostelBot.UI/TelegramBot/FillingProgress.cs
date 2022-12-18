@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using System.Text.Json.Serialization;
 using HostelBot.App;
 using HostelBot.Domain.Infrastructure;
 

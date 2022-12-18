@@ -5,18 +5,18 @@ namespace HostelBot.Domain.Infrastructure;
 
 public class AppealManager : Manager<AppealFiller>
 {
-    private readonly ResidentRepository residentService;
+    private readonly ResidentRepository residentRepository;
 
-    public AppealManager(ResidentRepository residentService)
+    public AppealManager(ResidentRepository residentRepository)
     {
-        this.residentService = residentService;
+        this.residentRepository = residentRepository;
     }
     
     protected override void Handle(AppealFiller value)
     {
-        var resident = residentService.GetAsync(value.ResidentId).Result;
+        var resident = residentRepository.GetAsync(value.ResidentId).Result;
         var appeal = new Appeal(value.Name, resident, value.Content);
         resident.AddAppeal(appeal);
-        residentService.UpdateAsync(resident);
+        residentRepository.UpdateAsync(resident);
     }
 }

@@ -1,16 +1,34 @@
-﻿namespace HostelBot.App;
+﻿using HostelBot.Domain.Infrastructure;
+using HostelBot.Domain.Infrastructure.Exceptions;
+using HostelBot.Domain.Infrastructure.Services;
 
-public class CheckRegistrationCommand : Command
+namespace HostelBot.App;
+
+public class CheckRegistrationCommand : FillCommand<ResidentFiller>
 {
     private List<Command> subcommands;
-    public CheckRegistrationCommand(List<Command> subcommands) : base("Проверка регистрации")
+    private readonly ResidentRepository residentRepository;
+
+    public CheckRegistrationCommand(IEnumerable<Manager<ResidentFiller>> managers, List<Command> subcommands,
+        ResidentRepository residentRepository) 
+        : base("Проверка регистрации", managers, new ResidentFiller())
     {
         this.subcommands = subcommands;
+        this.residentRepository = residentRepository;
+        AppDomain.CurrentDomain.UnhandledException += ProcessException;
     }
 
     public override List<Command> GetSubcommands(long residentId)
     {
-        // кинет какой нибудь exception, если еще не верефицирован
+        if (!residentRepository.CheckAsync(residentId).Result)
+            throw new NotRegisteredResidentException();
+        
         return subcommands;
+    }
+    
+    static void ProcessException(object sender, UnhandledExceptionEventArgs args)
+    {
+        Console.WriteLine((args.ExceptionObject as Exception).StackTrace);
+        Environment.Exit(1);
     }
 }

@@ -5,21 +5,14 @@ namespace HostelBot.App;
 
 public class Application : IApplication
 {
-    private readonly Command[] baseCommands;
-    private readonly ResidentRegistrationCommand residentRegistrationCommand;
+    private readonly CheckRegistrationCommand residentRegistrationCommand;
     
-    public Application(Command[] baseCommands, ResidentRegistrationCommand residentRegistrationCommand)
+    public Application(CheckRegistrationCommand residentRegistrationCommand)
     {
-        this.baseCommands = baseCommands;
         this.residentRegistrationCommand = residentRegistrationCommand;
     }
-    
-    public IReadOnlyCollection<Command> GetBaseCommands()
-    {
-        return baseCommands;
-    }
-    
-    public Command GetRegistrationCommand()
+
+    public Command GetStartCommand()
     {
         return residentRegistrationCommand;
     }

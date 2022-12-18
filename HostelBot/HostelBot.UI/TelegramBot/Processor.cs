@@ -1,5 +1,6 @@
 ﻿using HostelBot.App;
 using HostelBot.Domain.Infrastructure;
+using HostelBot.Domain.Infrastructure.Exceptions;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.ReplyMarkups;
@@ -10,13 +11,39 @@ internal static class Processor
 {
     public static async Task Start(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
-        // var replyKeyboardMarkup = new ReplyKeyboardMarkup(new []
-        // {
-        //     new KeyboardButton[] { KeyboardButtons.Start.Info, KeyboardButtons.Start.Service },
-        //     new KeyboardButton[] { KeyboardButtons.Start.Question, KeyboardButtons.Start.Report }
-        // })
+        var chatId = update.Message!.Chat.Id;
+        
+        List<Command> baseCommands;
+        try
+        {
+            baseCommands = Commands.StartCommand.GetSubcommands(chatId);
+        }
+        catch (NotRegisteredResidentException)
+        {
+            var fillable = Commands.StartCommand.GetFillable(chatId);
+            await HandleFillable(botClient, cancellationToken, fillable!, chatId, Commands.StartCommand);
+            return;
+        }
+        catch (Exception e)
+        {
+            await botClient.SendTextMessageAsync(chatId, $"Unknown Exception: {e}", cancellationToken: cancellationToken);
+            return;
+        }
+        
+        Commands.AddCommands(baseCommands, chatId);
+        Commands.RegisterUser(chatId);
 
-        await HandleCommand(botClient, cancellationToken, Commands.StartCommand, update.Message!.Chat.Id);
+        var buttons = baseCommands.Select(x => new [] { new KeyboardButton(x.Name) });
+        var replyKeyboardMarkup = new ReplyKeyboardMarkup(buttons)
+        {
+            ResizeKeyboard = true,
+            OneTimeKeyboard = false
+        };
+        
+        await botClient.SendTextMessageAsync(chatId, 
+            "Верификация прошла успешно", 
+            replyMarkup: replyKeyboardMarkup,
+            cancellationToken: cancellationToken);
     }
     
     public static async Task HandleCommand(ITelegramBotClient botClient, CancellationToken cancellationToken, 
@@ -32,12 +59,12 @@ internal static class Processor
         var subcommands = command.GetSubcommands(chatId);
         if (subcommands.Count == 0)
         {
-            await botClient.SendTextMessageAsync(chatId, $"No info for {command.Name} Command",
+            await botClient.SendTextMessageAsync(chatId, $"No subcommands for '{command.Name}' Command",
                 cancellationToken: cancellationToken);
             return;
         }
         
-        Commands.AddCommands(subcommands);
+        Commands.AddCommands(subcommands, chatId);
         
         var buttons = subcommands.Select(x => InlineKeyboardButton.WithCallbackData(x.Name));
         var replyKeyboardMarkup = new InlineKeyboardMarkup(buttons);
@@ -77,68 +104,39 @@ internal static class Processor
         {
             await botClient.SendTextMessageAsync(chatId, progress.Result.ToJsonFormat(), cancellationToken: cancellationToken);
             
-            // progress.Command is Commands.StartCommand не робит
             if (progress.Command.GetType().Name == Commands.StartCommand.GetType().Name)
             {
-                await OutputWaitVerification(botClient, chatId, cancellationToken);
+                await WaitVerification(botClient, chatId, cancellationToken);
             }
             
             FillingProgress.FinishFilling(chatId);
+            
             return;
         }
                 
         await botClient.SendTextMessageAsync(chatId, progress.GetNextQuestion(), cancellationToken: cancellationToken);
     }
 
-    private static async Task OutputWaitVerification(ITelegramBotClient botClient, long chatId, 
+    private static async Task WaitVerification(ITelegramBotClient botClient, long chatId, 
         CancellationToken cancellationToken)
     {
         await botClient.SendTextMessageAsync(chatId, 
-            "Подождите пока вас верифицируют.\nЧтобы проверить статус верификации, нажмите /checkstatus.",
+            "Подождите пока вас верифицируют.\nЧтобы проверить статус верификации, нажмите /start.",
             cancellationToken: cancellationToken);
-    }
-
-    public static async Task CheckVerificationStatus(ITelegramBotClient botClient, Update update,
-        CancellationToken cancellationToken)
-    {
-        var chatId = update.Message!.Chat.Id;
-        List<Command> subcommands;
-        try
-        {
-            //TODO: артем попуск реализуй чек
-            subcommands = new CheckRegistrationCommand(new List<Command>()).GetSubcommands(chatId);
-            // throw new NullReferenceException();
-        }
-        catch
-        {
-            await OutputWaitVerification(botClient, chatId, cancellationToken);
-            return;
-        }
-        // TODO: ты вроде говорил шо сабкоманды CheckRegistrationCommand будут BaseCommand`ами 
-        var buttons = Commands.Names.Select(x => new [] { new KeyboardButton(x) });
-        var replyKeyboardMarkup = new ReplyKeyboardMarkup(buttons)
-        {
-            ResizeKeyboard = true,
-            OneTimeKeyboard = false
-        };
-        
-        await botClient.SendTextMessageAsync(chatId, 
-            "Верификация прошла успешно", 
-            replyMarkup: replyKeyboardMarkup,
-            cancellationToken: cancellationToken); 
     }
 
     public static async Task HandleCallbackQuery(ITelegramBotClient botClient, CancellationToken cancellationToken, 
         CallbackQuery callbackQuery)
     {
-        if (Commands.Contains(callbackQuery.Data!))
+        var chatId = callbackQuery.Message!.Chat.Id;
+        if (Commands.Contains(callbackQuery.Data!, chatId))
         {
-            await HandleCommand(botClient, cancellationToken, Commands.Get(callbackQuery.Data!), 
+            await HandleCommand(botClient, cancellationToken, Commands.Get(callbackQuery.Data!, chatId), 
                 callbackQuery.Message!.Chat.Id);
             return;
         }
         
-        await botClient.SendTextMessageAsync(callbackQuery.Message.Chat.Id, $"Unknown Data: {callbackQuery.Data}",
+        await botClient.SendTextMessageAsync(chatId, $"Unknown Data: {callbackQuery.Data}",
             cancellationToken: cancellationToken);
     }
 }

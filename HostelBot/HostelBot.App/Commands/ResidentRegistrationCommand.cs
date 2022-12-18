@@ -1,4 +1,4 @@
-﻿using HostelBot.Domain.Domain;
+﻿/*using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
@@ -18,4 +18,4 @@ public class ResidentRegistrationCommand : FillCommand<ResidentFiller>
     {
         return subcommands;
     }
-}
+}*/

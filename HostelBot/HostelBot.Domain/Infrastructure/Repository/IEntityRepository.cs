@@ -3,7 +3,7 @@
 public interface IEntityRepository<TEntity>
     where TEntity : Entity<TEntity>
 {
-    Task<TEntity?> GetAsync(long id);
+    Task<TEntity> GetAsync(long id);
         
     Task<bool> CreateAsync(TEntity entity);
         
@@ -11,4 +11,5 @@ public interface IEntityRepository<TEntity>
 
     Task<bool> UpdateAsync(TEntity entity);
 
+    Task<bool> CheckAsync(long id);
 }

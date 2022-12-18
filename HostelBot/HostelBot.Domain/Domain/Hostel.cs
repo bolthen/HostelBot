@@ -9,7 +9,7 @@ public class Hostel : Entity<Hostel>
 {
     public List<Resident> Residents { get; set; } = new ();
 
-    public List<Room> Rooms { get; set; }= new ();
+    public List<Room> Rooms { get; set; } = new ();
 
     public List<UtilityName> UtilityNames { get; set; } = new ();
 
@@ -36,6 +36,7 @@ public class Hostel : Entity<Hostel>
     
     public void AddRoom(Room room)
     {
-        Rooms.Add(room);
+        if (!Rooms.Contains(room))
+            Rooms.Add(room);
     }
 }
