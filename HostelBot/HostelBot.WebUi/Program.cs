@@ -23,6 +23,7 @@ var container = ConfigureContainer();
 foreach (var ui in container.GetAll<IUi>())
     Task.Run(() => ui.Run());
 
+builder.Services.AddSingleton<Manager<Resident>>();
 builder.Services.AddSingleton(_ => container.Get<ResidentRepository>());
 builder.Services.AddSingleton(_ => container.Get<HostelRepository>());
 builder.Services.AddSingleton(_ => container.Get<UtilityNameRepository>());
@@ -56,7 +57,7 @@ static StandardKernel ConfigureContainer()
     container.Bind<IUi>().To<TelegramUi>().InSingletonScope();
     container.Bind<IApplication>().To<Application>().InSingletonScope();
         
-    container.Bind<UtilityManager>().ToSelf().WhenInjectedInto<ChooseServiceCommand>().InSingletonScope();
+    container.Bind<FillableUtilityManager>().ToSelf().WhenInjectedInto<ChooseServiceCommand>().InSingletonScope();
         
     container.Bind<Command>().To<InformationCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
     container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
@@ -67,9 +68,9 @@ static StandardKernel ConfigureContainer()
     container.Bind<Command>().To<ChooseServiceCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<CheckRegistrationCommand>().ToSelf().WhenInjectedInto<Application>().InSingletonScope();
-    container.Bind<Manager<UtilityFiller>>().To<UtilityManager>().WhenInjectedInto<ChooseServiceCommand>().InSingletonScope();
-    container.Bind<Manager<AppealFiller>>().To<AppealManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
-    container.Bind<Manager<ResidentFiller>>().To<ResidentManager>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
+    container.Bind<Manager<UtilityFillable>>().To<FillableUtilityManager>().WhenInjectedInto<ChooseServiceCommand>().InSingletonScope();
+    container.Bind<Manager<AppealFillable>>().To<FillableAppealManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
+    container.Bind<Manager<ResidentFillable>>().To<FillableResidentManager>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
 
     container.Bind<MainDbContext>().ToSelf().InSingletonScope();
     container.Bind<IEntityRepository<Resident>>().To<EntityRepository<Resident>>().InSingletonScope();

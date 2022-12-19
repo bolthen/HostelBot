@@ -3,16 +3,16 @@ using HostelBot.Domain.Infrastructure.Services;
 
 namespace HostelBot.Domain.Infrastructure;
 
-public class AppealManager : Manager<AppealFiller>
+public class FillableAppealManager : Manager<AppealFillable>
 {
     private readonly ResidentRepository residentRepository;
 
-    public AppealManager(ResidentRepository residentRepository)
+    public FillableAppealManager(ResidentRepository residentRepository)
     {
         this.residentRepository = residentRepository;
     }
     
-    protected override void Handle(AppealFiller value)
+    protected override void Handle(AppealFillable value)
     {
         var resident = residentRepository.GetAsync(value.ResidentId).Result;
         var appeal = new Appeal(value.Name, resident, value.Content);

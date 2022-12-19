@@ -3,16 +3,16 @@ using HostelBot.Domain.Infrastructure.Services;
 
 namespace HostelBot.Domain.Domain;
 
-public class UtilityManager : Manager<UtilityFiller>
+public class FillableUtilityManager : Manager<UtilityFillable>
 {
     private readonly ResidentRepository residentRepository;
     
-    public UtilityManager(ResidentRepository residentRepository)
+    public FillableUtilityManager(ResidentRepository residentRepository)
     {
         this.residentRepository = residentRepository;
     }
 
-    protected override void Handle(UtilityFiller value)
+    protected override void Handle(UtilityFillable value)
     {
         var utility = new Utility(value.Name, value.Content);
         var resident = residentRepository.GetAsync(value.ResidentId).Result;

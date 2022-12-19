@@ -4,14 +4,14 @@ using HostelBot.Domain.Infrastructure.Services;
 
 namespace HostelBot.App;
 
-public class CheckRegistrationCommand : FillCommand<ResidentFiller>
+public class CheckRegistrationCommand : FillCommand<ResidentFillable>
 {
     private List<Command> subcommands;
     private readonly ResidentRepository residentRepository;
 
-    public CheckRegistrationCommand(IEnumerable<Manager<ResidentFiller>> managers, List<Command> subcommands,
+    public CheckRegistrationCommand(IEnumerable<Manager<ResidentFillable>> managers, List<Command> subcommands,
         ResidentRepository residentRepository) 
-        : base("Проверка регистрации", managers, new ResidentFiller())
+        : base("Проверка регистрации", managers, new ResidentFillable())
     {
         this.subcommands = subcommands;
         this.residentRepository = residentRepository;

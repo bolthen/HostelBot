@@ -3,18 +3,18 @@ using HostelBot.Domain.Infrastructure.Services;
 
 namespace HostelBot.Domain.Infrastructure.Managers;
 
-public class ResidentManager : Manager<ResidentFiller>
+public class FillableResidentManager : Manager<ResidentFillable>
 {
     private readonly ResidentRepository residentRepository;
     private readonly HostelRepository hostelRepository;
 
-    public ResidentManager(ResidentRepository residentRepository, HostelRepository hostelRepository)
+    public FillableResidentManager(ResidentRepository residentRepository, HostelRepository hostelRepository)
     {
         this.residentRepository = residentRepository;
         this.hostelRepository = hostelRepository;
     }
     
-    protected override void Handle(ResidentFiller value)
+    protected override void Handle(ResidentFillable value)
     {
         var hostel = hostelRepository.GetByName($"№{value.HostelNumber}").Result;
         var room = new Room(value.RoomNumber, hostel);

@@ -4,10 +4,10 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
-public class UtilityCommand : FillCommand<UtilityFiller>
+public class UtilityCommand : FillCommand<UtilityFillable>
 {
-    public UtilityCommand(string name, IEnumerable<Manager<UtilityFiller>> managers) 
-        : base(name, managers, new UtilityFiller(name))
+    public UtilityCommand(string name, IEnumerable<Manager<UtilityFillable>> managers) 
+        : base(name, managers, new UtilityFillable(name))
     {
     }
 }

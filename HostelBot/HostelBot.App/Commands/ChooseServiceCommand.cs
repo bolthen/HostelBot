@@ -7,11 +7,11 @@ namespace HostelBot.App;
 
 public class ChooseServiceCommand : Command
 {
-    private readonly IEnumerable<Manager<UtilityFiller>> managers;
+    private readonly IEnumerable<Manager<UtilityFillable>> managers;
     private readonly HostelRepository hostelNameRepository;
     private readonly ResidentRepository residentRepository;
 
-    public ChooseServiceCommand(IEnumerable<Manager<UtilityFiller>> managers, HostelRepository hostelNameRepository, ResidentRepository residentRepository)
+    public ChooseServiceCommand(IEnumerable<Manager<UtilityFillable>> managers, HostelRepository hostelNameRepository, ResidentRepository residentRepository)
         : base("Услуги")
     {
         this.managers = managers;

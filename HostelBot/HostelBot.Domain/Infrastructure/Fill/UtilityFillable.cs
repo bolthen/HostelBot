@@ -2,10 +2,10 @@
 
 namespace HostelBot.Domain.Infrastructure;
 
-public class UtilityFiller : Filler<UtilityFiller>
+public class UtilityFillable : Fillable<UtilityFillable>
 {
-    public UtilityFiller() {}
-    public UtilityFiller(string name) => Name = name;
+    public UtilityFillable() {}
+    public UtilityFillable(string name) => Name = name;
     
     public override void OnFilled()
     {

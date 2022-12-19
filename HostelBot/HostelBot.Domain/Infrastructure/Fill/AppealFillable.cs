@@ -6,7 +6,7 @@ using HostelBot.Domain.Domain;
 
 namespace HostelBot.Domain.Infrastructure;
 
-public class AppealFiller : Filler<AppealFiller>, IFillable
+public class AppealFillable : Fillable<AppealFillable>, IFillable
 {
     public override void OnFilled()
     {

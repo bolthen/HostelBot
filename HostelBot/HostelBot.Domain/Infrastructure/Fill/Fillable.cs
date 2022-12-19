@@ -2,7 +2,7 @@
 
 namespace HostelBot.Domain.Infrastructure;
 
-public abstract class Filler<T> : DddObject<T>, IObservable<T>, IFillable
+public abstract class Fillable<T> : DddObject<T>, IObservable<T>, IFillable
     where T : DddObject<T>
 {
     protected readonly List<IObserver<T>> observers = new();

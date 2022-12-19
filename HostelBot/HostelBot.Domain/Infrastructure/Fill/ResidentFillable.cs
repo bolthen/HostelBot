@@ -6,7 +6,7 @@ using HostelBot.Domain.Infrastructure.Services;
 
 namespace HostelBot.Domain.Infrastructure;
 
-public class ResidentFiller : Filler<ResidentFiller>
+public class ResidentFillable : Fillable<ResidentFillable>
 {
      /*public void OnFilled()
      {

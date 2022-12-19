@@ -3,9 +3,9 @@ using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.App;
 
-public class AppealCommand : FillCommand<AppealFiller>
+public class AppealCommand : FillCommand<AppealFillable>
 {
-    public AppealCommand(IEnumerable<Manager<AppealFiller>> managers) : base("Обращения", managers, new AppealFiller())
+    public AppealCommand(IEnumerable<Manager<AppealFillable>> managers) : base("Обращения", managers, new AppealFillable())
     {
     }
 }
