@@ -13,7 +13,8 @@ public sealed class MainDbContext : DbContext
     public DbSet<Room> Rooms { get; set; }
     public DbSet<Utility> Utilities { get; set; }
     public DbSet<UtilityName> UtilityNames { get; set; }
- 
+    public DbSet<Administrator> Administrators { get; set; }
+
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
     {
         Database.EnsureCreated();
@@ -21,7 +22,7 @@ public sealed class MainDbContext : DbContext
 
     public MainDbContext()
     {
-        //Database.EnsureDeleted(); // TODO DELETE
+        Database.EnsureDeleted(); // TODO DELETE
         Database.EnsureCreated();
     }
 
