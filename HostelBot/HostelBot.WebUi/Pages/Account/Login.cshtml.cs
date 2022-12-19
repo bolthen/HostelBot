@@ -30,7 +30,7 @@ namespace WebUi.Pages.Account
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, Manager.Login),
-                new Claim("Hostel", "№6")
+                new Claim("Hostel", "1")
             };
             var identity = new ClaimsIdentity(claims, "CookieAuth");
             var claimPrincipal = new ClaimsPrincipal(identity);

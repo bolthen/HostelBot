@@ -13,7 +13,7 @@ public class HostelRepository : EntityRepository<Hostel>
     {
         return context.Hostels.FirstOrDefault(x => x.Name == hostelName);
     }
-    
+
     public async new Task<Hostel> GetAsync(long id)
     {
         var foundEntity = context.Hostels
@@ -23,9 +23,8 @@ public class HostelRepository : EntityRepository<Hostel>
             .FirstOrDefault(r => r.Id == id);
 
         if (foundEntity != null) return foundEntity;
-        
+
         context.Entry(foundEntity).State = EntityState.Detached;
         throw new Exception($"The Hostel with the given id was not found in the database");
-    }
-
+    }                                                                                                 
 }

@@ -11,13 +11,18 @@ namespace WebUi.Pages.Utilities;
 public class DeletePage : PageModel
 {
     private readonly UtilityNameRepository utilityNameRepository;
+    private readonly HostelRepository hostelRepository;
     
     [BindProperty]
     public UtilityName Utility { get; set; }
     
-    public DeletePage(UtilityNameRepository utilityNameRepository)
+    [BindProperty]
+    public Hostel Hostel { get; set; }
+    
+    public DeletePage(HostelRepository hostelRepository, UtilityNameRepository utilityNameRepository)
     {
         this.utilityNameRepository = utilityNameRepository;
+        this.hostelRepository = hostelRepository;
     }
     
     public IActionResult OnGet(int id)

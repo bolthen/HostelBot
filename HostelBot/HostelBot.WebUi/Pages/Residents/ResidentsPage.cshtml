@@ -19,20 +19,18 @@
     <table class="table table-bordered table-hover table-inverse table-striped" id="residents">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Имя</th>
-                <th>Фамилия</th>
-                <th>Комната</th>
+                <th class="col-1">Комната</th>
+                <th class="col-2">Имя</th>
+                <th class="col-4">Фамилия</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.Residents)
             {
                 <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Name</td>
-                    <td>@item.Surname</td>
-                    <td></td>
+                    <td class="col-1">@item.Room?.Number</td>
+                    <td class="col-2">@item.Name</td>
+                    <td class="col-4">@item.Surname</td>
                 </tr>
             }
         </tbody>
