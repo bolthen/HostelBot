@@ -21,7 +21,7 @@ namespace HostelBot.Domain.Domain
 
         public Resident(){}
 
-         public string Name { get; set; }
+        public string Name { get; set; }
         
         public string Surname { get; set; }
 
