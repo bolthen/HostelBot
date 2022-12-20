@@ -1,4 +1,5 @@
 ﻿using HostelBot.App;
+using HostelBot.Ui.TelegramBot.Commands;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
@@ -12,8 +13,8 @@ public class TelegramUi : IUi
     {
         BaseCommands.SetStartCommand(application.GetStartCommand());
         
-        application.GetAppealChangesManager().AddChangesHandler(UpdateHandler.HandleAppeal);
-        application.GetResidentChangesManager().AddChangesHandler(UpdateHandler.HandleResident);
+        application.GetAppealChangesManager().AddChangesHandler(UpdateHandler.NotifyAppealReceived);
+        application.GetResidentChangesManager().AddChangesHandler(UpdateHandler.NotifyResidentAccepted);
     }
 
     public void Run()

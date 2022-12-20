@@ -2,30 +2,25 @@
 
 public static class LocalUserRepo
 {
-    private static readonly Dictionary<long, LocalUser> ChatId2User = new();
+    private static readonly Dictionary<long, bool> ChatId2IsUserRegistered = new();
 
     public static bool ContainsUser(long chatId)
     {
-        return ChatId2User.ContainsKey(chatId);
+        return ChatId2IsUserRegistered.ContainsKey(chatId);
     }
 
     public static void AddUser(long chatId)
     {
-        ChatId2User[chatId] = new LocalUser { Registered = false };
+        ChatId2IsUserRegistered[chatId] = false;
     }
 
     public static void RegisterUser(long chatId)
     {
-        ChatId2User[chatId].Registered = true;
+        ChatId2IsUserRegistered[chatId] = true;
     }
 
     public static bool IsRegistered(long chatId)
     {
-        return ChatId2User[chatId].Registered;
-    }
-    
-    private class LocalUser
-    {
-        public bool Registered { get; set; }
+        return ChatId2IsUserRegistered[chatId];
     }
 }

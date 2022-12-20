@@ -78,4 +78,9 @@ public class FillingProgress
         progress.fillable.FillClass(progress.Answers);
         ChatId2FillingProgress.Remove(chatId);
     }
+
+    public static void CancelFilling(long chatId)
+    {
+        ChatId2FillingProgress.Remove(chatId);
+    }
 }

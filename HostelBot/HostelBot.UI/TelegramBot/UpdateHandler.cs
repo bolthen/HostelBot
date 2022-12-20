@@ -2,6 +2,7 @@
 using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure;
 using HostelBot.Domain.Infrastructure.Exceptions;
+using HostelBot.Ui.TelegramBot.Commands;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -191,24 +192,38 @@ internal static class UpdateHandler
         
         if (CallbackCommands.Contains(callbackQuery.Data!))
         {
-            await HandleCommand(CallbackCommands.Get(callbackQuery.Data!), chatId);
+            var command = CallbackCommands.Get(callbackQuery.Data!);
+
+            await BotClient.EditMessageTextAsync(chatId, callbackQuery.Message.MessageId,
+                $"Вы выбрали: {command.Name}", 
+                replyMarkup: new InlineKeyboardMarkup(InlineKeyboardButton.WithCallbackData("Отменить")));
+
+            await HandleCommand(command, chatId);
             return;
         }
-        
+
+        if (callbackQuery.Data! == "Отменить")
+        {
+            FillingProgress.CancelFilling(chatId);
+            await SendMessage("Операция отменена.", chatId);
+            return;
+        }
+
         await SendMessage($"Unknown Data: {callbackQuery.Data}", chatId);
     }
 
-    private static async Task SendMessage(string message, long chatId, ReplyMarkupBase? replyMarkup = null)
+    private static async Task SendMessage(string message, long chatId, IReplyMarkup? replyMarkup = null)
     {
         await BotClient.SendTextMessageAsync(chatId, message, replyMarkup: replyMarkup);
     }
     
-    public static async void HandleResident(Resident resident)
+    
+    public static async void NotifyResidentAccepted(Resident resident)
     {
         await VerificationSuccessful(resident.Id);
     }
     
-    public static async void HandleAppeal(Appeal appeal)
+    public static async void NotifyAppealReceived(Appeal appeal)
     {
         await SendMessage("Ответ на ваше обращение:\n" + appeal.Answer, appeal.Resident.Id);
     }
