@@ -6,7 +6,7 @@ public class ResidentChangesManager : ChangesManager<Resident>
 {
     public override void OnHandleChanges(Resident resident)
     {
-        if (resident.Accepted)
+        if (resident.IsAccepted)
             base.OnHandleChanges(resident);
     }
 }

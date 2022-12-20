@@ -15,13 +15,9 @@ namespace HostelBot.Domain.Domain
         public string? Answer { get; set; }
         
         public Appeal() { }
-
-        public Appeal(Resident resident, string content)
-        {
-            Resident = resident;
-        }
         
-        public Appeal(string name, Resident resident, string content)
+        
+        public Appeal( Resident resident, string content)
         {
             Resident = resident;
             Content = content;

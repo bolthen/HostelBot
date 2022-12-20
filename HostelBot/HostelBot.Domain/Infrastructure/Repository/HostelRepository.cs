@@ -12,7 +12,11 @@ public class HostelRepository : EntityRepository<Hostel>
 
     public async Task<Hostel> GetByName(string hostelName)
     {
-        return context.Hostels.FirstOrDefault(x => x.Name == hostelName);
+        return context.Hostels
+            .Include(x => x.Residents)
+            .Include(x => x.UtilityNames)
+            .Include(x => x.Rooms)
+            .FirstOrDefault(r => r.Name == hostelName);
     }
     
     public async new Task<Hostel> GetAsync(long id)
@@ -48,7 +52,7 @@ public class HostelRepository : EntityRepository<Hostel>
         if (foundEntity == null)
             return GetAsync(hostelId).Result;
         
-        foundEntity.AcceptToHostel = true;
+        foundEntity.IsAccepted = true;
         context.Set<Resident>().Update(foundEntity);
         await context.SaveChangesAsync();
         

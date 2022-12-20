@@ -33,7 +33,7 @@ namespace HostelBot.Domain.Domain
 
         public List<Appeal> Appeals { get; set; } = new();
 
-        public bool AcceptToHostel { get; set; }
+        public bool IsAccepted { get; set; }
         
         public override string ToString() => $"{Name} {Surname}";
 

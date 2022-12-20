@@ -1,5 +1,5 @@
 using HostelBot.Domain.Domain;
-using HostelBot.Domain.Infrastructure.Services;
+using HostelBot.Domain.Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Telegram.Bot.Types;
@@ -26,7 +26,7 @@ public class CheckInPage : PageModel
             RedirectToPage("/Account/AccessDenied");
             
         hostel = hostelRepository.GetAsync(id).Result;
-        Residents = hostel?.Residents.Where(x => !x.AcceptToHostel).ToArray() ?? Array.Empty<Resident>();
+        Residents = hostel?.Residents.Where(x => !x.IsAccepted).ToArray() ?? Array.Empty<Resident>();
         return Page();
     }
     
@@ -37,7 +37,7 @@ public class CheckInPage : PageModel
             
         hostel = hostelRepository.GetAsync(hostelId).Result;
         hostel = hostelRepository.AcceptResident(id, hostel.Id).Result;
-        Residents = hostel.Residents.Where(x => !x.AcceptToHostel).ToArray();
+        Residents = hostel.Residents.Where(x => !x.IsAccepted).ToArray();
         return Page();
     }
     
@@ -48,7 +48,7 @@ public class CheckInPage : PageModel
             
         hostel = hostelRepository.GetAsync(hostelId).Result;
         hostel = hostelRepository.DeleteResident(id, hostel.Id).Result;
-        Residents = hostel.Residents.Where(x => !x.AcceptToHostel).ToArray();
+        Residents = hostel.Residents.Where(x => !x.IsAccepted).ToArray();
         return Page();
     }
 }

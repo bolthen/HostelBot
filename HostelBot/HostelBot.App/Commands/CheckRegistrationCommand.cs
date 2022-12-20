@@ -22,6 +22,8 @@ public class CheckRegistrationCommand : FillCommand<ResidentFillable>
     {
         if (!residentRepository.CheckAsync(residentId).Result)
             throw new NotRegisteredResidentException();
+        if (!residentRepository.GetAsync(residentId).Result.IsAccepted)
+            throw new NotAcceptedResidentException();
         
         return subcommands;
     }
