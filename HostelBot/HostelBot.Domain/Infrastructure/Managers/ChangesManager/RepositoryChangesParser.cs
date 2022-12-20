@@ -7,10 +7,10 @@ namespace HostelBot.Domain.Infrastructure;
 
 public class RepositoryChangesParser
 {
-    private readonly AppealChangesManager appealChangesManager;
-    private readonly ResidentChangesManager residentChangesManager;
+    private readonly ChangesManager<Appeal> appealChangesManager;
+    private readonly ChangesManager<Resident> residentChangesManager;
 
-    public RepositoryChangesParser(AppealChangesManager appealChangesManager, ResidentChangesManager residentChangesManager)
+    public RepositoryChangesParser(ChangesManager<Appeal> appealChangesManager, ChangesManager<Resident> residentChangesManager)
     {
         this.appealChangesManager = appealChangesManager;
         this.residentChangesManager = residentChangesManager;

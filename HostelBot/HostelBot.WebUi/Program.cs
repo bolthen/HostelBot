@@ -73,7 +73,9 @@ static StandardKernel ConfigureContainer()
     container.Bind<Manager<ResidentFillable>>().To<FillableResidentManager>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
 
     container.Bind<MainDbContext>().ToSelf().InSingletonScope();
-    
+
+    container.Bind<ChangesManager<Appeal>>().To<AppealChangesManager>().InSingletonScope();
+    container.Bind<ChangesManager<Resident>>().To<ResidentChangesManager>().InSingletonScope();
     container.Bind<RepositoryChangesParser>().ToSelf().InSingletonScope();
     container.Bind<AppealChangesManager>().ToSelf().InSingletonScope();
     container.Bind<ResidentChangesManager>().ToSelf().InSingletonScope();

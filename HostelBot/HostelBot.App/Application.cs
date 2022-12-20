@@ -7,17 +7,29 @@ namespace HostelBot.App;
 public class Application : IApplication
 {
     private readonly CheckRegistrationCommand residentRegistrationCommand;
+    private readonly ChangesManager<Appeal> appealChangesManager;
+    private readonly ChangesManager<Resident> residentChangesManager;
     
     public Application(CheckRegistrationCommand residentRegistrationCommand,
-        AppealChangesManager appealChangesManager, ResidentChangesManager residentChangesManager)
+        ChangesManager<Appeal> appealChangesManager, ChangesManager<Resident> residentChangesManager)
     {
         this.residentRegistrationCommand = residentRegistrationCommand;
-        appealChangesManager.AddChangesHandler(Console.WriteLine);
-        residentChangesManager.AddChangesHandler(Console.WriteLine);
+        this.appealChangesManager = appealChangesManager;
+        this.residentChangesManager = residentChangesManager;
     }
 
     public Command GetStartCommand()
     {
         return residentRegistrationCommand;
+    }
+
+    public ChangesManager<Appeal> GetAppealChangesManager()
+    {
+        return appealChangesManager;
+    }
+    
+    public ChangesManager<Resident> GetResidentChangesManager()
+    {
+        return residentChangesManager;
     }
 }
