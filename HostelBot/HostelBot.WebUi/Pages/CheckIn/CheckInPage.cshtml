@@ -1,27 +1,28 @@
 @page
-@model WebUi.Pages.Residents.ResidentsPage
+@model WebUi.Pages.CheckIn.CheckInPage
 
 @{
-    ViewData["Title"] = "Жители";
+    ViewData["Title"] = "Поселение";
 }
 
 <!DOCTYPE html>
 
-<html lang="ru">
+<html>
 <head>
-    <title>Жители</title>
+    <title></title>
 </head>
 <body>
 <div>
-    <h2>Жители</h2>
+    <h2>Заявление на добавление</h2>
     <h3>Количество: @Model.Residents.Count</h3>
-
+    
     <table class="table table-bordered table-hover table-inverse table-striped" id="residents">
         <thead>
         <tr>
             <th class="col-1">Комната</th>
             <th class="col-3">Имя</th>
             <th class="col-4">Фамилия</th>
+            <th class="col-1"></th>
             <th class="col-1"></th>
         </tr>
         </thead>
@@ -33,11 +34,25 @@
                 <td class="col-3">@item.Name</td>
                 <td class="col-4">@item.Surname</td>
                 <td class="col-1">
-                    <a asp-page="/Residents/ResidentDeletePage" 
-                       asp-route-Id="@item.Id" 
-                       class="btn btn-outline-danger">
-                        Удалить
-                    </a>
+                    <form method="post">
+                        <button type="submit" 
+                                class="btn btn-outline-primary"
+                                asp-route-id="@item.Id"
+                                asp-for="hostel"
+                                asp-page-handler="Submit">
+                            Добавить
+                        </button>
+                    </form>
+                </td>
+                <td class="col-1">
+                    <form method="post">
+                        <button type="submit"
+                                class="btn btn-outline-danger"
+                                asp-route-id="@item.Id"
+                                asp-page-handler="Decline">
+                            Отклонить
+                        </button>
+                    </form>
                 </td>
             </tr>
         }
@@ -57,21 +72,5 @@
     $('table').dataTable({searching: true, paging: false, info: false});
 </script>
 
-<script>
-function deleteItem() {
-    let table = $('#residents');
-    let rowid = $(this).closest('tr').data('index');
-    
-    //$("#residents tr:eq("+2+")").remove();
-    $("#residents tr:eq("+$rowid+")").remove();
-    
-    if (!confirm('Are you sure you want to delete this item?')) {
-        return
-    }
-
-  }
-</script>
-
 </body>
 </html>
-

@@ -11,18 +11,13 @@ namespace WebUi.Pages.Utilities;
 public class DeletePage : PageModel
 {
     private readonly UtilityNameRepository utilityNameRepository;
-    private readonly HostelRepository hostelRepository;
     
     [BindProperty]
     public UtilityName Utility { get; set; }
     
-    [BindProperty]
-    public Hostel Hostel { get; set; }
-    
-    public DeletePage(HostelRepository hostelRepository, UtilityNameRepository utilityNameRepository)
+    public DeletePage(UtilityNameRepository utilityNameRepository, HostelRepository hostelRepository)
     {
         this.utilityNameRepository = utilityNameRepository;
-        this.hostelRepository = hostelRepository;
     }
     
     public IActionResult OnGet(int id)
@@ -30,7 +25,7 @@ public class DeletePage : PageModel
         Utility = utilityNameRepository.GetAsync(id).Result;
 
         if (Utility is null)
-            return RedirectToPage("/NotFound");
+            return RedirectToPage("/Utilities/UtilityNotFound", Utility);
 
         return Page();
     }
@@ -38,8 +33,10 @@ public class DeletePage : PageModel
     public IActionResult OnPost()
     {
         if (!utilityNameRepository.DeleteAsync(Utility.Id).Result)
-            return RedirectToPage("/NotFound");
-
+            return RedirectToPage("/Utilities/UtilityNotFound", Utility);
+        
+        
+        
         return RedirectToPage("/Utilities/UtilitiesPage");
     }
 }

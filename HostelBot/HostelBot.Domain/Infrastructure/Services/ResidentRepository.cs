@@ -11,4 +11,5 @@ public class ResidentRepository : EntityRepository<Resident>
     {
         return context.Residents;
     }
+    
 }

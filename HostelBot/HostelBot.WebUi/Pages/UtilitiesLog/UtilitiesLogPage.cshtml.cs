@@ -20,17 +20,11 @@ public class UtilitiesLogPage : PageModel
     
     public IActionResult OnGet()
     {
-        var claim = User.Claims.FirstOrDefault(x => x.Type == "Hostel");
-        if (claim is null)
-            return RedirectToPage("/Account/AccessDenied");
-
-        if (int.TryParse(claim.Value, out var id))
-        {
-            var hostel = hostelRepository.GetAsync(id).Result;
-            Utilities = hostel?.UtilityNames.ToArray() ?? Array.Empty<UtilityName>();
-            return Page();
-        }
+        if (!User.GetClaimValue("Hostel").TryParseInt(out var id))
+            RedirectToPage("/Account/AccessDenied");
         
-        return RedirectToPage("/Account/AccessDenied");
+        var hostel = hostelRepository.GetAsync(id).Result;
+        Utilities = hostel?.UtilityNames.ToArray() ?? Array.Empty<UtilityName>();
+        return Page();
     }
 }

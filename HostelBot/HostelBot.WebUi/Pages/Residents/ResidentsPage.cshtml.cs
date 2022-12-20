@@ -14,7 +14,7 @@ namespace WebUi.Pages.Residents
 
         private readonly HostelRepository hostelRepository;
 
-        public ResidentsPage(HostelRepository hostelRepository)
+        public ResidentsPage(HostelRepository hostelRepository, ResidentRepository residentRepository)
         {
             this.hostelRepository = hostelRepository;
 
@@ -34,21 +34,15 @@ namespace WebUi.Pages.Residents
              // foreach (var resident in mockBd)
              //     residentRepository.CreateAsync(resident);
         }
-    
+
         public IActionResult OnGet()
         {
-            var claim = User.Claims.FirstOrDefault(x => x.Type == "Hostel");
-            if (claim is null)
-                return RedirectToPage("/Account/AccessDenied");
-
-            if (int.TryParse(claim.Value, out var id))
-            {
-                var hostel = hostelRepository.GetAsync(id).Result;
-                Residents = hostel?.Residents.ToArray() ?? Array.Empty<Resident>();
-                return Page();
-            }
+            if (!User.GetClaimValue("Hostel").TryParseInt(out var id))
+                RedirectToPage("/Account/AccessDenied");
             
-            return RedirectToPage("/Account/AccessDenied"); 
+            var hostel = hostelRepository.GetAsync(id).Result;
+            Residents = hostel?.Residents.Where(x => x.AcceptToHostel).ToArray() ?? Array.Empty<Resident>();
+            return Page();
         }
     }
 }

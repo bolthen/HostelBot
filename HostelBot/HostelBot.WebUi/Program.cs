@@ -23,6 +23,8 @@ var container = ConfigureContainer();
 //foreach (var ui in container.GetAll<IUi>())
 //    Task.Run(() => ui.Run());
 
+builder.Services.AddSingleton<MainDbContext>();
+builder.Services.AddSingleton<AdministratorRepository>();
 builder.Services.AddSingleton(_ => container.Get<ResidentRepository>());
 builder.Services.AddSingleton(_ => container.Get<HostelRepository>());
 builder.Services.AddSingleton(_ => container.Get<UtilityNameRepository>());

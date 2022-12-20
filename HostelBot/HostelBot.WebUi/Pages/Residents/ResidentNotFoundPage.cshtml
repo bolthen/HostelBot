@@ -1,0 +1,32 @@
+@page
+@model WebUi.Pages.Residents.ResidentNotFoundPage
+
+@{
+    ViewData["Title"] = "Ошибка";
+}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <div class="row">
+        <h4>Ошибка</h4>
+    </div>
+    <div class="row">
+        @if (Model.Resident != null)
+        {
+            <h6><span class="text-primary">@Model.Resident.Name @Model.Resident.Surname</span> не найден</h6>
+        }
+        else
+        {
+            <h6>Человек не найден</h6>
+        }
+    </div>
+    
+</div>
+</body>
+</html>

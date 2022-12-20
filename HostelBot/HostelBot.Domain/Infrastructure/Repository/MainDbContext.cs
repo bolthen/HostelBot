@@ -23,7 +23,7 @@ public sealed class MainDbContext : DbContext
 
     public MainDbContext()
     {
-        Database.EnsureDeleted(); // TODO DELETE
+        //Database.EnsureDeleted(); // TODO DELETE
         Database.EnsureCreated();
     }
 
