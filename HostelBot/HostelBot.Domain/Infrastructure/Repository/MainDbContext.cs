@@ -24,7 +24,7 @@ public sealed class MainDbContext : DbContext
 
     /*public MainDbContext()
     {
-        Database.EnsureDeleted(); // TODO DELETE
+        //Database.EnsureDeleted(); // TODO DELETE
         Database.EnsureCreated();
     }*/
     
@@ -37,16 +37,38 @@ public sealed class MainDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        
         optionsBuilder.UseSqlite("Data Source=helloapp.db");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Hostel>(hostel => 
-                hostel
-                    .HasMany(a => a.Residents)
-                    .WithOne(x => x.Hostel));
-        modelBuilder.Entity<Room>().HasIndex(x => x.Number).IsUnique();
+            hostel
+                .HasMany(a => a.Residents)
+                .WithOne(x => x.Hostel));
+        
+        modelBuilder.Entity<Room>()
+            .HasIndex(x => x.Number)
+            .IsUnique();
+        
+        modelBuilder.Entity<Hostel>(hostel =>
+            hostel
+                .HasMany(x => x.Rooms)
+                .WithOne(y => y.Hostel));
+        
+        modelBuilder.Entity<Hostel>(hostel =>
+            hostel
+                .HasMany(x => x.UtilityNames)
+                .WithOne(y => y.Hostel));
+
+        modelBuilder.Entity<Resident>(resident =>
+            resident
+                .HasMany(x => x.Appeals)
+                .WithOne(y => y.Resident));
+        
+        modelBuilder.Entity<Resident>(resident =>
+            resident
+                .HasMany(x => x.Utilities)
+                .WithOne(y => y.Resident));
     }
 }

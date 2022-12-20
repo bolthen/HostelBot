@@ -14,8 +14,8 @@ public class FillableUtilityManager : Manager<UtilityFillable>
 
     protected override void Handle(UtilityFillable value)
     {
-        var utility = new Utility(value.Name, value.Content);
         var resident = residentRepository.GetAsync(value.ResidentId).Result;
+        var utility = new Utility(value.Name, value.Content, resident);
         resident.AddUtility(utility);
         residentRepository.UpdateAsync(resident);
     }

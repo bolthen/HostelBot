@@ -1,20 +1,29 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text.Json.Serialization;
+using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure;
 
 namespace HostelBot.Domain;
 
-public class Utility : Entity<Utility>, Infrastructure.IObservable<Utility>, IFillable
+public class Utility : Entity<Utility>
 {
-    public Utility() { }
-    
-    public Utility(string name) => Name = name;
+    public Utility()
+    {
 
-    public Utility(string name, string content)
+    }
+    
+    public Utility(string name, Resident resident)
+    {
+        Name = name;
+        Resident = resident;
+    }
+
+    public Utility(string name, string content, Resident resident)
     {
         Name = name;
         Content = content;
+        Resident = resident;
     } 
     
     public string Name { get; set; }
@@ -22,9 +31,10 @@ public class Utility : Entity<Utility>, Infrastructure.IObservable<Utility>, IFi
     [Question("Опишите Вашу проблему", ViewType.TextEnter)]
     public string Content { get; set; }
 
-    public long ResidentId { get; set; }
+    public Resident Resident { get; set; }
     
     public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
+    public long ResidentId { get; set; }
     private readonly List<Infrastructure.IObserver<Utility>> observers = new();
     
     /*private bool filled;

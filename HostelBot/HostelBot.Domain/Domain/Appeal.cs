@@ -31,6 +31,6 @@ namespace HostelBot.Domain.Domain
 
         public string Content { get; set; }
         
-        public string Answer { get; set; }
+        public string? Answer { get; set; }
     }
 }

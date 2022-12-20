@@ -14,4 +14,6 @@ public class UtilityName : Entity<UtilityName>
     }
 
     public string Name { get; set; }
+    
+    public Hostel Hostel { get; set; }
 }
