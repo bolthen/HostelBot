@@ -16,9 +16,9 @@ public class RepositoryChangesParser
         this.residentChangesManager = residentChangesManager;
     }
     
-    public void ParseRepositoryChanges(object? sender, EntityTrackedEventArgs entityTrackedEventArgs)
+    public void ParseRepositoryChanges(object? sender, DetectedEntityChangesEventArgs detectedEntityChangesEventArgs)
     {
-        switch (entityTrackedEventArgs.Entry.Entity)
+        switch (detectedEntityChangesEventArgs.Entry.Entity)
         {
             case Appeal appeal:
                 appealChangesManager.OnHandleChanges(appeal);
