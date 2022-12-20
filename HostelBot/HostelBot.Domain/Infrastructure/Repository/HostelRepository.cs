@@ -1,5 +1,8 @@
 ﻿using HostelBot.Domain.Domain;
+using HostelBot.Domain.Infrastructure.Repository;
+using iTextSharp.text.pdf;
 using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Utilities;
 
 namespace HostelBot.Domain.Infrastructure.Repository;
 
@@ -26,6 +29,33 @@ public class HostelRepository : EntityRepository<Hostel>
         throw new Exception($"The Hostel with the given id was not found in the database");
     }
 
+    public async Task<Hostel> DeleteResident(long residentId, long hostelId)
+    {
+        var foundEntity = await context.Set<Resident>().FindAsync(residentId);
+
+        if (foundEntity == null)
+            return GetAsync(hostelId).Result;
+
+        context.Set<Resident>().Remove(foundEntity);
+        await context.SaveChangesAsync();
+        return GetAsync(hostelId).Result;
+    }
+
+    public async Task<Hostel> AcceptResident(long residentId, long hostelId)
+    {
+        var foundEntity = await context.Set<Resident>().FindAsync(residentId);
+        
+        if (foundEntity == null)
+            return GetAsync(hostelId).Result;
+        
+        foundEntity.AcceptToHostel = true;
+        context.Set<Resident>().Update(foundEntity);
+        await context.SaveChangesAsync();
+        
+        return GetAsync(hostelId).Result;
+        
+    }
+    
     public async Task<Room> FindOrCreateRoom(string hostelName, int roomNumber)
     {
         var hostel = GetByName(hostelName).Result;
@@ -36,5 +66,4 @@ public class HostelRepository : EntityRepository<Hostel>
 
         return room;
     }
-
 }

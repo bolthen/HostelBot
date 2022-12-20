@@ -15,7 +15,7 @@ public class DeletePage : PageModel
     [BindProperty]
     public UtilityName Utility { get; set; }
     
-    public DeletePage(UtilityNameRepository utilityNameRepository)
+    public DeletePage(UtilityNameRepository utilityNameRepository, HostelRepository hostelRepository)
     {
         this.utilityNameRepository = utilityNameRepository;
     }
@@ -25,7 +25,7 @@ public class DeletePage : PageModel
         Utility = utilityNameRepository.GetAsync(id).Result;
 
         if (Utility is null)
-            return RedirectToPage("/NotFound");
+            return RedirectToPage("/Utilities/UtilityNotFound", Utility);
 
         return Page();
     }
@@ -33,8 +33,10 @@ public class DeletePage : PageModel
     public IActionResult OnPost()
     {
         if (!utilityNameRepository.DeleteAsync(Utility.Id).Result)
-            return RedirectToPage("/NotFound");
-
+            return RedirectToPage("/Utilities/UtilityNotFound", Utility);
+        
+        
+        
         return RedirectToPage("/Utilities/UtilitiesPage");
     }
 }

@@ -1,0 +1,48 @@
+@page
+@model WebUi.Pages.UtilitiesLog.UtilitiesLogPage
+
+@{
+    ViewData["Title"] = "Журнал заявок";
+}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <h2>Заявления</h2>
+  
+    <div class="accordion" id="printUtilities">
+        @foreach (var item in Model.Utilities)
+        {
+            var id = "id" + item.Name;
+            var collapseName = "collapse" + item.Name;
+            <div class="accordion-item">
+                <h2 class="accordion-header" id=@id>
+                    <button class="accordion-button" 
+                            type="button" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target=#@collapseName
+                            aria-expanded="false" 
+                            aria-controls=@collapseName>
+                        @item.Name
+                    </button>
+                </h2>
+
+                <div id=@collapseName 
+                     class="accordion-collapse collapse" 
+                     aria-labelledby=@id 
+                     data-bs-parent="#printUtilities">
+                    <div class="accordion-body">
+                        <strong>Выбор дат для печати</strong>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</body>
+</html>

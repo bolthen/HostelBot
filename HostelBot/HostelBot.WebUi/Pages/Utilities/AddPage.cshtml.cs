@@ -24,8 +24,11 @@ public class AddPage : PageModel
     
     public IActionResult OnPost()
     {
+        if (!User.GetClaimValue("Hostel").TryParseInt(out var id))
+            RedirectToPage("/Account/AccessDenied");
+
         var name = HttpContext.Request.Form["Workable"].ToString();
-        var hostel = hostelRepository.GetByName("№6").Result;
+        var hostel = hostelRepository.GetAsync(id).Result;
         hostel.AddUtilityName(new UtilityName(name));
         hostelRepository.UpdateAsync(hostel);
         return RedirectToPage("/Utilities/UtilitiesPage");
