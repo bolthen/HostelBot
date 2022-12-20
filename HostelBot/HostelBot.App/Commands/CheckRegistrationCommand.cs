@@ -1,6 +1,6 @@
 ﻿using HostelBot.Domain.Infrastructure;
 using HostelBot.Domain.Infrastructure.Exceptions;
-using HostelBot.Domain.Infrastructure.Services;
+using HostelBot.Domain.Infrastructure.Repository;
 
 namespace HostelBot.App;
 

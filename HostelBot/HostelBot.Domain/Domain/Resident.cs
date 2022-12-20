@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text.Json.Serialization;
 using HostelBot.Domain.Infrastructure;
-using HostelBot.Domain.Infrastructure.Services;
 
 namespace HostelBot.Domain.Domain
 {
@@ -32,6 +31,8 @@ namespace HostelBot.Domain.Domain
         public List<Utility> Utilities { get; set; } = new ();
 
         public List<Appeal> Appeals { get; set; } = new();
+
+        public bool Accepted { get; set; }
         
         public override string ToString() => $"{Name} {Surname}";
 

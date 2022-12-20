@@ -2,7 +2,6 @@
 using System.Reflection;
 using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure.Managers;
-using HostelBot.Domain.Infrastructure.Services;
 
 namespace HostelBot.Domain.Infrastructure;
 

@@ -1,5 +1,5 @@
 ﻿using HostelBot.Domain.Domain;
-using HostelBot.Domain.Infrastructure.Services;
+using HostelBot.Domain.Infrastructure.Repository;
 
 namespace HostelBot.Domain.Infrastructure.Managers;
 
@@ -16,10 +16,8 @@ public class FillableResidentManager : Manager<ResidentFillable>
     
     protected override void Handle(ResidentFillable value)
     {
+        var room = hostelRepository.FindOrCreateRoom($"№{value.HostelNumber}", value.RoomNumber).Result;
         var hostel = hostelRepository.GetByName($"№{value.HostelNumber}").Result;
-        var room = new Room(value.RoomNumber, hostel);
-        hostel.AddRoom(room);
-        hostelRepository.UpdateAsync(hostel);
         var resident = new Resident(value.ResidentId, value.Name, value.Surname, hostel, room);
         residentRepository.CreateAsync(resident);
     }

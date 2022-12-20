@@ -10,21 +10,21 @@ public class RepositoryChangesParser
     private readonly AppealChangesManager appealChangesManager;
     private readonly ResidentChangesManager residentChangesManager;
 
-    private RepositoryChangesParser(AppealChangesManager appealChangesManager, ResidentChangesManager residentChangesManager)
+    public RepositoryChangesParser(AppealChangesManager appealChangesManager, ResidentChangesManager residentChangesManager)
     {
         this.appealChangesManager = appealChangesManager;
         this.residentChangesManager = residentChangesManager;
     }
     
-    private void ParseRepositoryChanges(object sender, EntityEntryEventArgs e)
+    public void ParseRepositoryChanges(object? sender, EntityTrackedEventArgs entityTrackedEventArgs)
     {
-        switch (e.Entry.Entity)
+        switch (entityTrackedEventArgs.Entry.Entity)
         {
             case Appeal appeal:
-                appealChangesManager.HandleUtilityChanges(appeal);
+                appealChangesManager.OnHandleChanges(appeal);
                 break;
             case Resident resident:
-                residentChangesManager.HandleResidentChanges(resident);
+                residentChangesManager.OnHandleChanges(resident);
                 break;
         }
     }

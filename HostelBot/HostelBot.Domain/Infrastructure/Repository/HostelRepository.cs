@@ -1,9 +1,7 @@
 ﻿using HostelBot.Domain.Domain;
-using HostelBot.Domain.Infrastructure.Repository;
-using iTextSharp.text.pdf;
 using Microsoft.EntityFrameworkCore;
 
-namespace HostelBot.Domain.Infrastructure.Services;
+namespace HostelBot.Domain.Infrastructure.Repository;
 
 public class HostelRepository : EntityRepository<Hostel>
 {
@@ -26,6 +24,17 @@ public class HostelRepository : EntityRepository<Hostel>
         
         context.Entry(foundEntity).State = EntityState.Detached;
         throw new Exception($"The Hostel with the given id was not found in the database");
+    }
+
+    public async Task<Room> FindOrCreateRoom(string hostelName, int roomNumber)
+    {
+        var hostel = GetByName(hostelName).Result;
+        var room = hostel.Rooms.FirstOrDefault(r => r.Number == roomNumber) ?? new Room(roomNumber, hostel);
+        
+        hostel.AddRoom(room);
+        await UpdateAsync(hostel);
+
+        return room;
     }
 
 }

@@ -4,7 +4,6 @@ using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure;
 using HostelBot.Domain.Infrastructure.Managers;
 using HostelBot.Domain.Infrastructure.Repository;
-using HostelBot.Domain.Infrastructure.Services;
 using HostelBot.Ui;
 using HostelBot.Ui.TelegramBot;
 using Ninject;
@@ -23,7 +22,8 @@ var container = ConfigureContainer();
 foreach (var ui in container.GetAll<IUi>())
     Task.Run(() => ui.Run());
 
-builder.Services.AddSingleton<Manager<Resident>>();
+builder.Services.AddSingleton<AdministratorRepository>();
+builder.Services.AddSingleton(_ => container.Get<MainDbContext>());
 builder.Services.AddSingleton(_ => container.Get<ResidentRepository>());
 builder.Services.AddSingleton(_ => container.Get<HostelRepository>());
 builder.Services.AddSingleton(_ => container.Get<UtilityNameRepository>());
@@ -73,6 +73,11 @@ static StandardKernel ConfigureContainer()
     container.Bind<Manager<ResidentFillable>>().To<FillableResidentManager>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
 
     container.Bind<MainDbContext>().ToSelf().InSingletonScope();
+    
+    container.Bind<RepositoryChangesParser>().ToSelf().InSingletonScope();
+    container.Bind<AppealChangesManager>().ToSelf().InSingletonScope();
+    container.Bind<ResidentChangesManager>().ToSelf().InSingletonScope();
+    
     container.Bind<IEntityRepository<Resident>>().To<EntityRepository<Resident>>().InSingletonScope();
     container.Bind<IEntityRepository<Hostel>>().To<EntityRepository<Hostel>>().InSingletonScope();
     container.Bind<IEntityRepository<Utility>>().To<EntityRepository<Utility>>().InSingletonScope();

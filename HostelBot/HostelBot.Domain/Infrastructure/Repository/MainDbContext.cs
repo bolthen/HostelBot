@@ -14,6 +14,7 @@ public sealed class MainDbContext : DbContext
     public DbSet<Room> Rooms { get; set; }
     public DbSet<Utility> Utilities { get; set; }
     public DbSet<UtilityName> UtilityNames { get; set; }
+    public DbSet<Appeal> Appeal { get; set; }
     public DbSet<Administrator> Administrators { get; set; }
 
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
@@ -21,10 +22,17 @@ public sealed class MainDbContext : DbContext
         Database.EnsureCreated();
     }
 
-    public MainDbContext()
+    /*public MainDbContext()
     {
         Database.EnsureDeleted(); // TODO DELETE
         Database.EnsureCreated();
+    }*/
+    
+    public MainDbContext(RepositoryChangesParser repositoryChangesParser)
+    { 
+        //Database.EnsureDeleted(); // TODO DELETE
+        Database.EnsureCreated();
+        ChangeTracker.Tracked += repositoryChangesParser.ParseRepositoryChanges;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

@@ -1,5 +1,5 @@
 using HostelBot.Domain.Domain;
-using HostelBot.Domain.Infrastructure.Services;
+using HostelBot.Domain.Infrastructure.Repository;
 
 namespace HostelBot.Domain.Infrastructure;
 

@@ -1,6 +1,6 @@
 using HostelBot.Domain;
 using HostelBot.Domain.Domain;
-using HostelBot.Domain.Infrastructure.Services;
+using HostelBot.Domain.Infrastructure.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

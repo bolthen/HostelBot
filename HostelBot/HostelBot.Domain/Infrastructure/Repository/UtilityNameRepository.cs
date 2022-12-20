@@ -1,7 +1,7 @@
 ﻿using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure.Repository;
 
-namespace HostelBot.Domain.Infrastructure.Services;
+namespace HostelBot.Domain.Infrastructure.Repository;
 
 public class UtilityNameRepository : EntityRepository<UtilityName>
 {
