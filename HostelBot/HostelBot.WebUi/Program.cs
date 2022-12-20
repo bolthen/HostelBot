@@ -83,11 +83,13 @@ static StandardKernel ConfigureContainer()
     container.Bind<IEntityRepository<Utility>>().To<EntityRepository<Utility>>().InSingletonScope();
     container.Bind<IEntityRepository<Room>>().To<EntityRepository<Room>>().InSingletonScope();
     container.Bind<IEntityRepository<UtilityName>>().To<EntityRepository<UtilityName>>().InSingletonScope();
+    container.Bind<IEntityRepository<Appeal>>().To<EntityRepository<Appeal>>().InSingletonScope();
 
     container.Bind<UtilityRepository>().ToSelf().InSingletonScope();
     container.Bind<ResidentRepository>().ToSelf().InSingletonScope();
     container.Bind<HostelRepository>().ToSelf().InSingletonScope();
     container.Bind<UtilityNameRepository>().ToSelf().InSingletonScope();
+    container.Bind<AppealRepository>().ToSelf().InSingletonScope();
 
     return container;
 }

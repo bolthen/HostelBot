@@ -17,6 +17,9 @@ public class ResidentRepository : EntityRepository<Resident>
     {
         var foundEntity = context.Residents
             .Include(x => x.Appeals)
+            .Include(x => x.Utilities)
+            .Include(x => x.Hostel)
+            .Include(x => x.Room)
             .FirstOrDefault(r => r.Id == id);
 
         if (foundEntity != null) return foundEntity;

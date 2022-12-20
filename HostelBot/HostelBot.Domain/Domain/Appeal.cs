@@ -12,16 +12,21 @@ namespace HostelBot.Domain.Domain
         
         public string Content { get; set; }
         
-        public string Answer { get; set; }
+        public string? Answer { get; set; }
         
-        public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
-
         public Appeal() { }
 
         public Appeal(Resident resident, string content)
         {
             Resident = resident;
+        }
+        
+        public Appeal(string name, Resident resident, string content)
+        {
+            Resident = resident;
             Content = content;
         }
+        
+        public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
     }
 }
