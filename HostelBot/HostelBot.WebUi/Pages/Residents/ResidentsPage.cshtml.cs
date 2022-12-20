@@ -1,6 +1,6 @@
 using System.Collections.ObjectModel;
 using HostelBot.Domain.Domain;
-using HostelBot.Domain.Infrastructure.Repository;
+using HostelBot.Domain.Infrastructure.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -35,13 +35,13 @@ namespace WebUi.Pages.Residents
              //     residentRepository.CreateAsync(resident);
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             if (!User.GetClaimValue("Hostel").TryParseInt(out var id))
                 RedirectToPage("/Account/AccessDenied");
             
-            var hostel = hostelRepository.GetAsync(id).Result;
-            Residents = hostel?.Residents.Where(x => x.IsAccepted).ToArray() ?? Array.Empty<Resident>();
+            var hostel = await hostelRepository.GetAsync(id);
+            Residents = hostel?.Residents.Where(x => x.AcceptToHostel).ToArray() ?? Array.Empty<Resident>();
             return Page();
         }
     }

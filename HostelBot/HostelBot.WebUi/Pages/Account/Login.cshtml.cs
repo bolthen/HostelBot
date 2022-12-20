@@ -31,7 +31,7 @@ namespace WebUi.Pages.Account
             if (!ModelState.IsValid)
                 return Page();
 
-            var administrator = administratorRepository.GetByLogin(Manager.Login).Result;
+            var administrator = await administratorRepository.GetByLogin(Manager.Login);
             if (administrator is null)
                 return Page();
 

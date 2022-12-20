@@ -19,12 +19,12 @@ namespace WebUi.Pages.Utilities
             this.hostelRepository = hostelRepository;
         }
     
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             if (!User.GetClaimValue("Hostel").TryParseInt(out var id))
                 RedirectToPage("/Account/AccessDenied");
 
-            var hostel = hostelRepository.GetAsync(id).Result;
+            var hostel = await hostelRepository.GetAsync(id);
             Utilities = hostel?.UtilityNames.ToArray() ?? Array.Empty<UtilityName>();
             return Page();
         }
