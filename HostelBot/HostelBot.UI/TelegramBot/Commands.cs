@@ -2,77 +2,42 @@
 
 namespace HostelBot.Ui.TelegramBot;
 
-public static class Commands
+public class BaseCommands : Commands
 {
-    private static Dictionary<long, UserCommands> ChatIdToUserCommands { get; } = new();
-
     public static Command StartCommand { get; private set; }
 
     public static void SetStartCommand(Command command)
     {
         StartCommand = command;
     }
-
-    public static void AddUser(long chatId)
-    {
-        if (!ContainsUser(chatId))
-            ChatIdToUserCommands[chatId] = new UserCommands();
-    }
-
-    public static bool ContainsUser(long chatId)
-    {
-        return ChatIdToUserCommands.ContainsKey(chatId);
-    }
-
-    public static void AddCommands(IEnumerable<Command> commands, long chatId)
-    {
-        ChatIdToUserCommands[chatId].AddCommands(commands);
-    }
-
-    public static bool Contains(string commandName, long chatId)
-    {
-        return ChatIdToUserCommands[chatId].Contains(commandName);
-    }
-
-    public static Command Get(string commandName, long chatId)
-    {
-        return ChatIdToUserCommands[chatId].Get(commandName);
-    }
-
-    public static void RegisterUser(long chatId)
-    {
-        ChatIdToUserCommands[chatId].RegisterUser();
-    }
-
-    public static bool IsUserRegistered(long chatId)
-    {
-        return ChatIdToUserCommands[chatId].UserRegistered;
-    }
 }
 
-public class UserCommands
+public class CallbackCommands : Commands
 {
-    private Dictionary<string, Command> NameToCommand { get; } = new();
-    public bool UserRegistered { get; private set; } = false;
-    
+}
+
+public abstract class Commands
+{
+    private Dictionary<string, Command> Name2Command { get; } = new();
+
     public void AddCommands(IEnumerable<Command> commands)
     {
         foreach (var command in commands)
-            NameToCommand[command.Name] = command;
+            Name2Command[command.Name] = command;
     }
 
-    public bool Contains(string commandName)
+    public IEnumerable<Command> GetCommands()
     {
-        return NameToCommand.ContainsKey(commandName);
-    }
-
-    public Command Get(string commandName)
-    {
-        return NameToCommand[commandName];
+        return Name2Command.Values;
     }
     
-    public void RegisterUser()
+    public bool Contains(string commandName)
     {
-        UserRegistered = true;
+        return Name2Command.ContainsKey(commandName);
+    }
+    
+    public Command Get(string commandName)
+    {
+        return Name2Command[commandName];
     }
 }
