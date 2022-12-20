@@ -32,7 +32,7 @@ public sealed class MainDbContext : DbContext
     { 
         //Database.EnsureDeleted(); // TODO DELETE
         Database.EnsureCreated();
-        ChangeTracker.Tracked += repositoryChangesParser.ParseRepositoryChanges;
+        ChangeTracker.DetectedEntityChanges += repositoryChangesParser.ParseRepositoryChanges;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
