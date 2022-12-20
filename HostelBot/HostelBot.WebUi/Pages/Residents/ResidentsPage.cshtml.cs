@@ -35,12 +35,12 @@ namespace WebUi.Pages.Residents
              //     residentRepository.CreateAsync(resident);
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
             if (!User.GetClaimValue("Hostel").TryParseInt(out var id))
                 RedirectToPage("/Account/AccessDenied");
             
-            var hostel = hostelRepository.GetAsync(id).Result;
+            var hostel = await hostelRepository.GetAsync(id);
             Residents = hostel?.Residents.Where(x => x.AcceptToHostel).ToArray() ?? Array.Empty<Resident>();
             return Page();
         }

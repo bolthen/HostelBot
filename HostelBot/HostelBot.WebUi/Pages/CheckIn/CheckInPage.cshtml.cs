@@ -20,34 +20,34 @@ public class CheckInPage : PageModel
         this.hostelRepository = hostelRepository;
     }
 
-    public IActionResult OnGet()
+    public async Task<IActionResult> OnGet()
     {
         if (!User.GetClaimValue("Hostel").TryParseInt(out var id))
             RedirectToPage("/Account/AccessDenied");
             
-        hostel = hostelRepository.GetAsync(id).Result;
+        hostel = await hostelRepository.GetAsync(id);
         Residents = hostel?.Residents.Where(x => !x.AcceptToHostel).ToArray() ?? Array.Empty<Resident>();
         return Page();
     }
     
-    public IActionResult OnPostSubmit(int id)
+    public async Task<IActionResult> OnPostSubmitAsync(long id)
     {
         if (!User.GetClaimValue("Hostel").TryParseInt(out var hostelId))
             RedirectToPage("/Account/AccessDenied");
             
-        hostel = hostelRepository.GetAsync(hostelId).Result;
-        hostel = hostelRepository.AcceptResident(id, hostel.Id).Result;
+        hostel = await hostelRepository.GetAsync(hostelId);
+        hostel = await hostelRepository.AcceptResident(id, hostel.Id);
         Residents = hostel.Residents.Where(x => !x.AcceptToHostel).ToArray();
         return Page();
     }
     
-    public IActionResult OnPostDecline(int id)
+    public async Task<IActionResult> OnPostDeclineAsync(long id)
     {
         if (!User.GetClaimValue("Hostel").TryParseInt(out var hostelId))
             RedirectToPage("/Account/AccessDenied");
             
-        hostel = hostelRepository.GetAsync(hostelId).Result;
-        hostel = hostelRepository.DeleteResident(id, hostel.Id).Result;
+        hostel = await hostelRepository.GetAsync(hostelId);
+        hostel = await hostelRepository.DeleteResident(id, hostel.Id);
         Residents = hostel.Residents.Where(x => !x.AcceptToHostel).ToArray();
         return Page();
     }

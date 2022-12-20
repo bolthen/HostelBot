@@ -17,9 +17,9 @@ public class ResidentDeletePage : PageModel
         this.residentRepository = residentRepository;
     }
     
-    public IActionResult OnGet(int id)
+    public async Task<IActionResult> OnGet(long id)
     {
-        Resident = residentRepository.GetAsync(id).Result;
+        Resident = await residentRepository.GetAsync(id);
 
         if (Resident is null)
             return RedirectToPage("/Residents/ResidentNotFoundPage", Resident);
@@ -27,9 +27,9 @@ public class ResidentDeletePage : PageModel
         return Page();
     }
     
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPost()
     {
-        if (!residentRepository.DeleteAsync(Resident.Id).Result)
+        if (!await residentRepository.DeleteAsync(Resident.Id))
             return RedirectToPage("/Residents/ResidentNotFoundPage", Resident);
 
         return RedirectToPage("/Residents/ResidentsPage");

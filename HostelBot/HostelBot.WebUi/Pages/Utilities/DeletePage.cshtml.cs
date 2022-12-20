@@ -20,9 +20,9 @@ public class DeletePage : PageModel
         this.utilityNameRepository = utilityNameRepository;
     }
     
-    public IActionResult OnGet(int id)
+    public async Task<IActionResult> OnGet(long id)
     {
-        Utility = utilityNameRepository.GetAsync(id).Result;
+        Utility = await utilityNameRepository.GetAsync(id);
 
         if (Utility is null)
             return RedirectToPage("/Utilities/UtilityNotFound", Utility);
@@ -30,12 +30,10 @@ public class DeletePage : PageModel
         return Page();
     }
     
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPost()
     {
-        if (!utilityNameRepository.DeleteAsync(Utility.Id).Result)
+        if (!await utilityNameRepository.DeleteAsync(Utility.Id))
             return RedirectToPage("/Utilities/UtilityNotFound", Utility);
-        
-        
         
         return RedirectToPage("/Utilities/UtilitiesPage");
     }
