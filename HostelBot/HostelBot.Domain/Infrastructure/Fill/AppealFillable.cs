@@ -18,11 +18,6 @@ public class AppealFillable : Fillable<AppealFillable>, IFillable
 
     public long ResidentId { get; set; }
     
-    [Question("Как вас зовут", ViewType.TextEnter)]
-    [RegularExpression(@"^([А-ЩЭ-Я][а-я]+-?)+$",
-        ErrorMessage = "Имя должно начинаться с заглавной буквы, не иметь пробелов")]
-    public string Name { get; set; }
-
-    [Question("Опишите Вашу проблему", ViewType.TextEnter)]
+    [Question("Напишите ваше обращение", ViewType.TextEnter)]
     public string Content { get; set; }
 }

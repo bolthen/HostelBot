@@ -2,8 +2,8 @@
 
 namespace HostelBot.Domain.Infrastructure;
 
-public abstract class Fillable<T> : DddObject<T>, IObservable<T>, IFillable
-    where T : DddObject<T>
+public abstract class Fillable<T> : ValueType<T>, IObservable<T>, IFillable
+    where T : ValueType<T>
 {
     protected readonly List<IObserver<T>> observers = new();
     
@@ -13,23 +13,10 @@ public abstract class Fillable<T> : DddObject<T>, IObservable<T>, IFillable
             observers.Add(observer);
         return new Unsubscriber<T>(observers, observer);
     }
-    
-    /*public IDisposable Subscribe(IObserver<T> observer)
-    {
-        if (!observers.Contains(observer))
-            observers.Add(observer);
-        return new Unsubscriber<T>(observers, observer);
-    }*/
 
     public abstract void OnFilled();
-    /*{
-        foreach (var observer in observers.ToArray())
-            observer.OnCompleted(this);
-    }*/
 
     public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
 
     public long ResidentId { get; set; }
-
-    //public abstract TEntity GetFilledEntity(Manager<TEntity> manager);
 }

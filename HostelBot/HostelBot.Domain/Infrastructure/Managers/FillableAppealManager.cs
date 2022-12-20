@@ -15,7 +15,7 @@ public class FillableAppealManager : Manager<AppealFillable>
     protected override void Handle(AppealFillable value)
     {
         var resident = residentRepository.GetAsync(value.ResidentId).Result;
-        var appeal = new Appeal(value.Name, resident, value.Content);
+        var appeal = new Appeal(resident, value.Content);
         resident.AddAppeal(appeal);
         residentRepository.UpdateAsync(resident);
     }
