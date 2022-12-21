@@ -9,7 +9,7 @@ public class HtmlStatTableMaker : IDisposable
     public HtmlStatTableMaker(StringBuilder data, string caption)
     {
         this.data = data;
-        this.data.Append($"<h1>{caption}</h1>");
+        this.data.Append($"<big>{caption}</big>");
         this.data.Append("<table>");
     }
 
