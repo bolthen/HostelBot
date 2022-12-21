@@ -15,7 +15,6 @@ public class CheckRegistrationCommand : FillCommand<ResidentFillable>
     {
         this.subcommands = subcommands;
         this.residentRepository = residentRepository;
-        AppDomain.CurrentDomain.UnhandledException += ProcessException;
     }
 
     public override List<Command> GetSubcommands(long residentId)
@@ -26,11 +25,5 @@ public class CheckRegistrationCommand : FillCommand<ResidentFillable>
             throw new NotAcceptedResidentException();
         
         return subcommands;
-    }
-    
-    static void ProcessException(object sender, UnhandledExceptionEventArgs args)
-    {
-        Console.WriteLine((args.ExceptionObject as Exception).StackTrace);
-        Environment.Exit(1);
     }
 }

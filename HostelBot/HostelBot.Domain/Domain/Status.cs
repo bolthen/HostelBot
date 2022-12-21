@@ -11,10 +11,4 @@ public class Status : ValueType<Status>, IFillable
     {
         throw new NotImplementedException();
     }
-
-    public IReadOnlyCollection<PropertyInfo> GetFields()
-    {
-        //класс затычка, хз нужен ли будет
-        throw new NotImplementedException();
-    }
 }

@@ -28,11 +28,10 @@ public sealed class MainDbContext : DbContext
         Database.EnsureCreated();
     }*/
     
-    public MainDbContext(RepositoryChangesParser repositoryChangesParser)
+    public MainDbContext()
     { 
         //Database.EnsureDeleted(); // TODO DELETE
         Database.EnsureCreated();
-        //ChangeTracker.Tracked += repositoryChangesParser.ParseRepositoryChanges;
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

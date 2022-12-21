@@ -7,24 +7,7 @@ namespace HostelBot.Domain.Infrastructure;
 
 public class ResidentFillable : Fillable<ResidentFillable>
 {
-     /*public void OnFilled()
-     {
-         foreach (var observer in observers.ToArray())
-             observer.OnCompleted(this);
-     }
- 
-     public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
- 
-     public long ResidentId { get; set; }*/
-     /*public override Resident GetFilledEntity(Manager<Resident> hostelRepository)
-     {
-          var hostel = hostelRepository.GetByName($"№{HostelNumber}").Result;
-          var room = new Room(RoomNumber, hostel.Name);
-          hostel.AddRoom(room);
-          return new Resident(ResidentId, Name, Surname, hostel, room);
-     }*/
-      
-     public override void OnFilled()
+      public override void OnFilled()
      {
            foreach (var observer in observers.ToArray())
                  observer.OnCompleted(this);

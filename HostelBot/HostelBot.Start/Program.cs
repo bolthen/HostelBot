@@ -10,6 +10,7 @@ using Ninject;
 
 
 var container = ConfigureContainer();
+AppDomain.CurrentDomain.UnhandledException += ProcessException;
 foreach (var ui in container.GetAll<IUi>())
     Task.Run(() => ui.Run());
 
@@ -56,4 +57,10 @@ static StandardKernel ConfigureContainer()
     container.Bind<AppealRepository>().ToSelf().InSingletonScope();
 
     return container;
+}
+
+static void ProcessException(object sender, UnhandledExceptionEventArgs args)
+{
+    Console.WriteLine((args.ExceptionObject as Exception).StackTrace);
+    Environment.Exit(0);
 }

@@ -14,8 +14,6 @@ public class AppealFillable : Fillable<AppealFillable>, IFillable
             observer.OnCompleted(this);
     }
 
-    public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
-
     public long ResidentId { get; set; }
     
     [Question("Напишите ваше обращение", ViewType.TextEnter)]

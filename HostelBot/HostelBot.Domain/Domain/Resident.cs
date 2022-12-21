@@ -32,7 +32,7 @@ namespace HostelBot.Domain.Domain
 
         public Room? Room { get; set; }
         
-        public Hostel? Hostel { get; set; }
+        public Hostel Hostel { get; set; }
 
         public List<Utility> Utilities { get; set; } = new ();
 
@@ -60,6 +60,6 @@ namespace HostelBot.Domain.Domain
             Appeals.Add(appeal);
         }
         
-        public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
+        
     }
 }

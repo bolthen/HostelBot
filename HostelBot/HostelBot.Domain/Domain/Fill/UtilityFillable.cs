@@ -5,6 +5,7 @@ namespace HostelBot.Domain.Infrastructure;
 public class UtilityFillable : Fillable<UtilityFillable>
 {
     public UtilityFillable() {}
+    
     public UtilityFillable(string name) => Name = name;
     
     public override void OnFilled()
@@ -12,9 +13,7 @@ public class UtilityFillable : Fillable<UtilityFillable>
         foreach (var observer in observers.ToArray())
             observer.OnCompleted(this);
     }
-
-    public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
-
+    
     public string Name { get; set; }
     
     [Question("Опишите Вашу проблему", ViewType.TextEnter)]

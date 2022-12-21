@@ -17,4 +17,6 @@ public class DddObject<TType>
             .Where(property => property.CanRead)
             .ToArray();
     }
+    
+    public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
 }

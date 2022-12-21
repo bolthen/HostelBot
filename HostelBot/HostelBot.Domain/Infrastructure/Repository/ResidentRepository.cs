@@ -25,6 +25,6 @@ public class ResidentRepository : EntityRepository<Resident>
         if (foundEntity != null) return foundEntity;
         
         context.Entry(foundEntity).State = EntityState.Detached;
-        throw new Exception($"The Resident with the given id was not found in the database");
+        throw new ArgumentException($"The Resident with the given id {id} was not found in the database");
     }
 }

@@ -35,7 +35,5 @@ namespace HostelBot.Domain.Domain
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Answer)));
             }
         }
-
-        public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
     }
 }

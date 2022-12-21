@@ -16,7 +16,5 @@ public abstract class Fillable<T> : ValueType<T>, IObservable<T>, IFillable
 
     public abstract void OnFilled();
 
-    public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
-
     public long ResidentId { get; set; }
 }

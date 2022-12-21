@@ -63,6 +63,8 @@ public class HostelRepository : EntityRepository<Hostel>
     public async Task<Room> FindOrCreateRoom(string hostelName, int roomNumber)
     {
         var hostel = GetByName(hostelName).Result;
+        if (hostel is null)
+            throw new ArgumentException($"No hostel with name {hostelName} in database");
         var room = hostel.Rooms.FirstOrDefault(r => r.Number == roomNumber) ?? new Room(roomNumber, hostel);
         
         hostel.AddRoom(room);

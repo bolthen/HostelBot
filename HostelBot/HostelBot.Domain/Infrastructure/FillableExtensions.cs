@@ -21,6 +21,5 @@ public static class FillableExtensions
         }
         
         fillableClass.OnFilled();
-        //fillableClass.Filled = true; старая версия
     }
 }

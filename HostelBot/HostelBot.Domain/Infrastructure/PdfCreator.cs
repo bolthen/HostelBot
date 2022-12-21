@@ -1,4 +1,5 @@
-﻿using iTextSharp.text.pdf;
+﻿using System.Text;
+using iTextSharp.text.pdf;
 using iTextSharp.text;
 
 namespace HostelBot.Domain.Infrastructure;
