@@ -8,12 +8,15 @@ namespace HostelBot.Domain;
 
 public class Utility : Entity<Utility>
 {
-    public Utility() { }
+    public Utility()
+    {
+    }
     
     public Utility(string name, Resident resident)
     {
         Name = name;
         Resident = resident;
+        CreationDateTime = DateTime.Now;
     }
 
     public Utility(string name, string content, Resident resident)
@@ -21,6 +24,7 @@ public class Utility : Entity<Utility>
         Name = name;
         Content = content;
         Resident = resident;
+        CreationDateTime = DateTime.Now;
     } 
     
     public string Name { get; set; }
@@ -30,5 +34,8 @@ public class Utility : Entity<Utility>
 
     public Resident Resident { get; set; }
     
-    public long ResidentId { get; set; }
+    public DateTime CreationDateTime { get; set; }
+    
+    public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
+    private readonly List<Infrastructure.IObserver<Utility>> observers = new();
 }

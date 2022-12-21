@@ -1,9 +1,7 @@
 ﻿using HostelBot.Domain.Domain;
-using HostelBot.Domain.Infrastructure.Repository;
-
 namespace HostelBot.Domain.Infrastructure.Repository;
 
-public class UtilityRepository : EntityRepository<Utility>
+public class UtilityRepository : EntityRepository<HostelBot.Domain.Utility>
 {
     public UtilityRepository(MainDbContext context) : base(context) { }
 }

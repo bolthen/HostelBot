@@ -12,7 +12,7 @@ public sealed class MainDbContext : DbContext
     public DbSet<Hostel> Hostels { get; set; }
     public DbSet<Resident> Residents { get; set; }
     public DbSet<Room> Rooms { get; set; }
-    public DbSet<Utility> Utilities { get; set; }
+    public DbSet<HostelBot.Domain.Utility> Utilities { get; set; }
     public DbSet<UtilityName> UtilityNames { get; set; }
     public DbSet<Appeal> Appeal { get; set; }
     public DbSet<Administrator> Administrators { get; set; }
