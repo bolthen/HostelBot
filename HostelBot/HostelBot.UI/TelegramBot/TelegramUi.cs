@@ -13,8 +13,8 @@ public class TelegramUi : IUi
     {
         BaseCommands.SetStartCommand(application.GetStartCommand());
         
-        application.GetAppealChangesManager().AddChangesHandler(UpdateHandler.NotifyAppealReceived);
-        application.GetResidentChangesManager().AddChangesHandler(UpdateHandler.NotifyResidentAccepted);
+        application.GetAppealChangesManager().AddChangesHandler(SharedHandlers.NotifyAppealResponseReceived);
+        application.GetResidentChangesManager().AddChangesHandler(SharedHandlers.NotifyResidentAccepted);
     }
 
     public void Run()
@@ -27,14 +27,15 @@ public class TelegramUi : IUi
             AllowedUpdates = new [] { UpdateType.Message, UpdateType.CallbackQuery }
         });
 
-        UpdateHandler.BotClient = client;
+        // UpdateHandler.BotClient = client;
+        BotClientHolder.BotClient = client;
         
         Console.ReadLine();
     }
 
     private async Task Update(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
-        await UpdateHandler.Handle(update);
+        await UpdateHandler2.Handle(update);
     }
 
     private Task Error(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
