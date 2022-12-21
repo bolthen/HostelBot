@@ -13,7 +13,7 @@ public class FillingProgress
 
     private readonly PropertyInfo[] properties;
 
-    public readonly Dictionary<string, string> Result = new();
+    public readonly Dictionary<string, string> Answers = new();
 
     private readonly IFillable fillable;
     public Command Command { get; }
@@ -28,13 +28,13 @@ public class FillingProgress
             .Where(propertyInfo => propertyInfo.GetCustomAttribute<QuestionAttribute>() != null)
             .ToArray();
         
-        ChatIdToFillingProgress[chatId] = this;
+        ChatId2FillingProgress[chatId] = this;
     }
 
     public void SaveResponse(string response)
     {
         var key = properties[Stage].Name;
-        Result[key] = response.Trim();
+        Answers[key] = response.Trim();
     }
 
     public bool TryValidateRegex(string response, out string? errorMessage)
@@ -60,22 +60,27 @@ public class FillingProgress
     }
     
     
-    private static readonly Dictionary<long, FillingProgress> ChatIdToFillingProgress = new();
+    private static readonly Dictionary<long, FillingProgress> ChatId2FillingProgress = new();
     
     public static bool IsUserCurrentlyFilling(long chatId)
     {
-        return ChatIdToFillingProgress.ContainsKey(chatId);
+        return ChatId2FillingProgress.ContainsKey(chatId);
     }
 
     public static FillingProgress GetProgress(long chatId)
     {
-        return ChatIdToFillingProgress[chatId];
+        return ChatId2FillingProgress[chatId];
     }
     
     public static void FinishFilling(long chatId)
     {
         var progress = GetProgress(chatId);
-        progress.fillable.FillClass(progress.Result);
-        ChatIdToFillingProgress.Remove(chatId);
+        progress.fillable.FillClass(progress.Answers);
+        ChatId2FillingProgress.Remove(chatId);
+    }
+
+    public static void CancelFilling(long chatId)
+    {
+        ChatId2FillingProgress.Remove(chatId);
     }
 }
