@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\HostelBot.App\HostelBot.App.csproj" />
+      <ProjectReference Include="..\HostelBot.Domain\HostelBot.Domain.csproj" />
+      <ProjectReference Include="..\HostelBot.Test\HostelBot.Test.csproj" />
+      <ProjectReference Include="..\HostelBot.Ui\HostelBot.Ui.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Ninject" Version="4.0.0-beta.1" />
+    </ItemGroup>
+
+</Project>
