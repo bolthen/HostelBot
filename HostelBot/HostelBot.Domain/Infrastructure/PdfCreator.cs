@@ -5,9 +5,9 @@ namespace HostelBot.Domain.Infrastructure;
 
 public static class PdfCreator
 {
-    public static void CreatePdfFile(string path, string html, string css = "")
+    public static byte[] CreatePdfFile(string html, string css = "")
     {
-        Byte[] bytes;
+        byte[] bytes;
         
         using (var ms = new MemoryStream()) {
             using (var doc = new Document()) {
@@ -26,7 +26,7 @@ public static class PdfCreator
             
             bytes = ms.ToArray();
         }
-        
-        File.WriteAllBytes(path, bytes);
+
+        return bytes;
     }
 }

@@ -19,8 +19,8 @@ builder.Services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", options
 
 
 var container = ConfigureContainer();
-foreach (var ui in container.GetAll<IUi>())
-    Task.Run(() => ui.Run());
+//foreach (var ui in container.GetAll<IUi>())
+//    Task.Run(() => ui.Run());
 
 builder.Services.AddSingleton<AdministratorRepository>();
 builder.Services.AddSingleton(_ => container.Get<MainDbContext>());
