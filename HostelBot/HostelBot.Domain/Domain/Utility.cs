@@ -17,6 +17,7 @@ public class Utility : Entity<Utility>
     {
         Name = name;
         Resident = resident;
+        CreationDateTime = DateTime.Now;
     }
 
     public Utility(string name, string content, Resident resident)
@@ -24,6 +25,7 @@ public class Utility : Entity<Utility>
         Name = name;
         Content = content;
         Resident = resident;
+        CreationDateTime = DateTime.Now;
     } 
     
     public string Name { get; set; }
@@ -33,39 +35,8 @@ public class Utility : Entity<Utility>
 
     public Resident Resident { get; set; }
     
+    public DateTime CreationDateTime { get; set; }
+    
     public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
-    public long ResidentId { get; set; }
     private readonly List<Infrastructure.IObserver<Utility>> observers = new();
-    
-    /*private bool filled;
-    [NotMapped]
-    public bool Filled
-    {
-        get => filled;
-        set
-        {
-            filled = value;
-            if (value)
-                OnFilled();
-        }
-    }*/
-    
-    public IDisposable Subscribe(Infrastructure.IObserver<Utility> observer)
-    {
-        if (!observers.Contains(observer))
-            observers.Add(observer);
-        return new Unsubscriber<Utility>(observers, observer);
-    }
-    
-    public void OnFilled()
-    {
-        foreach (var observer in observers.ToArray())
-            observer.OnCompleted(this);
-    }
-
-    private void OnNext()
-    {
-        foreach (var observer in observers)
-            observer.OnNext(this);
-    }
 }

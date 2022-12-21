@@ -70,4 +70,14 @@ public class HostelRepository : EntityRepository<Hostel>
 
         return room;
     }
+    
+    public async Task<IReadOnlyCollection<Utility>> GetUtilityByDate(long hostelId, DateTime start, DateTime end, string utilityName)
+    {
+        var hostel = await GetAsync(hostelId);
+        
+        return hostel.Residents
+            .SelectMany(x => x.Utilities)
+            .Where(x => x.CreationDateTime >= start && x.CreationDateTime <= end && x.Name == utilityName)
+            .ToArray();
+    }
 }
