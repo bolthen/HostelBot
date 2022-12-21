@@ -196,15 +196,22 @@ internal static class UpdateHandler
 
             await BotClient.EditMessageTextAsync(chatId, callbackQuery.Message.MessageId,
                 $"Вы выбрали: {command.Name}", 
-                replyMarkup: new InlineKeyboardMarkup(InlineKeyboardButton.WithCallbackData("Отменить")));
+                replyMarkup: new InlineKeyboardMarkup(
+                    InlineKeyboardButton.WithCallbackData("Отменить", CallbackCommands.CancelFillingCallbackData)
+                    )
+                );
 
             await HandleCommand(command, chatId);
             return;
         }
 
-        if (callbackQuery.Data! == "Отменить")
+        if (callbackQuery.Data! == CallbackCommands.CancelFillingCallbackData)
         {
             FillingProgress.CancelFilling(chatId);
+
+            await BotClient.EditMessageReplyMarkupAsync(chatId, callbackQuery.Message.MessageId, 
+                new InlineKeyboardMarkup(Enumerable.Empty<InlineKeyboardButton>()));
+            
             await SendMessage("Операция отменена.", chatId);
             return;
         }
@@ -220,6 +227,7 @@ internal static class UpdateHandler
     
     public static async void NotifyResidentAccepted(Resident resident)
     {
+        LocalUserRepo.RegisterUser(resident.Id);
         await VerificationSuccessful(resident.Id);
     }
     
