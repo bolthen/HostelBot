@@ -6,7 +6,7 @@ namespace HostelBot.Domain.Infrastructure.Repository;
 
 public class ResidentRepository : EntityRepository<Resident>
 {
-    public ResidentRepository(MainDbContext context) : base(context) { }
+    public ResidentRepository(MainDbContext context) : base(context) {}
 
     public async Task<IQueryable<Resident>> GetAll()
     {
