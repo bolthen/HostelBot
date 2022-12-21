@@ -227,7 +227,7 @@ internal static class UpdateHandler
     
     public static async void NotifyResidentAccepted(Resident resident)
     {
-        LocalUserRepo.RegisterUser(resident.Id);
+        await CheckRegistration(resident.Id);
         await VerificationSuccessful(resident.Id);
     }
     
