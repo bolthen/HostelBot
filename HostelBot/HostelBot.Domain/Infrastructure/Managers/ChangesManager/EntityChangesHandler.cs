@@ -1,6 +1,6 @@
 ﻿namespace HostelBot.Domain.Infrastructure.Managers;
 
-public abstract class ChangesManager<TEntity> 
+public class EntityChangesHandler<TEntity> 
     where TEntity : Entity<TEntity>
 {
     protected event Action<TEntity>? HandleChanges;

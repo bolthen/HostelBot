@@ -1,9 +1,18 @@
+using HostelBot.Domain.Infrastructure.Repository;
+
 namespace HostelBot.Domain.Infrastructure;
 
 public abstract class Manager<T> : IObserver<T>
     //where T : IObservable<T>
 {
-    private IDisposable unsubscriber;
+    protected readonly ResidentRepository residentRepository;
+
+    public Manager(ResidentRepository residentRepository)
+    {
+        this.residentRepository = residentRepository;
+    }
+
+    private IDisposable? unsubscriber;
     
     public void Subscribe(IObservable<T> observable)
     {

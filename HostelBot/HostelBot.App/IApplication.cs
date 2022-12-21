@@ -6,6 +6,6 @@ namespace HostelBot.App;
 public interface IApplication
 {
     Command GetStartCommand();
-    public ChangesManager<Appeal> GetAppealChangesManager();
-    public ChangesManager<Resident> GetResidentChangesManager();
+    public EntityChangesHandler<Appeal> GetAppealChangesManager();
+    public EntityChangesHandler<Resident> GetResidentChangesManager();
 }

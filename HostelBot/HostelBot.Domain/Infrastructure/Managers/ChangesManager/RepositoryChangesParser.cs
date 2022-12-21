@@ -1,4 +1,5 @@
-﻿using HostelBot.Domain.Domain;
+﻿using System.ComponentModel;
+using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure.Managers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -7,25 +8,25 @@ namespace HostelBot.Domain.Infrastructure;
 
 public class RepositoryChangesParser
 {
-    private readonly ChangesManager<Appeal> appealChangesManager;
-    private readonly ChangesManager<Resident> residentChangesManager;
+    private readonly EntityChangesHandler<Appeal> appealEntityChangesHandler;
+    private readonly EntityChangesHandler<Resident> residentEntityChangesHandler;
 
-    public RepositoryChangesParser(ChangesManager<Appeal> appealChangesManager, ChangesManager<Resident> residentChangesManager)
+    public RepositoryChangesParser(EntityChangesHandler<Appeal> appealEntityChangesHandler, EntityChangesHandler<Resident> residentEntityChangesHandler)
     {
-        this.appealChangesManager = appealChangesManager;
-        this.residentChangesManager = residentChangesManager;
+        this.appealEntityChangesHandler = appealEntityChangesHandler;
+        this.residentEntityChangesHandler = residentEntityChangesHandler;
     }
     
-    public void ParseRepositoryChanges(object? sender, EntityTrackedEventArgs entityTrackedEventArgs)
+    public void ParseRepositoryChanges(object? sender, PropertyChangedEventArgs entityTrackedEventArgs)
     {
-        switch (entityTrackedEventArgs.Entry.Entity)
+        var propertyName = entityTrackedEventArgs.PropertyName;
+        if (sender is Resident {IsAccepted: true} resident && propertyName == nameof(resident.IsAccepted))
         {
-            case Appeal appeal:
-                appealChangesManager.OnHandleChanges(appeal);
-                break;
-            case Resident resident:
-                residentChangesManager.OnHandleChanges(resident);
-                break;
+            residentEntityChangesHandler.OnHandleChanges(resident);
+        }
+        if (sender is Appeal appeal && appeal.Answer != null && propertyName == nameof(appeal.Answer))
+        {
+            appealEntityChangesHandler.OnHandleChanges(appeal);
         }
     }
 }

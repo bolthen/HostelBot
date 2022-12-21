@@ -5,17 +5,18 @@ namespace HostelBot.Domain.Infrastructure;
 
 public class FillableAppealManager : Manager<AppealFillable>
 {
-    private readonly ResidentRepository residentRepository;
+    private readonly RepositoryChangesParser repositoryChangesParser;
 
-    public FillableAppealManager(ResidentRepository residentRepository)
+    public FillableAppealManager(ResidentRepository residentRepository, RepositoryChangesParser repositoryChangesParser) 
+        : base(residentRepository)
     {
-        this.residentRepository = residentRepository;
+        this.repositoryChangesParser = repositoryChangesParser;
     }
     
     protected override void Handle(AppealFillable value)
     {
         var resident = residentRepository.GetAsync(value.ResidentId).Result;
-        var appeal = new Appeal(resident, value.Content);
+        var appeal = new Appeal(resident, value.Content, repositoryChangesParser);
         resident.AddAppeal(appeal);
         residentRepository.UpdateAsync(resident);
     }

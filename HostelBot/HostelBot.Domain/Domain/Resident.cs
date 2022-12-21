@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
 using System.Text.Json.Serialization;
@@ -7,9 +8,12 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace HostelBot.Domain.Domain
 {
-    public class Resident : Entity<Resident>
+    public class Resident : Entity<Resident>, INotifyPropertyChanged
     {
-        public Resident(long telegramId, string name, string surname, Hostel hostel, Room room)
+        public event PropertyChangedEventHandler? PropertyChanged;
+        
+        public Resident(long telegramId, string name, string surname, Hostel hostel, Room room, 
+            RepositoryChangesParser repositoryChangesParser)
         {
             Id = telegramId;
             Name = name;
@@ -17,6 +21,7 @@ namespace HostelBot.Domain.Domain
             Hostel = hostel;
             Room = room;
             Hostel = hostel;
+            PropertyChanged += repositoryChangesParser.ParseRepositoryChanges;
         }
 
         public Resident(){}
@@ -33,7 +38,15 @@ namespace HostelBot.Domain.Domain
 
         public List<Appeal> Appeals { get; set; } = new();
 
-        public bool IsAccepted { get; set; }
+        private bool isAccepted;
+        public bool IsAccepted { 
+            get => isAccepted;
+            set
+            {
+                isAccepted = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAccepted)));
+            } 
+        }
         
         public override string ToString() => $"{Name} {Surname}";
 

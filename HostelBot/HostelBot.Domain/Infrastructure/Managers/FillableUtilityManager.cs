@@ -5,11 +5,8 @@ namespace HostelBot.Domain.Domain;
 
 public class FillableUtilityManager : Manager<UtilityFillable>
 {
-    private readonly ResidentRepository residentRepository;
-    
-    public FillableUtilityManager(ResidentRepository residentRepository)
+    public FillableUtilityManager(ResidentRepository residentRepository) : base(residentRepository)
     {
-        this.residentRepository = residentRepository;
     }
 
     protected override void Handle(UtilityFillable value)

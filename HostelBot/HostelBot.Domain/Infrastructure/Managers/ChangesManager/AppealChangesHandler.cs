@@ -2,7 +2,7 @@
 
 namespace HostelBot.Domain.Infrastructure.Managers;
 
-public class AppealChangesManager : ChangesManager<Appeal>
+public class AppealChangesHandler : EntityChangesHandler<Appeal>
 {
     public override void OnHandleChanges(Appeal appeal)
     {

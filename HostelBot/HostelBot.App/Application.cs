@@ -7,15 +7,15 @@ namespace HostelBot.App;
 public class Application : IApplication
 {
     private readonly CheckRegistrationCommand residentRegistrationCommand;
-    private readonly ChangesManager<Appeal> appealChangesManager;
-    private readonly ChangesManager<Resident> residentChangesManager;
+    private readonly EntityChangesHandler<Appeal> appealEntityChangesHandler;
+    private readonly EntityChangesHandler<Resident> residentEntityChangesHandler;
     
     public Application(CheckRegistrationCommand residentRegistrationCommand,
-        ChangesManager<Appeal> appealChangesManager, ChangesManager<Resident> residentChangesManager)
+        EntityChangesHandler<Appeal> appealEntityChangesHandler, EntityChangesHandler<Resident> residentEntityChangesHandler)
     {
         this.residentRegistrationCommand = residentRegistrationCommand;
-        this.appealChangesManager = appealChangesManager;
-        this.residentChangesManager = residentChangesManager;
+        this.appealEntityChangesHandler = appealEntityChangesHandler;
+        this.residentEntityChangesHandler = residentEntityChangesHandler;
     }
 
     public Command GetStartCommand()
@@ -23,13 +23,13 @@ public class Application : IApplication
         return residentRegistrationCommand;
     }
 
-    public ChangesManager<Appeal> GetAppealChangesManager()
+    public EntityChangesHandler<Appeal> GetAppealChangesManager()
     {
-        return appealChangesManager;
+        return appealEntityChangesHandler;
     }
     
-    public ChangesManager<Resident> GetResidentChangesManager()
+    public EntityChangesHandler<Resident> GetResidentChangesManager()
     {
-        return residentChangesManager;
+        return residentEntityChangesHandler;
     }
 }

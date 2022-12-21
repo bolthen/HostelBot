@@ -2,7 +2,7 @@
 
 namespace HostelBot.Domain.Infrastructure.Managers;
 
-public class ResidentChangesManager : ChangesManager<Resident>
+public class ResidentChangesHandler : EntityChangesHandler<Resident>
 {
     public override void OnHandleChanges(Resident resident)
     {

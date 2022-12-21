@@ -74,11 +74,11 @@ static StandardKernel ConfigureContainer()
 
     container.Bind<MainDbContext>().ToSelf().InSingletonScope();
 
-    container.Bind<ChangesManager<Appeal>>().To<AppealChangesManager>().InSingletonScope();
-    container.Bind<ChangesManager<Resident>>().To<ResidentChangesManager>().InSingletonScope();
+    container.Bind<EntityChangesHandler<Appeal>>().ToSelf().InSingletonScope();
+    container.Bind<EntityChangesHandler<Resident>>().ToSelf().InSingletonScope();
     container.Bind<RepositoryChangesParser>().ToSelf().InSingletonScope();
-    container.Bind<AppealChangesManager>().ToSelf().InSingletonScope();
-    container.Bind<ResidentChangesManager>().ToSelf().InSingletonScope();
+    /*container.Bind<AppealChangesHandler>().ToSelf().InSingletonScope();
+    container.Bind<ResidentChangesHandler>().ToSelf().InSingletonScope();*/
     
     container.Bind<IEntityRepository<Resident>>().To<EntityRepository<Resident>>().InSingletonScope();
     container.Bind<IEntityRepository<Hostel>>().To<EntityRepository<Hostel>>().InSingletonScope();
