@@ -2,6 +2,7 @@
 using System.Reflection;
 using HostelBot.App;
 using HostelBot.Domain.Infrastructure;
+using HostelBot.Domain.Infrastructure.Exceptions;
 
 namespace HostelBot.Ui.TelegramBot;
 
@@ -72,11 +73,21 @@ public class FillingProgress
         return ChatId2FillingProgress[chatId];
     }
     
-    public static void FinishFilling(long chatId)
+    public static async Task<bool> FinishFilling(long chatId)
     {
         var progress = GetProgress(chatId);
-        progress.fillable.FillClass(progress.Answers);
+        try
+        {
+            progress.fillable.FillClass(progress.Answers);
+        }
+        catch (Exception e)
+        {
+            await SharedHandlers.SendMessage("Общежития с заданным названием не существует", chatId);
+            return false;
+        }
+        
         ChatId2FillingProgress.Remove(chatId);
+        return true;
     }
 
     public static void CancelFilling(long chatId)

@@ -204,12 +204,18 @@ internal static class FillingHandler
 
         await SharedHandlers.SendMessage(progress.Answers.ToJsonFormat(), chatId);
 
+        var isFinished = FillingProgress.FinishFilling(chatId).Result;
+        
         if (progress.IsVerification)
         {
+            if (!isFinished)
+            {
+                LocalUserRepo.AddUserIfNotExists(chatId);
+                return;
+            }
             await SharedHandlers.WaitVerification(chatId);
         }
 
-        FillingProgress.FinishFilling(chatId);
     }
 
     private static async Task HandleFillable(IFillable fillable, long chatId, bool isVerification = false)
