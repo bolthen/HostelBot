@@ -30,8 +30,7 @@ internal static class UpdateHandler
 
         if (update.Type == UpdateType.Message)
         {
-            if (!LocalUserRepo.ContainsUser(chatId))
-                LocalUserRepo.AddUser(chatId);
+            LocalUserRepo.AddUserIfNotExists(chatId);
             
             if (!LocalUserRepo.IsRegistered(chatId) && !FillingProgress.IsUserCurrentlyFilling(chatId))
             {   
@@ -58,7 +57,15 @@ internal static class UpdateHandler
             }
         }
 
-        await SendMessage($"UpdateType: {update.Type}", chatId);
+        await SendMessage($"Неизвестная операция: {text}", chatId);
+    }
+
+    private static async Task Start(Update update)
+    {
+        var chatId = update.Message!.Chat.Id;
+        await CheckRegistration(chatId);
+        if (LocalUserRepo.IsRegistered(chatId))
+            await VerificationSuccessful(chatId);
     }
 
     private static async Task CheckRegistration(long chatId)
@@ -92,14 +99,6 @@ internal static class UpdateHandler
         LocalUserRepo.RegisterUser(chatId);
     }
 
-    private static async Task Start(Update update)
-    {
-        var chatId = update.Message!.Chat.Id;
-        await CheckRegistration(chatId);
-        if (LocalUserRepo.IsRegistered(chatId))
-            await VerificationSuccessful(chatId);
-    }
-
     private static async Task VerificationSuccessful(long chatId)
     {
         var buttons = BaseCommands.GetCommands().Select(x => new[] { new KeyboardButton(x.Name) });
@@ -111,6 +110,37 @@ internal static class UpdateHandler
 
         await BotClient.SendTextMessageAsync(chatId, "Верификация прошла успешно.",
             replyMarkup: replyKeyboardMarkup);
+    }
+
+    private static async Task HandleProgress(Message message)
+    {
+        var chatId = message.Chat.Id;
+        var text = message.Text!;
+
+        var progress = FillingProgress.GetProgress(chatId);
+
+        if (!progress.TryValidateRegex(text, out var errorMessage))
+        {
+            await SendMessage(errorMessage!, chatId);
+            return;
+        }
+
+        progress.SaveResponse(text);
+
+        if (!progress.Completed)
+        {
+            await SendMessage(progress.GetNextQuestion(), chatId);
+            return;
+        }
+
+        await SendMessage(progress.Answers.ToJsonFormat(), chatId);
+
+        if (progress.Command.GetType().Name == BaseCommands.StartCommand.GetType().Name)
+        {
+            await WaitVerification(chatId);
+        }
+
+        FillingProgress.FinishFilling(chatId);
     }
 
     private static async Task HandleCommand(Command command, long chatId)
@@ -150,37 +180,6 @@ internal static class UpdateHandler
         await SendMessage(progress.GetNextQuestion(), chatId);
     }
 
-    private static async Task HandleProgress(Message message)
-    {
-        var chatId = message.Chat.Id;
-        var text = message.Text!;
-
-        var progress = FillingProgress.GetProgress(chatId);
-
-        if (!progress.TryValidateRegex(text, out var errorMessage))
-        {
-            await SendMessage(errorMessage!, chatId);
-            return;
-        }
-
-        progress.SaveResponse(text);
-
-        if (!progress.Completed)
-        {
-            await SendMessage(progress.GetNextQuestion(), chatId);
-            return;
-        }
-
-        await SendMessage(progress.Answers.ToJsonFormat(), chatId);
-
-        if (progress.Command.GetType().Name == BaseCommands.StartCommand.GetType().Name)
-        {
-            await WaitVerification(chatId);
-        }
-
-        FillingProgress.FinishFilling(chatId);
-    }
-
     private static async Task WaitVerification(long chatId)
     {
         await SendMessage("Подождите пока вас примут.", chatId);
@@ -189,32 +188,32 @@ internal static class UpdateHandler
     private static async Task HandleCallbackQuery(CallbackQuery callbackQuery)
     {
         var chatId = callbackQuery.Message!.Chat.Id;
+        var messageId = callbackQuery.Message.MessageId;
         
         if (CallbackCommands.Contains(callbackQuery.Data!))
         {
             var command = CallbackCommands.Get(callbackQuery.Data!);
 
-            await BotClient.EditMessageTextAsync(chatId, callbackQuery.Message.MessageId,
-                $"Вы выбрали: {command.Name}", 
-                replyMarkup: new InlineKeyboardMarkup(
-                    InlineKeyboardButton.WithCallbackData("Отменить", CallbackCommands.CancelFillingCallbackData)
-                    )
-                );
-
             await HandleCommand(command, chatId);
-            return;
-        }
 
-        if (callbackQuery.Data! == CallbackCommands.CancelFillingCallbackData)
-        {
-            FillingProgress.CancelFilling(chatId);
-
-            await BotClient.EditMessageReplyMarkupAsync(chatId, callbackQuery.Message.MessageId, 
-                new InlineKeyboardMarkup(Enumerable.Empty<InlineKeyboardButton>()));
+            await BotClient.EditMessageTextAsync(chatId, messageId,
+                $"Вы выбрали: {command.Name}", 
+                replyMarkup: new InlineKeyboardMarkup(Enumerable.Empty<InlineKeyboardButton>()));
             
-            await SendMessage("Операция отменена.", chatId);
             return;
         }
+
+        // if (callbackQuery.Data! == CallbackCommands.CancelFillingCallbackData)
+        // {
+        //     FillingProgress.CancelFilling(chatId);
+        //
+        //     await BotClient.EditMessageReplyMarkupAsync(chatId, callbackQuery.Message.MessageId, 
+        //         new InlineKeyboardMarkup(Enumerable.Empty<InlineKeyboardButton>()));
+        //     
+        //     await SendMessage("Операция отменена.", chatId);
+        //     
+        //     return;
+        // }
 
         await SendMessage($"Unknown Data: {callbackQuery.Data}", chatId);
     }

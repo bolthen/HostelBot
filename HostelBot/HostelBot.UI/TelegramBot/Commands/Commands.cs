@@ -9,7 +9,12 @@ public abstract class Commands
     public void AddCommands(IEnumerable<Command> commands)
     {
         foreach (var command in commands)
-            Name2Command[command.Name] = command;
+            AddCommand(command);
+    }
+
+    public void AddCommand(Command command)
+    {
+        Name2Command[command.Name] = command;
     }
 
     public IEnumerable<Command> GetCommands()
