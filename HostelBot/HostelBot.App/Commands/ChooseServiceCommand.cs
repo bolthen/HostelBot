@@ -23,7 +23,7 @@ public class ChooseServiceCommand : Command
     {
         var resident = residentRepository.GetAsync(residentId).Result;
         
-        var names = resident.Hostel.UtilityNames; // TODO
+        var names = hostelNameRepository.GetAsync(resident.Hostel.Id).Result.UtilityNames;
 
         return names.Select(name => new UtilityCommand(name.Name, managers)).Cast<Command>().ToList();
     }
