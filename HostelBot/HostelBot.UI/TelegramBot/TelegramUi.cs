@@ -11,6 +11,7 @@ public class TelegramUi : IUi
 {
     public TelegramUi(IApplication application)
     {
+        //
         BaseCommands.SetStartCommand(application.GetStartCommand());
         
         application.GetAppealChangesManager().AddChangesHandler(UpdateHandler.NotifyAppealReceived);
