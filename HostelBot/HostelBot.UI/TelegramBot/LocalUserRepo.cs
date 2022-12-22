@@ -8,8 +8,8 @@ public static class LocalUserRepo
     {
         return ChatId2IsUserRegistered.ContainsKey(chatId);
     }
-
-    public static void AddUser(long chatId)
+    
+    public static void AddUserIfNotExists(long chatId)
     {
         ChatId2IsUserRegistered[chatId] = false;
     }

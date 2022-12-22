@@ -15,12 +15,12 @@ public class FillingProgress
 
     public readonly Dictionary<string, string> Answers = new();
 
-    private readonly IFillable fillable;
-    public Command Command { get; }
+    public readonly IFillable fillable;
+    public bool IsVerification { get; }
 
-    public FillingProgress(IFillable fillable, long chatId, Command command)
+    public FillingProgress(IFillable fillable, long chatId, bool isVerification = false)
     {
-        Command = command;
+        IsVerification = isVerification;
         
         this.fillable = fillable;
         properties = fillable
