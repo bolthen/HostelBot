@@ -1,27 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using HostelBot.App;
 using HostelBot.Domain.Infrastructure;
 using HostelBot.Domain.Infrastructure.Exceptions;
 
-namespace HostelBot.Ui.TelegramBot;
+namespace HostelBot.Ui.TelegramBot.Handlers.Filling;
 
-public class FillingProgress
+internal class FillingProgress
 {
-    private int Stage { get; set; } = -1;
-
-    public bool Completed => Stage == properties.Length - 1;
+    private int Stage { get; set; } = 0;
+    private bool Completed => Stage == properties.Length;
 
     private readonly PropertyInfo[] properties;
 
     public readonly Dictionary<string, string> Answers = new();
 
     public readonly IFillable fillable;
-    public bool IsVerification { get; }
+    public bool IsRegistration { get; }
 
-    public FillingProgress(IFillable fillable, long chatId, bool isVerification = false)
+    public FillingProgress(IFillable fillable, long chatId, bool isRegistration = false)
     {
-        IsVerification = isVerification;
+        IsRegistration = isRegistration;
         
         this.fillable = fillable;
         properties = fillable
@@ -32,13 +30,13 @@ public class FillingProgress
         ChatId2FillingProgress[chatId] = this;
     }
 
-    public void SaveResponse(string response)
+    private void SaveResponse(string response)
     {
         var key = properties[Stage].Name;
-        Answers[key] = response.Trim();
+        Answers[key] = response;
     }
 
-    public bool TryValidateRegex(string response, out string? errorMessage)
+    private bool TryValidateRegex(string response, out string? errorMessage)
     {
         errorMessage = null;
         
@@ -50,17 +48,26 @@ public class FillingProgress
         return false;
     }
 
-    public string? GetNextQuestion()
+    public string GetNextQuestion()
     {
-        if (Completed)
-            return null;
-
-        Stage++;
-
         return properties[Stage].GetCustomAttribute<QuestionAttribute>()!.Question;
     }
-    
-    
+
+    public (CurrentProgressStatus progressStatus, string? errorMessage) HandleResponse(string text)
+    {
+        if (!TryValidateRegex(text, out var errorMessage))
+            return (CurrentProgressStatus.RegexFailed, errorMessage);
+        
+        SaveResponse(text);
+        Stage++;
+
+        if (Completed)
+            return (CurrentProgressStatus.Completed, null);
+        
+        return (CurrentProgressStatus.WrittenDown, null);
+    }
+
+
     private static readonly Dictionary<long, FillingProgress> ChatId2FillingProgress = new();
     
     public static bool IsUserCurrentlyFilling(long chatId)
@@ -68,30 +75,18 @@ public class FillingProgress
         return ChatId2FillingProgress.ContainsKey(chatId);
     }
 
-    public static FillingProgress GetProgress(long chatId)
+    public static FillingProgress GetFillingProgress(long chatId)
     {
         return ChatId2FillingProgress[chatId];
     }
     
-    public static async Task<bool> FinishFilling(long chatId)
+    public static void FinishFilling(long chatId)
     {
-        var progress = GetProgress(chatId);
-        try
-        {
-            progress.fillable.FillClass(progress.Answers);
-        }
-        catch (Exception e)
-        {
-            await SharedHandlers.SendMessage("Общежития с заданным названием не существует", chatId);
-            return false;
-        }
-        
         ChatId2FillingProgress.Remove(chatId);
-        return true;
     }
 
-    public static void CancelFilling(long chatId)
+    public enum CurrentProgressStatus
     {
-        ChatId2FillingProgress.Remove(chatId);
+        WrittenDown, RegexFailed, Completed
     }
 }

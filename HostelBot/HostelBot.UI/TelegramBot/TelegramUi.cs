@@ -1,5 +1,6 @@
 ﻿using HostelBot.App;
 using HostelBot.Ui.TelegramBot.Commands;
+using HostelBot.Ui.TelegramBot.Handlers;
 using Telegram.Bot;
 using Telegram.Bot.Polling;
 using Telegram.Bot.Types;
@@ -27,7 +28,6 @@ public class TelegramUi : IUi
             AllowedUpdates = new [] { UpdateType.Message, UpdateType.CallbackQuery }
         });
 
-        // UpdateHandler.BotClient = client;
         BotClientHolder.BotClient = client;
         
         Console.ReadLine();
@@ -35,7 +35,7 @@ public class TelegramUi : IUi
 
     private async Task Update(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
-        await UpdateHandler2.Handle(update);
+        await UpdateHandler.Handle(update);
     }
 
     private Task Error(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)

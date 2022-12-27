@@ -17,11 +17,6 @@ public static class CallbackCommands
         Name2Command[command.Name] = command;
     }
 
-    public static IEnumerable<Command> GetCommands()
-    {
-        return Name2Command.Values;
-    }
-    
     public static bool Contains(string commandName)
     {
         return Name2Command.ContainsKey(commandName);
