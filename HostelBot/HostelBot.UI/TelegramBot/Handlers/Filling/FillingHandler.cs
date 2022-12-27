@@ -1,4 +1,5 @@
 ﻿using HostelBot.Domain.Infrastructure;
+using HostelBot.Domain.Infrastructure.Exceptions;
 using Telegram.Bot.Types;
 
 namespace HostelBot.Ui.TelegramBot.Handlers.Filling;
@@ -36,11 +37,19 @@ internal static class FillingHandler
                 var answers = progress.Answers;
                 var fillable = progress.fillable;
                 FillingProgress.FinishFilling(chatId);
-                
-                fillable.FillClass(answers);
-                
-                await SharedHandlers.SendMessage(answers.ToJsonFormat(), chatId);
 
+                await SharedHandlers.SendMessage(answers.ToJsonFormat(), chatId);
+                
+                try
+                {
+                    fillable.FillClass(answers);
+                }
+                catch (HostelException)
+                {
+                    await SharedHandlers.SendMessage("Общежития с таким номером не существует", chatId);
+                    return;
+                }
+                
                 if (progress.IsRegistration)
                     await SharedHandlers.WaitVerification(chatId);
                 
@@ -48,29 +57,6 @@ internal static class FillingHandler
             default:
                 throw new ArgumentOutOfRangeException();
         }
-
-        // if (!progress.TryValidateRegex(text, out var errorMessage))
-        // {
-        //     await SharedHandlers.SendMessage(errorMessage!, chatId);
-        //     return;
-        // }
-        //
-        // progress.SaveResponse(text);
-        //
-        // if (!progress.Completed)
-        // {
-        //     await SharedHandlers.SendMessage(progress.GetNextQuestion(), chatId);
-        //     return;
-        // }
-        //
-        // await SharedHandlers.SendMessage(progress.Answers.ToJsonFormat(), chatId);
-
-        // if (progress.IsRegistration)
-        // {
-        //     await SharedHandlers.WaitVerification(chatId);
-        // }
-
-        // FillingProgress.FinishFilling(chatId);
     }
 
     private static async Task StartFilling(IFillable fillable, long chatId, bool isRegistration = false)
