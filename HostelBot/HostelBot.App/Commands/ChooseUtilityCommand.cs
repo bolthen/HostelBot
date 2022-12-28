@@ -6,13 +6,13 @@ using HostelBot.Domain.Infrastructure.Repository;
 
 namespace HostelBot.App;
 
-public class ChooseServiceCommand : Command
+public class ChooseUtilityCommand : Command
 {
     private readonly IEnumerable<Manager<UtilityFillable>> managers;
     private readonly ResidentRepository residentRepository;
     private readonly HostelRepository hostelRepository;
 
-    public ChooseServiceCommand(IEnumerable<Manager<UtilityFillable>> managers, ResidentRepository residentRepository,
+    public ChooseUtilityCommand(IEnumerable<Manager<UtilityFillable>> managers, ResidentRepository residentRepository,
         HostelRepository hostelRepository)
         : base("Услуги")
     {

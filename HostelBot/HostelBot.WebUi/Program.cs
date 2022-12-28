@@ -19,7 +19,7 @@ builder.Services.AddAuthentication("CookieAuth").AddCookie("CookieAuth", options
 
 
 var container = ConfigureContainer();
-foreach (var ui in container.GetAll<IUi>())
+foreach (var ui in container.GetAll<IResidentUi>())
     Task.Run(() => ui.Run());
 
 builder.Services.AddSingleton<AdministratorRepository>();
@@ -54,21 +54,21 @@ app.Run();
 static StandardKernel ConfigureContainer()
 {
     var container = new StandardKernel();
-    container.Bind<IUi>().To<TelegramUi>().InSingletonScope();
+    container.Bind<IResidentUi>().To<TelegramResidentUi>().InSingletonScope();
     container.Bind<IApplication>().To<Application>().InSingletonScope();
         
-    container.Bind<FillableUtilityManager>().ToSelf().WhenInjectedInto<ChooseServiceCommand>().InSingletonScope();
+    container.Bind<FillableUtilityManager>().ToSelf().WhenInjectedInto<ChooseUtilityCommand>().InSingletonScope();
         
     container.Bind<Command>().To<InformationCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
     container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
-    container.Bind<Command>().To<ChooseServiceCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
+    container.Bind<Command>().To<ChooseUtilityCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
     container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
     container.Bind<Command>().To<InformationCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
-    container.Bind<Command>().To<ChooseServiceCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
+    container.Bind<Command>().To<ChooseUtilityCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<CheckRegistrationCommand>().ToSelf().WhenInjectedInto<Application>().InSingletonScope();
-    container.Bind<Manager<UtilityFillable>>().To<FillableUtilityManager>().WhenInjectedInto<ChooseServiceCommand>().InSingletonScope();
+    container.Bind<Manager<UtilityFillable>>().To<FillableUtilityManager>().WhenInjectedInto<ChooseUtilityCommand>().InSingletonScope();
     container.Bind<Manager<AppealFillable>>().To<FillableAppealManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
     container.Bind<Manager<ResidentFillable>>().To<FillableResidentManager>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
 

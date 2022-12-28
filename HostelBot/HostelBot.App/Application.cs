@@ -23,12 +23,12 @@ public class Application : IApplication
         return residentRegistrationCommand;
     }
 
-    public EntityChangesHandler<Appeal> GetAppealChangesManager()
+    public EntityChangesHandler<Appeal> GetAppealChangesHandler()
     {
         return appealChangesHandler;
     }
     
-    public EntityChangesHandler<Resident> GetResidentChangesManager()
+    public EntityChangesHandler<Resident> GetResidentChangesHandler()
     {
         return residentChangesHandler;
     }

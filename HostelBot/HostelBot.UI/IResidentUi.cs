@@ -1,6 +1,6 @@
 ﻿namespace HostelBot.Ui;
 
-public interface IUi
+public interface IResidentUi
 {
     void Run();
 }

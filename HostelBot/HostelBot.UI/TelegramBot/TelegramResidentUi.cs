@@ -8,19 +8,19 @@ using Telegram.Bot.Types.Enums;
 
 namespace HostelBot.Ui.TelegramBot;
 
-public class TelegramUi : IUi
+public class TelegramResidentUi : IResidentUi
 {
-    public TelegramUi(IApplication application)
+    public TelegramResidentUi(IApplication application)
     {
         BaseCommands.SetStartCommand(application.GetStartCommand());
         
-        application.GetAppealChangesManager().AddChangesHandler(SharedHandlers.NotifyAppealResponseReceived);
-        application.GetResidentChangesManager().AddChangesHandler(SharedHandlers.NotifyResidentAccepted);
+        application.GetAppealChangesHandler().AddChangesHandler(SharedHandlers.NotifyAppealResponseReceived);
+        application.GetResidentChangesHandler().AddChangesHandler(SharedHandlers.NotifyResidentAccepted);
     }
 
     public void Run()
     {
-        const string token = "5891142143:AAGPdh2b3te8nyC4GbyTLu4wYTDIK8czh58";
+        const string token = "5907576996:AAG4e3-Nwd30BiHI8O793YgkdXtpY0EqZoU";
         
         var client = new TelegramBotClient(token);
         client.StartReceiving(Update, Error, receiverOptions: new ReceiverOptions
