@@ -44,7 +44,7 @@ internal static class FillingHandler
                 {
                     fillable.FillClass(answers);
                 }
-                catch (HostelException)
+                catch (InvalidHostelNameException)
                 {
                     await SharedHandlers.SendMessage("Общежития с таким номером не существует", chatId);
                     return;

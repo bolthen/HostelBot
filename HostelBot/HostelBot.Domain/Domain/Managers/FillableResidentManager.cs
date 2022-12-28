@@ -24,9 +24,9 @@ public class FillableResidentManager : Manager<ResidentFillable>
         {
             room = hostelRepository.FindOrCreateRoom($"№{value.HostelNumber}", value.RoomNumber).Result;
         }
-        catch(ArgumentException e)
+        catch (AggregateException e)
         {
-            throw new HostelException(e);
+            throw new InvalidHostelNameException(e.InnerException);
         }
 
         var hostel = hostelRepository.GetByName($"№{value.HostelNumber}").Result;
