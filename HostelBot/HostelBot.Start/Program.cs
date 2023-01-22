@@ -54,8 +54,7 @@ static StandardKernel ConfigureContainer()
     container.Bind<AppealRepository>().ToSelf().InSingletonScope();
     container.Bind<AdministratorRepository>().ToSelf().InSingletonScope();*/
     
-    
-    container.Bind<MainDbContext>().ToSelf().InSingletonScope();
+    container.Bind<IMainDbContext>().To<MainDbContext>().InSingletonScope();
     container.Bind<AdministratorRepository>().ToSelf().InSingletonScope();
     container.Bind<UtilityRepository>().ToSelf().InSingletonScope();
     container.Bind<HostelRepository>().ToSelf().InSingletonScope();
