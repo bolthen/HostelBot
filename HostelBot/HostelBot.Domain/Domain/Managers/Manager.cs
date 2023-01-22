@@ -3,7 +3,7 @@ using HostelBot.Domain.Infrastructure.Repository;
 namespace HostelBot.Domain.Infrastructure;
 
 public abstract class Manager<T> : IObserver<T>
-    //where T : IObservable<T>
+    where T : IObservable<T>
 {
     protected readonly ResidentRepository residentRepository;
 
@@ -14,7 +14,7 @@ public abstract class Manager<T> : IObserver<T>
 
     private IDisposable? unsubscriber;
     
-    public void Subscribe(IObservable<T> observable)
+    public void Subscribe(T observable)
     {
         unsubscriber = observable.Subscribe(this);
     }

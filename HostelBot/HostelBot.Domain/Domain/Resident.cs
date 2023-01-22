@@ -47,8 +47,6 @@ namespace HostelBot.Domain.Domain
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsAccepted)));
             } 
         }
-        
-        public override string ToString() => $"{Name} {Surname}";
 
         public void AddUtility(Utility utility)
         {

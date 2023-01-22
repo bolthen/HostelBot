@@ -16,9 +16,9 @@ namespace HostelBot.App
             return new List<Command>();
         }
 
-        public virtual object[] GetStaticInfo(long residentId)
+        public virtual string? GetStaticInfo(long residentId)
         {
-            return Array.Empty<object>();
+            return null;
         }
 
         public virtual IFillable? GetFillable(long residentId)
