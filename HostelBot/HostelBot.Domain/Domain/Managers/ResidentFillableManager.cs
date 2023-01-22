@@ -4,12 +4,12 @@ using HostelBot.Domain.Infrastructure.Repository;
 
 namespace HostelBot.Domain.Infrastructure.Managers;
 
-public class FillableResidentManager : Manager<ResidentFillable>
+public class ResidentFillableManager : Manager<ResidentFillable>
 {
     private readonly HostelRepository hostelRepository;
     private readonly RepositoryChangesParser repositoryChangesParser;
 
-    public FillableResidentManager(ResidentRepository residentRepository, HostelRepository hostelRepository,
+    public ResidentFillableManager(ResidentRepository residentRepository, HostelRepository hostelRepository,
         RepositoryChangesParser repositoryChangesParser) 
         : base(residentRepository)
     {

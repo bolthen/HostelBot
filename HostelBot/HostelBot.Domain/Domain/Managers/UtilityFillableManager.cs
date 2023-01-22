@@ -3,9 +3,9 @@ using HostelBot.Domain.Infrastructure.Repository;
 
 namespace HostelBot.Domain.Domain;
 
-public class FillableUtilityManager : Manager<UtilityFillable>
+public class UtilityFillableManager : Manager<UtilityFillable>
 {
-    public FillableUtilityManager(ResidentRepository residentRepository) : base(residentRepository)
+    public UtilityFillableManager(ResidentRepository residentRepository) : base(residentRepository)
     {
     }
 

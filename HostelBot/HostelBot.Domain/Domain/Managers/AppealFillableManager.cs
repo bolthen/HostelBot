@@ -3,11 +3,11 @@ using HostelBot.Domain.Infrastructure.Repository;
 
 namespace HostelBot.Domain.Infrastructure;
 
-public class FillableAppealManager : Manager<AppealFillable>
+public class AppealFillableManager : Manager<AppealFillable>
 {
     private readonly RepositoryChangesParser repositoryChangesParser;
 
-    public FillableAppealManager(ResidentRepository residentRepository, RepositoryChangesParser repositoryChangesParser) 
+    public AppealFillableManager(ResidentRepository residentRepository, RepositoryChangesParser repositoryChangesParser) 
         : base(residentRepository)
     {
         this.repositoryChangesParser = repositoryChangesParser;
