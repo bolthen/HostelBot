@@ -8,7 +8,7 @@ namespace HostelBot.Domain.Infrastructure.Repository;
 
 public class HostelRepository : EntityRepository<Hostel>
 {
-    public HostelRepository(MainDbContext context) : base(context) { }
+    public HostelRepository(IMainDbContext context) : base(context) { }
 
     public async Task<Hostel> GetByName(string hostelName)
     {
@@ -16,7 +16,7 @@ public class HostelRepository : EntityRepository<Hostel>
             .Include(x => x.Residents)
             .Include(x => x.UtilityNames)
             .Include(x => x.Rooms)
-            .FirstOrDefault(r => r.Name == hostelName);
+            .FirstOrDefault(r => r.Name == hostelName)!;
     }
     
     public async new Task<Hostel> GetAsync(long id)

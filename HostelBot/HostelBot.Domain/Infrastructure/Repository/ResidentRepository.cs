@@ -1,12 +1,11 @@
 ﻿using HostelBot.Domain.Domain;
-using HostelBot.Domain.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace HostelBot.Domain.Infrastructure.Repository;
 
 public class ResidentRepository : EntityRepository<Resident>
 {
-    public ResidentRepository(MainDbContext context) : base(context) {}
+    public ResidentRepository(IMainDbContext context) : base(context) {}
 
     public async Task<IQueryable<Resident>> GetAll()
     {

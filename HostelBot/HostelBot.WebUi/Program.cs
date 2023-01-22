@@ -23,7 +23,7 @@ foreach (var ui in container.GetAll<IResidentUi>())
     Task.Run(() => ui.Run());
 
 builder.Services.AddSingleton<AdministratorRepository>();
-builder.Services.AddSingleton(_ => container.Get<MainDbContext>());
+builder.Services.AddSingleton(_ => container.Get<IMainDbContext>());
 builder.Services.AddSingleton(_ => container.Get<ResidentRepository>());
 builder.Services.AddSingleton(_ => container.Get<HostelRepository>());
 builder.Services.AddSingleton(_ => container.Get<UtilityNameRepository>());
@@ -72,20 +72,13 @@ static StandardKernel ConfigureContainer()
     container.Bind<Manager<AppealFillable>>().To<FillableAppealManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
     container.Bind<Manager<ResidentFillable>>().To<FillableResidentManager>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
 
-    container.Bind<MainDbContext>().ToSelf().InSingletonScope();
+    container.Bind<IMainDbContext>().To<MainDbContext>().InSingletonScope();
 
     container.Bind<EntityChangesHandler<Appeal>>().ToSelf().InSingletonScope();
     container.Bind<EntityChangesHandler<Resident>>().ToSelf().InSingletonScope();
     container.Bind<RepositoryChangesParser>().ToSelf().InSingletonScope();
     /*container.Bind<AppealChangesHandler>().ToSelf().InSingletonScope();
     container.Bind<ResidentChangesHandler>().ToSelf().InSingletonScope();*/
-    
-    container.Bind<IEntityRepository<Resident>>().To<EntityRepository<Resident>>().InSingletonScope();
-    container.Bind<IEntityRepository<Hostel>>().To<EntityRepository<Hostel>>().InSingletonScope();
-    container.Bind<IEntityRepository<Utility>>().To<EntityRepository<Utility>>().InSingletonScope();
-    container.Bind<IEntityRepository<Room>>().To<EntityRepository<Room>>().InSingletonScope();
-    container.Bind<IEntityRepository<UtilityName>>().To<EntityRepository<UtilityName>>().InSingletonScope();
-    container.Bind<IEntityRepository<Appeal>>().To<EntityRepository<Appeal>>().InSingletonScope();
 
     container.Bind<UtilityRepository>().ToSelf().InSingletonScope();
     container.Bind<ResidentRepository>().ToSelf().InSingletonScope();
