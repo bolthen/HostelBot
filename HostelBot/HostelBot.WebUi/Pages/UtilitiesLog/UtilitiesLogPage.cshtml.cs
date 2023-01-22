@@ -49,7 +49,7 @@ public class UtilitiesLogPage : PageModel
             RedirectToPage("/Account/AccessDenied");
         
         var utilityName = await utilityNameRepository.GetAsync(utilityNameId);
-        var matchData = hostelRepository.GetUtilitiesByDate(id, StartDate, EndDate, utilityName.Name);
+        var matchData = hostelRepository.GetUtilitiesByDate(id, StartDate, EndDate.AddDays(1), utilityName.Name);
         
         var data = HtmlUtilitiesLogMaker.Make(matchData.ToList());
         

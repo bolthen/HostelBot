@@ -32,7 +32,7 @@ public class AppealsMonitorPage : PageModel
 
         await appealRepository.AddAnswer(appealId, response);
         UpdateAppeals(id);
-        return Page();
+        return RedirectToPage();
     }
     
     public async Task<IActionResult> OnPostAppealDelete(long appealId)
@@ -42,7 +42,7 @@ public class AppealsMonitorPage : PageModel
 
         await appealRepository.DeleteAsync(appealId);
         UpdateAppeals(id);
-        return Page();
+        return RedirectToPage();
     }
 
     private void UpdateAppeals(long hostelId)

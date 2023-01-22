@@ -1,10 +1,5 @@
 ﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
-using System.Text.Json.Serialization;
 using HostelBot.Domain.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace HostelBot.Domain.Domain
 {
@@ -56,6 +51,11 @@ namespace HostelBot.Domain.Domain
         public void AddAppeal(Appeal appeal)
         {
             Appeals.Add(appeal);
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} {Surname}";
         }
     }
 }
