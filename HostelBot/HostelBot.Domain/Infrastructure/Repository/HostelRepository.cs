@@ -27,7 +27,8 @@ public class HostelRepository : EntityRepository<Hostel>
             .Include(x => x.Rooms)
             .FirstOrDefault(r => r.Id == id);
 
-        if (foundEntity != null) return foundEntity;
+        if (foundEntity != null) 
+            return foundEntity;
         
         context.Entry(foundEntity).State = EntityState.Detached;
         throw new Exception($"The Hostel with the given id was not found in the database");
@@ -38,11 +39,11 @@ public class HostelRepository : EntityRepository<Hostel>
         var foundEntity = await context.Set<Resident>().FindAsync(residentId);
 
         if (foundEntity == null)
-            return GetAsync(hostelId).Result;
+            return await GetAsync(hostelId);
 
         context.Set<Resident>().Remove(foundEntity);
         await context.SaveChangesAsync();
-        return GetAsync(hostelId).Result;
+        return await GetAsync(hostelId);
     }
 
     public async Task<Hostel> AcceptResident(long residentId, long hostelId)
@@ -50,19 +51,19 @@ public class HostelRepository : EntityRepository<Hostel>
         var foundEntity = await context.Set<Resident>().FindAsync(residentId);
         
         if (foundEntity == null)
-            return GetAsync(hostelId).Result;
+            return await GetAsync(hostelId);
         
         foundEntity.IsAccepted = true;
         context.Set<Resident>().Update(foundEntity);
         await context.SaveChangesAsync();
         
-        return GetAsync(hostelId).Result;
+        return await GetAsync(hostelId);
         
     }
     
     public async Task<Room> FindOrCreateRoom(string hostelName, int roomNumber)
     {
-        var hostel = GetByName(hostelName).Result;
+        var hostel = await GetByName(hostelName);
         if (hostel is null)
             throw new ArgumentException($"No hostel with name {hostelName} in database");
         var room = hostel.Rooms.FirstOrDefault(r => r.Number == roomNumber) ?? new Room(roomNumber, hostel);

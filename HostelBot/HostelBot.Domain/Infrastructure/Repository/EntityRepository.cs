@@ -16,7 +16,8 @@ public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
     {
         var foundEntity = await context.Set<TEntity>().FindAsync(id);
 
-        if (foundEntity != null) return foundEntity;
+        if (foundEntity != null) 
+            return foundEntity;
         
         context.Entry(foundEntity).State = EntityState.Detached;
         throw new ArgumentException($"The {typeof(TEntity)} with the given id({id}) was not found in the database");

@@ -1,4 +1,5 @@
-﻿using HostelBot.Domain.Domain;
+﻿using System.Net.Mime;
+using HostelBot.Domain.Domain;
 using iTextSharp.text.pdf;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -36,7 +37,12 @@ public sealed class MainDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=helloapp.db");
+        var workingDirectory = Environment.CurrentDirectory;
+        var workingDirectory2 = System.IO.Directory.GetCurrentDirectory();
+        Console.WriteLine(workingDirectory);
+        var projectDirectory = Directory.GetParent(workingDirectory).Parent.Parent.Parent.FullName;
+        var absolutePath = Path.Combine(projectDirectory, "helloapp.db");
+        optionsBuilder.UseSqlite($"Data Source={absolutePath}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
