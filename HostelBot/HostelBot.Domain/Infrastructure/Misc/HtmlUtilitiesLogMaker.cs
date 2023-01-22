@@ -5,11 +5,11 @@ namespace HostelBot.Domain.Infrastructure.Misc;
 
 public static class HtmlUtilitiesLogMaker
 {
-    public static string Make(IReadOnlyCollection<Utility> data)
+    public static string Make(IReadOnlyCollection<Utility> data, DateTime startDate, DateTime endDate)
     {
         var log = new StringBuilder();
         
-        using (var table = new HtmlStatTableMaker(log, data.FirstOrDefault()?.Name ?? "unknown"))
+        using (var table = new HtmlStatTableMaker(log, data.FirstOrDefault()?.Name ?? "unknown", startDate, endDate))
         {
             using (var headers = table.AddHeader())
             {

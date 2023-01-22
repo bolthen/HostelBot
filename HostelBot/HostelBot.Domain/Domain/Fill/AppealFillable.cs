@@ -16,6 +16,6 @@ public class AppealFillable : Fillable<AppealFillable>, IFillable
 
     public long ResidentId { get; set; }
     
-    [Question("Напишите ваше обращение", ViewType.TextEnter)]
+    [Question("Напишите ваше обращение к заведующей", ViewType.TextEnter)]
     public string Content { get; set; }
 }

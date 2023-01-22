@@ -51,7 +51,7 @@ public class UtilitiesLogPage : PageModel
         var utilityName = await utilityNameRepository.GetAsync(utilityNameId);
         var matchData = hostelRepository.GetUtilitiesByDate(id, StartDate, EndDate.AddDays(1), utilityName.Name);
         
-        var data = HtmlUtilitiesLogMaker.Make(matchData.ToList());
+        var data = HtmlUtilitiesLogMaker.Make(matchData.ToList(), StartDate, EndDate);
         
         var mas = PdfCreator.CreatePdfFile(data);
         var fileName = $"{utilityName} {StartDate} -- {EndDate}.pdf";

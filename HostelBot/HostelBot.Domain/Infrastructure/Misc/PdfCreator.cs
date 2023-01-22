@@ -18,8 +18,8 @@ public static class PdfCreator
         using (var writer = PdfWriter.GetInstance(doc, ms)) {
             doc.Open();
                 
-            using (var msCss = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(Css))) 
-            using (var msHtml = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(html)))
+            using (var msCss = new MemoryStream(Encoding.UTF8.GetBytes(Css))) 
+            using (var msHtml = new MemoryStream(Encoding.UTF8.GetBytes(html)))
                 XMLWorkerHelper.GetInstance().ParseXHtml(writer, doc, msHtml, msCss, Encoding.UTF8, new UnicodeFontFactory());
             
             doc.Close();

@@ -21,8 +21,8 @@
             sender += ", " + appeal.Resident.Room.Number;
         <div class="card-body">
             <div class="p-2 ms-2" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
-                <label class="fw-bold small mb-0">@sender</label>
-                <p class="m-3">@appeal.Content</p>
+                <label class="fw-bold mb-0">@sender</label><br/>
+                <label class="m-3">@appeal.Content</label><br/>
                 
                 <form method="post">
                     <input name="response" class="form-control m-1" style="border-radius: 7px;" type="text" id=@sender placeholder="Ответ"/>
