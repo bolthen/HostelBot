@@ -17,6 +17,7 @@ public class Utility : Entity<Utility>
         Name = name;
         Resident = resident;
         CreationDateTime = DateTime.Now;
+        HostelId = Resident.Hostel.Id;
     }
 
     public Utility(string name, string content, Resident resident)
@@ -25,6 +26,7 @@ public class Utility : Entity<Utility>
         Content = content;
         Resident = resident;
         CreationDateTime = DateTime.Now;
+        HostelId = Resident.Hostel.Id;
     } 
     
     public string Name { get; set; }
@@ -35,6 +37,8 @@ public class Utility : Entity<Utility>
     public Resident Resident { get; set; }
     
     public DateTime CreationDateTime { get; set; }
+    
+    public long HostelId { get; set; }
     
     public IReadOnlyCollection<PropertyInfo> GetFields() => Properties;
     private readonly List<Infrastructure.IObserver<Utility>> observers = new();

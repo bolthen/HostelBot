@@ -27,6 +27,7 @@ builder.Services.AddSingleton(_ => container.Get<MainDbContext>());
 builder.Services.AddSingleton(_ => container.Get<ResidentRepository>());
 builder.Services.AddSingleton(_ => container.Get<HostelRepository>());
 builder.Services.AddSingleton(_ => container.Get<UtilityNameRepository>());
+builder.Services.AddSingleton(_ => container.Get<AppealRepository>());
 
 var app = builder.Build();
 

@@ -17,22 +17,6 @@ namespace WebUi.Pages.Residents
         public ResidentsPage(HostelRepository hostelRepository, ResidentRepository residentRepository)
         {
             this.hostelRepository = hostelRepository;
-
-             // var hostel = new Hostel("№6");
-             // var a = new Room(718, hostel);
-             // var b = new Room(719, hostel);
-             //
-             // var mockBd = new List<Resident>
-             // {
-             //     new (1, "John", "Johnson", hostel, a),
-             //     new (5, "Sam", "Samson", hostel, a),
-             //     new (3, "Shon", "Shonson", hostel, b),
-             //     new (4, "Wayn", "Waynson", hostel, b)
-             //     
-             // };
-             //
-             // foreach (var resident in mockBd)
-             //     residentRepository.CreateAsync(resident);
         }
 
         public async Task<IActionResult> OnGet()

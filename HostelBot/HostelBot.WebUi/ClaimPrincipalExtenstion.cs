@@ -23,6 +23,11 @@ public static class ClaimPrincipalExtenstion
             return int.TryParse(value, out result);
         }
 
+        public bool TryParseLong(out long result)
+        {
+            return long.TryParse(value, out result);
+        }
+        
         public bool TryGetString(out string result)
         {
             result = "";

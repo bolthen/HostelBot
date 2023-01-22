@@ -27,7 +27,7 @@ public class AddPage : PageModel
         if (!User.GetClaimValue("Hostel").TryParseInt(out var id))
             RedirectToPage("/Account/AccessDenied");
 
-        var name = HttpContext.Request.Form["Workable"].ToString();
+        var name = HttpContext.Request.Form["utilityName"].ToString();
         var hostel = await hostelRepository.GetAsync(id);
         hostel.AddUtilityName(new UtilityName(name));
         hostelRepository.UpdateAsync(hostel);
