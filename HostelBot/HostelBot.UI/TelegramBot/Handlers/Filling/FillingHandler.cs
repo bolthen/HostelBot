@@ -38,7 +38,7 @@ internal static class FillingHandler
                 var fillable = progress.fillable;
                 FillingProgress.FinishFilling(chatId);
 
-                await SharedHandlers.SendMessage(answers.ToJsonFormat(), chatId);
+                // await SharedHandlers.SendMessage(answers.ToJsonFormat(), chatId);
                 
                 try
                 {
