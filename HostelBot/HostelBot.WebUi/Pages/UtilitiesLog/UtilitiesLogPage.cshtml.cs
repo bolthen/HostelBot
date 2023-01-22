@@ -10,11 +10,13 @@ namespace WebUi.Pages.UtilitiesLog;
 [Authorize]
 public class UtilitiesLogPage : PageModel
 {
-    [BindProperty]
-    public DateTime StartData { get; set; }
+    private const string FileType = "application/pdf";
     
     [BindProperty]
-    public DateTime EndData { get; set; }
+    public DateTime StartDate { get; set; }
+    
+    [BindProperty]
+    public DateTime EndDate { get; set; }
     
     public UtilityName[] Utilities { get; set; }
     
@@ -28,7 +30,7 @@ public class UtilitiesLogPage : PageModel
         this.hostelRepository = hostelRepository;
         this.utilityNameRepository = utilityNameRepository;
         this.residentRepository = residentRepository;
-        MaxChooseDate = DateTime.Today.AddDays(-1).ToString("yyyy-MM-dd");
+        MaxChooseDate = DateTime.Today.AddDays(0).ToString("yyyy-MM-dd");
     }
     
     public async Task<IActionResult> OnGet()
@@ -43,30 +45,16 @@ public class UtilitiesLogPage : PageModel
 
     public async Task<IActionResult> OnPostPrintUtilities(int utilityNameId)
     {
-        if (!User.GetClaimValue("Hostel").TryParseInt(out var id))
+        if (!User.GetClaimValue("Hostel").TryParseLong(out var id))
             RedirectToPage("/Account/AccessDenied");
         
-        var hostel = await hostelRepository.GetAsync(id);
-        var residents = hostel.Residents;
         var utilityName = await utilityNameRepository.GetAsync(utilityNameId);
-        var residentsWithUtility = new List<Resident>();
-        foreach (var resident in residents)
-            residentsWithUtility.Add(await residentRepository.GetAsync(resident.Id));
+        var matchData = hostelRepository.GetUtilitiesByDate(id, StartDate, EndDate, utilityName.Name);
         
+        var data = HtmlUtilitiesLogMaker.Make(matchData.ToList());
         
-        var matchUtilities = residentsWithUtility
-            .SelectMany(x => x.Utilities)
-            .Where(x => x.Name == utilityName.Name)
-            .Where(x => x.CreationDateTime >= StartData)
-            .Where(x => x.CreationDateTime <= EndData.AddDays(1))
-            .ToList();
-        var data = HtmlUtilitiesLogMaker.Make(matchUtilities);
-        
-        const string css = "table, td { border: 1px solid #333; } thead, tfoot { background-color: #333; color: #fff; } ";
-        const string fileType = "application/pdf";
-
-        var mas = PdfCreator.CreatePdfFile(data, css);
-        var fileName = $"{utilityName} {StartData} -- {EndData}.pdf";
-        return File(mas, fileType, fileName);
+        var mas = PdfCreator.CreatePdfFile(data);
+        var fileName = $"{utilityName} {StartDate} -- {EndDate}.pdf";
+        return File(mas, FileType, fileName);
     }
 }

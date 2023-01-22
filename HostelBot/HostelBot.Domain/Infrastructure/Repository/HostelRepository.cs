@@ -73,16 +73,20 @@ public class HostelRepository : EntityRepository<Hostel>
         return room;
     }
     
-    public async Task<IReadOnlyCollection<Utility>> GetUtilityByDate(long hostelId, DateTime start, DateTime end, string utilityName)
+    public IEnumerable<Appeal> GetAppealsByHostelId(long hostelId)
     {
-        var hostel = await GetAsync(hostelId);
-        
-        return hostel.Residents
-            .SelectMany(x => x.Utilities)
-            .Where(x =>
-            {
-                return x.CreationDateTime >= start && x.CreationDateTime <= end && x.Name == utilityName;
-            })
-            .ToArray();
+        return context.Set<Appeal>()
+            .Include(x => x.Resident)
+            .ThenInclude(x => x.Room)
+            .Where(x => x.HostelId == hostelId);
+    }
+    
+    public IEnumerable<Utility> GetUtilitiesByDate(long hostelId, DateTime start, DateTime end, string utilityName)
+    {
+        return context.Set<Utility>()
+            .Include(x => x.Resident)
+            .Where(x => x.HostelId == hostelId)
+            .Where(x => x.CreationDateTime >= start && x.CreationDateTime <= end)
+            .Where(x => x.Name == utilityName);
     }
 }

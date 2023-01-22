@@ -12,7 +12,7 @@ public class ResidentRepository : EntityRepository<Resident>
     {
         return context.Residents;
     }
-    
+
     public async new Task<Resident> GetAsync(long id)
     {
         var foundEntity = context.Residents
@@ -23,7 +23,7 @@ public class ResidentRepository : EntityRepository<Resident>
             .FirstOrDefault(r => r.Id == id);
 
         if (foundEntity != null) return foundEntity;
-        
+
         context.Entry(foundEntity).State = EntityState.Detached;
         throw new ArgumentException($"The Resident with the given id {id} was not found in the database");
     }

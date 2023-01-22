@@ -10,8 +10,9 @@ public class CheckInPage : PageModel
 {
     [BindProperty]
     public IReadOnlyCollection<Resident> Residents { get; set; }
+    
     [BindProperty]
-    public Hostel hostel { get; set; }
+    public Hostel Hostel { get; set; }
     
     private readonly HostelRepository hostelRepository;
 
@@ -25,8 +26,8 @@ public class CheckInPage : PageModel
         if (!User.GetClaimValue("Hostel").TryParseInt(out var id))
             RedirectToPage("/Account/AccessDenied");
             
-        hostel = await hostelRepository.GetAsync(id);
-        Residents = hostel?.Residents.Where(x => !x.IsAccepted).ToArray() ?? Array.Empty<Resident>();
+        Hostel = await hostelRepository.GetAsync(id);
+        Residents = Hostel?.Residents.Where(x => !x.IsAccepted).ToArray() ?? Array.Empty<Resident>();
         return Page();
     }
     
@@ -35,9 +36,9 @@ public class CheckInPage : PageModel
         if (!User.GetClaimValue("Hostel").TryParseInt(out var hostelId))
             RedirectToPage("/Account/AccessDenied");
             
-        hostel = await hostelRepository.GetAsync(hostelId);
-        hostel = await hostelRepository.AcceptResident(id, hostel.Id);
-        Residents = hostel.Residents.Where(x => !x.IsAccepted).ToArray();
+        Hostel = await hostelRepository.GetAsync(hostelId);
+        Hostel = await hostelRepository.AcceptResident(id, Hostel.Id);
+        Residents = Hostel.Residents.Where(x => !x.IsAccepted).ToArray();
         return Page();
     }
     
@@ -46,9 +47,9 @@ public class CheckInPage : PageModel
         if (!User.GetClaimValue("Hostel").TryParseInt(out var hostelId))
             RedirectToPage("/Account/AccessDenied");
             
-        hostel = await hostelRepository.GetAsync(hostelId);
-        hostel = await hostelRepository.DeleteResident(id, hostel.Id);
-        Residents = hostel.Residents.Where(x => !x.IsAccepted).ToArray();
+        Hostel = await hostelRepository.GetAsync(hostelId);
+        Hostel = await hostelRepository.DeleteResident(id, Hostel.Id);
+        Residents = Hostel.Residents.Where(x => !x.IsAccepted).ToArray();
         return Page();
     }
 }

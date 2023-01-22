@@ -7,33 +7,30 @@ namespace HostelBot.Domain.Infrastructure.Misc;
 
 public static class PdfCreator
 {
-    public static byte[] CreatePdfFile(string html, string css = "")
+    private const string Css = "table, td { border: 1px solid #333; } thead, tfoot { background-color: #333; color: #fff; } ";
+
+    public static byte[] CreatePdfFile(string html)
     {
         byte[] bytes;
 
         using var ms = new MemoryStream();
-        using (var doc = new Document()) {
-            using (var writer = PdfWriter.GetInstance(doc, ms)) {
-                doc.Open();
-                    
-                using (var msCss = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(css))) 
-                {
-                    using (var msHtml = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(html))) 
-                    {
-                        XMLWorkerHelper.GetInstance().ParseXHtml(writer, doc, msHtml, msCss, Encoding.UTF8, new UnicodeFontFactory());
-                    }
-                }
-                    
-                doc.Close();
-            }
+        using (var doc = new Document()) 
+        using (var writer = PdfWriter.GetInstance(doc, ms)) {
+            doc.Open();
+                
+            using (var msCss = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(Css))) 
+            using (var msHtml = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(html)))
+                XMLWorkerHelper.GetInstance().ParseXHtml(writer, doc, msHtml, msCss, Encoding.UTF8, new UnicodeFontFactory());
+            
+            doc.Close();
         }
             
         bytes = ms.ToArray();
 
         return bytes;
     }
-    
-    public class UnicodeFontFactory : FontFactoryImp
+
+    private class UnicodeFontFactory : FontFactoryImp
     {
         static UnicodeFontFactory()
         {
