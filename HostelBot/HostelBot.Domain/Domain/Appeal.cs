@@ -18,6 +18,7 @@ namespace HostelBot.Domain.Domain
             Resident = resident;
             Content = content;
             PropertyChanged += repositoryChangesParser.ParseRepositoryChanges;
+            HostelId = Resident.Hostel.Id;
         }
         
         public Resident Resident { get; set; }
@@ -25,6 +26,8 @@ namespace HostelBot.Domain.Domain
         public string Content { get; set; }
 
         private string? answer;
+        
+        public long HostelId { get; set; }
 
         public string? Answer
         {
