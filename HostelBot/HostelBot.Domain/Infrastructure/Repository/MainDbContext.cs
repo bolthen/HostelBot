@@ -1,4 +1,5 @@
 ﻿using HostelBot.Domain.Domain;
+using HostelBot.Domain.Infrastructure.Misc;
 using iTextSharp.text.pdf;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -7,26 +8,14 @@ using Microsoft.Extensions.Logging;
 
 namespace HostelBot.Domain.Infrastructure.Repository;
 
-public sealed class MainDbContext : DbContext
+public sealed class MainDbContext : IMainDbContext
 {
-    public DbSet<Hostel> Hostels { get; set; }
-    public DbSet<Resident> Residents { get; set; }
-    public DbSet<Room> Rooms { get; set; }
-    public DbSet<HostelBot.Domain.Utility> Utilities { get; set; }
-    public DbSet<UtilityName> UtilityNames { get; set; }
-    public DbSet<Appeal> Appeal { get; set; }
-    public DbSet<Administrator> Administrators { get; set; }
+    private const string DbName = "helloapp.db";
 
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
     {
         Database.EnsureCreated();
     }
-
-    /*public MainDbContext()
-    {
-        //Database.EnsureDeleted(); // TODO DELETE
-        Database.EnsureCreated();
-    }*/
     
     public MainDbContext()
     { 
@@ -36,7 +25,8 @@ public sealed class MainDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlite("Data Source=helloapp.db");
+        var dbPath = DirectorySearch.DeepFindSearch(DbName, "HostelBot");
+        optionsBuilder.UseSqlite($"Data Source={dbPath}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

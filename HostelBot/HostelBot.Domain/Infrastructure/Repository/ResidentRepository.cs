@@ -1,12 +1,11 @@
 ﻿using HostelBot.Domain.Domain;
-using HostelBot.Domain.Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
 
 namespace HostelBot.Domain.Infrastructure.Repository;
 
 public class ResidentRepository : EntityRepository<Resident>
 {
-    public ResidentRepository(MainDbContext context) : base(context) {}
+    public ResidentRepository(IMainDbContext context) : base(context) {}
 
     public async Task<IQueryable<Resident>> GetAll()
     {
@@ -15,7 +14,7 @@ public class ResidentRepository : EntityRepository<Resident>
 
     public async new Task<Resident> GetAsync(long id)
     {
-        var foundEntity = context.Residents
+            var foundEntity = context.Residents
             .Include(x => x.Appeals)
             .Include(x => x.Utilities)
             .Include(x => x.Hostel)
@@ -26,5 +25,12 @@ public class ResidentRepository : EntityRepository<Resident>
 
         context.Entry(foundEntity).State = EntityState.Detached;
         throw new ArgumentException($"The Resident with the given id {id} was not found in the database");
+    }
+
+    public async new Task<bool> CheckAsync(long id)
+    {
+        var foundEntity = context.Residents.FirstOrDefault(r => r.Id == id);
+
+        return foundEntity != null;
     }
 }
