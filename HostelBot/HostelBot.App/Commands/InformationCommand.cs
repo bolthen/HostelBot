@@ -15,7 +15,7 @@ public class InformationCommand : Command
         this.administratorRepository = administratorRepository;
     }
 
-    public override string? GetStaticInfo(long residentId)
+    public override string GetStaticInfo(long residentId)
     {
         var resident = residentRepository.GetAsync(residentId).Result;
         var administrator = administratorRepository.GetByHostel(resident.Hostel).Result;

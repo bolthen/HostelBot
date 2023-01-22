@@ -58,16 +58,13 @@ static StandardKernel ConfigureContainer()
     container.Bind<IApplication>().To<Application>().InSingletonScope();
         
     container.Bind<FillableUtilityManager>().ToSelf().WhenInjectedInto<ChooseUtilityCommand>().InSingletonScope();
-        
-    container.Bind<Command>().To<InformationCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
-    container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
-    container.Bind<Command>().To<ChooseUtilityCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
-    container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<IApplication>().InSingletonScope();
+    
     container.Bind<Command>().To<InformationCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
-    container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
+    //container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<Command>().To<ChooseUtilityCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<CheckRegistrationCommand>().ToSelf().WhenInjectedInto<Application>().InSingletonScope();
+    
     container.Bind<Manager<UtilityFillable>>().To<FillableUtilityManager>().WhenInjectedInto<ChooseUtilityCommand>().InSingletonScope();
     container.Bind<Manager<AppealFillable>>().To<FillableAppealManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
     container.Bind<Manager<ResidentFillable>>().To<FillableResidentManager>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
@@ -77,9 +74,7 @@ static StandardKernel ConfigureContainer()
     container.Bind<EntityChangesHandler<Appeal>>().ToSelf().InSingletonScope();
     container.Bind<EntityChangesHandler<Resident>>().ToSelf().InSingletonScope();
     container.Bind<RepositoryChangesParser>().ToSelf().InSingletonScope();
-    /*container.Bind<AppealChangesHandler>().ToSelf().InSingletonScope();
-    container.Bind<ResidentChangesHandler>().ToSelf().InSingletonScope();*/
-    
+
     container.Bind<IEntityRepository<Resident>>().To<EntityRepository<Resident>>().InSingletonScope();
     container.Bind<IEntityRepository<Hostel>>().To<EntityRepository<Hostel>>().InSingletonScope();
     container.Bind<IEntityRepository<Utility>>().To<EntityRepository<Utility>>().InSingletonScope();
