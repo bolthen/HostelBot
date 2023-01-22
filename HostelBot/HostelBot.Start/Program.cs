@@ -22,7 +22,7 @@ static StandardKernel ConfigureContainer()
     container.Bind<IResidentUi>().To<TelegramResidentUi>().InSingletonScope();
     container.Bind<IApplication>().To<Application>().InSingletonScope();
         
-    container.Bind<FillableUtilityManager>().ToSelf().WhenInjectedInto<ChooseUtilityCommand>().InSingletonScope();
+    container.Bind<UtilityFillableManager>().ToSelf().WhenInjectedInto<ChooseUtilityCommand>().InSingletonScope();
     
     container.Bind<Command>().To<InformationCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     //container.Bind<Command>().To<StatusCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
@@ -30,9 +30,9 @@ static StandardKernel ConfigureContainer()
     container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<CheckRegistrationCommand>().ToSelf().WhenInjectedInto<Application>().InSingletonScope();
     
-    container.Bind<Manager<UtilityFillable>>().To<FillableUtilityManager>().WhenInjectedInto<ChooseUtilityCommand>().InSingletonScope();
-    container.Bind<Manager<AppealFillable>>().To<FillableAppealManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
-    container.Bind<Manager<ResidentFillable>>().To<FillableResidentManager>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
+    container.Bind<Manager<UtilityFillable>>().To<UtilityFillableManager>().WhenInjectedInto<ChooseUtilityCommand>().InSingletonScope();
+    container.Bind<Manager<AppealFillable>>().To<AppealFillableManager>().WhenInjectedInto<AppealCommand>().InSingletonScope();
+    container.Bind<Manager<ResidentFillable>>().To<ResidentFillableManager>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
 
     //container.Bind<MainDbContext>().ToSelf().InSingletonScope();
 

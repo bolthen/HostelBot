@@ -18,13 +18,6 @@ public abstract class Manager<T> : IObserver<T>
     {
         unsubscriber = observable.Subscribe(this);
     }
-    
-    public void OnNext(T value)
-    {
-        // Здесь наверное можно сохранять промежуточное заполнение, если
-        // после заполнения каждого свойства вызывать этот метод.
-        // Ещё для этого возможно понадобится сохранять id пользователя внутри Appeal
-    }
 
     public void OnCompleted(T value)
     {

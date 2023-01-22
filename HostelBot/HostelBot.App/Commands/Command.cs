@@ -16,7 +16,7 @@ namespace HostelBot.App
             return new List<Command>();
         }
 
-        public virtual string? GetStaticInfo(long residentId)
+        public virtual string? GetInformation(long residentId)
         {
             return null;
         }

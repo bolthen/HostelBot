@@ -10,8 +10,8 @@ internal static class CommandHandler
 {
     public static async Task Handle(Command command, long chatId, Update update)
     {
-        if (command.GetStaticInfo(chatId) != null)
-            await SharedHandlers.SendMessage(command.GetStaticInfo(chatId)!, chatId);
+        if (command.GetInformation(chatId) != null)
+            await SharedHandlers.SendMessage(command.GetInformation(chatId)!, chatId);
 
         var fillable = command.GetFillable(chatId);
         if (fillable != null)
