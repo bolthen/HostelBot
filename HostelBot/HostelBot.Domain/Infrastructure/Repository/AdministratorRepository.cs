@@ -15,4 +15,9 @@ public class AdministratorRepository : EntityRepository<Administrator>
     {
         return GetByLogin(login).Result.HashPassword;
     }
+    
+    public async Task<Administrator> GetByHostel(Hostel hostel)
+    {
+        return context.Administrators.FirstOrDefault(x => x.HostelId == hostel.Id);
+    }
 }
