@@ -2,7 +2,6 @@ using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Telegram.Bot.Types;
 
 namespace WebUi.Pages.CheckIn;
 
