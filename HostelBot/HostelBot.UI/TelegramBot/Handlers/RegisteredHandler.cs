@@ -11,13 +11,6 @@ internal static class RegisteredHandler
 {
     public static async Task Handle(Update update, long chatId)
     {
-        if (!LocalUserRepo.ContainsUser(chatId))
-        {
-            LocalUserRepo.RegisterUser(chatId);
-            await SharedHandlers.AuthorizeUser(chatId);
-            return;
-        }
-
         if (FillingProgress.IsUserCurrentlyFilling(chatId))
         {
             await FillingHandler.Handle(update, chatId, FillingProgress.GetFillingProgress(chatId).fillable);
@@ -38,7 +31,7 @@ internal static class RegisteredHandler
             return;
         }
 
-        await SharedHandlers.SendMessage($"Не понимаем вас: {text}", chatId);
+        await SharedHandlers.SendMessage($"Не понимаем вас: {text}", chatId, BaseButtonsMarkup.Get(chatId));
     }
     
     private static async Task HandleCallbackQuery(Update update)

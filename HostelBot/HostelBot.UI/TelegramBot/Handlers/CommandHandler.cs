@@ -23,7 +23,7 @@ internal static class CommandHandler
         var subcommands = command.GetSubcommands(chatId);
         if (subcommands.Count == 0)
         {
-            await SharedHandlers.SendMessage($"No subcommands for '{command.Name}' Command", chatId);
+            // await SharedHandlers.SendMessage($"No subcommands for '{command.Name}' Command", chatId);
             return;
         }
         
@@ -32,6 +32,6 @@ internal static class CommandHandler
         var buttons = subcommands.Select(x => InlineKeyboardButton.WithCallbackData(x.Name));
         var replyKeyboardMarkup = new InlineKeyboardMarkup(buttons);
 
-        await SharedHandlers.SendMessage(command.Name, chatId, replyMarkup: replyKeyboardMarkup);
+        await SharedHandlers.SendMessage(command.Name, chatId, replyKeyboardMarkup);
     }
 }

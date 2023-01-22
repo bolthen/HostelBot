@@ -19,21 +19,12 @@ internal static class SharedHandlers
 
     public static async Task AuthorizeUser(long chatId)
     {
-        var buttons = BaseCommands.GetBaseCommandsNames(chatId)
-            .Select(name => new[] { new KeyboardButton(name) });
-        var replyKeyboardMarkup = new ReplyKeyboardMarkup(buttons)
-        {
-            ResizeKeyboard = true,
-            OneTimeKeyboard = false
-        };
-
-        await SendMessage("Добро пожаловать.", chatId, replyMarkup: replyKeyboardMarkup);
+        await SendMessage("Добро пожаловать.", chatId, BaseButtonsMarkup.Get(chatId));
     }
     
     
     public static async void NotifyResidentAccepted(Resident resident)
     {
-        LocalUserRepo.RegisterUser(resident.Id);
         await AuthorizeUser(resident.Id);
     }
     
