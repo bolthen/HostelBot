@@ -30,7 +30,7 @@ public class AddPage : PageModel
         var name = HttpContext.Request.Form["utilityName"].ToString();
         var hostel = await hostelRepository.GetAsync(id);
         hostel.AddUtilityName(new UtilityName(name));
-        hostelRepository.UpdateAsync(hostel);
+        await hostelRepository.UpdateAsync(hostel);
         return RedirectToPage("/Utilities/UtilitiesPage");
     }
 }

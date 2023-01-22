@@ -4,10 +4,10 @@ namespace HostelBot.Domain.Infrastructure.Repository;
 
 public class AdministratorRepository : EntityRepository<Administrator>
 {
-    public AdministratorRepository(IMainDbContext context) : base(context) { }
-
-    public async Task<Administrator> GetByLogin(string login)
+    public AdministratorRepository(){}
+    public async Task<Administrator?> GetByLogin(string login)
     {
+        await using IMainDbContext context = new MainDbContext();
         return context.Administrators.FirstOrDefault(x => x.Login == login)!;
     }
 
@@ -16,8 +16,9 @@ public class AdministratorRepository : EntityRepository<Administrator>
         return GetByLogin(login).Result.HashPassword;
     }
     
-    public async Task<Administrator> GetByHostel(Hostel hostel)
+    public async Task<Administrator?> GetByHostel(Hostel hostel)
     {
+        await using IMainDbContext context = new MainDbContext();
         return context.Administrators.FirstOrDefault(x => x.HostelId == hostel.Id);
     }
 }

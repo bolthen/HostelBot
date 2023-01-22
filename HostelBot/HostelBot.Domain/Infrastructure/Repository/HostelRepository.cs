@@ -8,10 +8,10 @@ namespace HostelBot.Domain.Infrastructure.Repository;
 
 public class HostelRepository : EntityRepository<Hostel>
 {
-    public HostelRepository(IMainDbContext context) : base(context) { }
-
+    public HostelRepository(){}
     public async Task<Hostel> GetByName(string hostelName)
     {
+        await using IMainDbContext context = new MainDbContext();
         return context.Set<Hostel>()
             .Include(x => x.Residents)
             .Include(x => x.UtilityNames)
@@ -19,8 +19,9 @@ public class HostelRepository : EntityRepository<Hostel>
             .FirstOrDefault(r => r.Name == hostelName)!;
     }
     
-    public async new Task<Hostel> GetAsync(long id)
+    public new async Task<Hostel> GetAsync(long id)
     {
+        await using IMainDbContext context = new MainDbContext();
         var foundEntity = context.Hostels
             .Include(x => x.Residents)
             .Include(x => x.UtilityNames)
@@ -36,6 +37,7 @@ public class HostelRepository : EntityRepository<Hostel>
 
     public async Task<Hostel> DeleteResident(long residentId, long hostelId)
     {
+        await using IMainDbContext context = new MainDbContext();
         var foundEntity = await context.Set<Resident>().FindAsync(residentId);
 
         if (foundEntity == null)
@@ -48,6 +50,7 @@ public class HostelRepository : EntityRepository<Hostel>
 
     public async Task<Hostel> AcceptResident(long residentId, long hostelId)
     {
+        await using IMainDbContext context = new MainDbContext();
         var foundEntity = await context.Set<Resident>().FindAsync(residentId);
         
         if (foundEntity == null)
@@ -74,16 +77,18 @@ public class HostelRepository : EntityRepository<Hostel>
         return room;
     }
     
-    public IEnumerable<Appeal> GetAppealsByHostelId(long hostelId)
+    public async Task<IEnumerable<Appeal>> GetAppealsByHostelId(long hostelId)
     {
+        await using IMainDbContext context = new MainDbContext();
         return context.Set<Appeal>()
             .Include(x => x.Resident)
             .ThenInclude(x => x.Room)
             .Where(x => x.HostelId == hostelId);
     }
     
-    public IEnumerable<Utility> GetUtilitiesByDate(long hostelId, DateTime start, DateTime end, string utilityName)
+    public async Task<IEnumerable<Utility>> GetUtilitiesByDate(long hostelId, DateTime start, DateTime end, string utilityName)
     {
+        await using IMainDbContext context = new MainDbContext();
         return context.Set<Utility>()
             .Include(x => x.Resident)
             .Where(x => x.HostelId == hostelId)

@@ -45,11 +45,9 @@ public class AppealsMonitorPage : PageModel
         return RedirectToPage();
     }
 
-    private void UpdateAppeals(long hostelId)
+    private async void UpdateAppeals(long hostelId)
     {
-        Appeals = hostelRepository
-            .GetAppealsByHostelId(hostelId)
-            .Where(x => x.Answer is null)
-            .ToList();
+        var appeals = await hostelRepository.GetAppealsByHostelId(hostelId);
+        Appeals = appeals.ToList();
     }
 }

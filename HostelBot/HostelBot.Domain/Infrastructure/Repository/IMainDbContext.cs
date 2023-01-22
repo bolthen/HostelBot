@@ -10,7 +10,7 @@ public abstract class IMainDbContext : DbContext
     public DbSet<Utility> Utilities { get; set; }
     public DbSet<UtilityName> UtilityNames { get; set; }
     public DbSet<Appeal> Appeal { get; set; }
-    public DbSet<Administrator> Administrators { get; set; }
+    public DbSet<Administrator?> Administrators { get; set; }
     
     public IMainDbContext(DbContextOptions<MainDbContext> options) : base(options) { }
     

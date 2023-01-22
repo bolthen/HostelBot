@@ -15,7 +15,6 @@ public class Tests
     public void Setup()
     {
         context = A.Fake<IMainDbContext>();
-        repository = new ResidentRepository(context);
     }
 
     [Test]

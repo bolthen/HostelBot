@@ -5,15 +5,9 @@ namespace HostelBot.Domain.Infrastructure.Repository;
 public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
     where TEntity : Entity<TEntity>
 {
-    protected readonly IMainDbContext context;
-    
-    public EntityRepository(IMainDbContext context)
-    {
-        this.context = context;
-    }
-    
     public async Task<TEntity> GetAsync(long id)
     {
+        await using IMainDbContext context = new MainDbContext();
         var foundEntity = await context.Set<TEntity>().FindAsync(id);
 
         if (foundEntity != null) 
@@ -25,6 +19,7 @@ public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
     
     public async Task<bool> CheckAsync(long id)
     {
+        await using IMainDbContext context = new MainDbContext();
         var foundEntity = await context.Set<TEntity>().FindAsync(id);
 
         return foundEntity != null;
@@ -32,6 +27,7 @@ public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
 
     public async Task<bool> CreateAsync(TEntity entity)
     {
+        await using IMainDbContext context = new MainDbContext();
         var foundEntity = await context.Set<TEntity>().FindAsync(entity.Id);
 
         if (foundEntity != null)
@@ -44,6 +40,7 @@ public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
 
     public async Task<bool> DeleteAsync(long id)
     {
+        await using IMainDbContext context = new MainDbContext();
         var foundEntity = await context.Set<TEntity>().FindAsync(id);
 
         if (foundEntity == null)
@@ -56,6 +53,7 @@ public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
 
     public async Task<bool> UpdateAsync(TEntity entity)
     {
+        await using IMainDbContext context = new MainDbContext();
         var foundEntity = await context.Set<TEntity>().FindAsync(entity.Id);
 
         if (foundEntity == null)
