@@ -30,9 +30,15 @@ internal static class FillingHandler
             case StepByStepFilling.CurrentProgressStatus.WrittenDown:
                 await SharedHandlers.SendMessage(progress.GetNextQuestion(), chatId);
                 return;
+            
             case StepByStepFilling.CurrentProgressStatus.RegexFailed:
                 await SharedHandlers.SendMessage(result.errorMessage!, chatId);
                 return;
+            
+            case StepByStepFilling.CurrentProgressStatus.AlreadyCompleted:
+                Console.WriteLine("Progress Already Completed");
+                return;
+            
             case StepByStepFilling.CurrentProgressStatus.Completed:
                 
                 var answers = progress.GetAnswers();
@@ -55,6 +61,7 @@ internal static class FillingHandler
                     await SharedHandlers.WaitVerification(chatId);
                 
                 return;
+            
             default:
                 throw new ArgumentOutOfRangeException();
         }

@@ -2,7 +2,7 @@
 
 namespace HostelBot.Ui.TelegramBot.Handlers.Filling;
 
-internal class StepByStepFilling
+public class StepByStepFilling
 {
     public Dictionary<string, string> Answers { get; } = new();
     private Question[] Questions { get; }
@@ -40,6 +40,9 @@ internal class StepByStepFilling
     
     public (CurrentProgressStatus progressStatus, string? errorMessage) HandleResponse(string text)
     {
+        if (IsCompleted)
+            return (CurrentProgressStatus.AlreadyCompleted, null);   
+        
         if (!TryValidateRegex(text, out var errorMessage))
             return (CurrentProgressStatus.RegexFailed, errorMessage);
         
@@ -68,6 +71,6 @@ internal class StepByStepFilling
     
     public enum CurrentProgressStatus
     {
-        WrittenDown, RegexFailed, Completed
+        WrittenDown, RegexFailed, Completed, AlreadyCompleted
     }
 }
