@@ -22,7 +22,7 @@ var container = ConfigureContainer();
 foreach (var ui in container.GetAll<IResidentUi>())
     Task.Run(() => ui.Run());
 
-builder.Services.AddSingleton<AdministratorRepository>();
+builder.Services.AddSingleton(_ => container.Get<AdministratorRepository>());
 builder.Services.AddSingleton(_ => container.Get<MainDbContext>());
 builder.Services.AddSingleton(_ => container.Get<ResidentRepository>());
 builder.Services.AddSingleton(_ => container.Get<HostelRepository>());
@@ -92,6 +92,7 @@ static StandardKernel ConfigureContainer()
     container.Bind<HostelRepository>().ToSelf().InSingletonScope();
     container.Bind<UtilityNameRepository>().ToSelf().InSingletonScope();
     container.Bind<AppealRepository>().ToSelf().InSingletonScope();
+    container.Bind<AdministratorRepository>().ToSelf().InSingletonScope();
 
     return container;
 }

@@ -57,7 +57,5 @@ namespace HostelBot.Domain.Domain
         {
             Appeals.Add(appeal);
         }
-        
-        
     }
 }
