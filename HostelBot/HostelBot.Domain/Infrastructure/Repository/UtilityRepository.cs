@@ -3,5 +3,5 @@ namespace HostelBot.Domain.Infrastructure.Repository;
 
 public class UtilityRepository : EntityRepository<HostelBot.Domain.Utility>
 {
-    public UtilityRepository(MainDbContext context) : base(context) { }
+    public UtilityRepository(IMainDbContext context) : base(context) { }
 }

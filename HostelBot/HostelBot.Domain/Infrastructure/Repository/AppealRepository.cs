@@ -4,7 +4,7 @@ namespace HostelBot.Domain.Infrastructure.Repository;
 
 public class AppealRepository : EntityRepository<Appeal>
 {
-    public AppealRepository(MainDbContext context) : base(context) { }
+    public AppealRepository(IMainDbContext context) : base(context) { }
 
     public async Task AddAnswer(long id, string answer)
     {

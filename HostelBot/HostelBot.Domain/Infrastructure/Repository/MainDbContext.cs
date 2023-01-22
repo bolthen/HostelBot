@@ -1,5 +1,4 @@
-﻿using System.Net.Mime;
-using HostelBot.Domain.Domain;
+﻿using HostelBot.Domain.Domain;
 using HostelBot.Domain.Infrastructure.Misc;
 using iTextSharp.text.pdf;
 using Microsoft.EntityFrameworkCore;
@@ -9,17 +8,9 @@ using Microsoft.Extensions.Logging;
 
 namespace HostelBot.Domain.Infrastructure.Repository;
 
-public sealed class MainDbContext : DbContext
+public sealed class MainDbContext : IMainDbContext
 {
     private const string DbName = "helloapp.db";
-    
-    public DbSet<Hostel> Hostels { get; set; }
-    public DbSet<Resident> Residents { get; set; }
-    public DbSet<Room> Rooms { get; set; }
-    public DbSet<HostelBot.Domain.Utility> Utilities { get; set; }
-    public DbSet<UtilityName> UtilityNames { get; set; }
-    public DbSet<Appeal> Appeal { get; set; }
-    public DbSet<Administrator> Administrators { get; set; }
 
     public MainDbContext(DbContextOptions<MainDbContext> options) : base(options)
     {
