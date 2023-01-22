@@ -12,7 +12,7 @@ public class HostelRepository : EntityRepository<Hostel>
 
     public async Task<Hostel> GetByName(string hostelName)
     {
-        return context.Hostels
+        return context.Set<Hostel>()
             .Include(x => x.Residents)
             .Include(x => x.UtilityNames)
             .Include(x => x.Rooms)
