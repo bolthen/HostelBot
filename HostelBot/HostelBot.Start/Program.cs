@@ -11,7 +11,6 @@ using Ninject;
 AppDomain.CurrentDomain.UnhandledException += ProcessException;
 
 var container = ConfigureContainer();
-var tmp = container.GetAll<HostelRepository>().ToList()[0];
 var tasks = container.GetAll<IResidentUi>().Select(ui => Task.Factory.StartNew(ui.Run));
 
 Task.WaitAll(tasks.ToArray());

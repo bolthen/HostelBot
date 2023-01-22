@@ -9,6 +9,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\HostelBot.Domain\HostelBot.Domain.csproj" />
+      <ProjectReference Include="..\HostelBot.Ui\HostelBot.Ui.csproj" />
     </ItemGroup>
 
     <ItemGroup>
