@@ -27,14 +27,15 @@ internal static class FillingHandler
         
         switch (result.progressStatus)
         {
-            case FillingProgress.CurrentProgressStatus.WrittenDown:
+            case StepByStepFilling.CurrentProgressStatus.WrittenDown:
                 await SharedHandlers.SendMessage(progress.GetNextQuestion(), chatId);
                 return;
-            case FillingProgress.CurrentProgressStatus.RegexFailed:
+            case StepByStepFilling.CurrentProgressStatus.RegexFailed:
                 await SharedHandlers.SendMessage(result.errorMessage!, chatId);
                 return;
-            case FillingProgress.CurrentProgressStatus.Completed:
-                var answers = progress.Answers;
+            case StepByStepFilling.CurrentProgressStatus.Completed:
+                
+                var answers = progress.GetAnswers();
                 var fillable = progress.fillable;
                 FillingProgress.FinishFilling(chatId);
 

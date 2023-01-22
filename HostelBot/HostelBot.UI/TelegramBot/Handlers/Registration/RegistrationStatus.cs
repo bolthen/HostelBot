@@ -1,4 +1,4 @@
-﻿namespace HostelBot.Ui.TelegramBot.Registration;
+﻿namespace HostelBot.Ui.TelegramBot.Handlers.Registration;
 
 internal enum RegistrationStatus
 {

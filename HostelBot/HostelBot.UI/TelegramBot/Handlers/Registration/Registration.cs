@@ -1,7 +1,7 @@
 ﻿using HostelBot.Domain.Infrastructure.Exceptions;
 using HostelBot.Ui.TelegramBot.Commands;
 
-namespace HostelBot.Ui.TelegramBot.Registration;
+namespace HostelBot.Ui.TelegramBot.Handlers.Registration;
 
 internal static class Registrator
 {

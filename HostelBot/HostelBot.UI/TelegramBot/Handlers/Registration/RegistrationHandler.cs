@@ -2,7 +2,7 @@
 using HostelBot.Ui.TelegramBot.Handlers.Filling;
 using Telegram.Bot.Types;
 
-namespace HostelBot.Ui.TelegramBot.Registration;
+namespace HostelBot.Ui.TelegramBot.Handlers.Registration;
 
 internal static class RegistrationHandler
 {

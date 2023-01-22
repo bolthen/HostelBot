@@ -53,6 +53,6 @@ internal static class RegisteredHandler
             return;
         }
 
-        await SharedHandlers.SendMessage($"Unknown Data: {callbackQuery.Data}", chatId);
+        Console.WriteLine($"Unknown Data: {callbackQuery.Data}");
     }
 }

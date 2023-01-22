@@ -1,4 +1,4 @@
-﻿using HostelBot.Ui.TelegramBot.Registration;
+﻿using HostelBot.Ui.TelegramBot.Handlers.Registration;
 using Telegram.Bot.Types;
 
 namespace HostelBot.Ui.TelegramBot.Handlers;
