@@ -53,9 +53,7 @@ static StandardKernel ConfigureContainer()
     var container = new StandardKernel();
     container.Bind<IResidentUi>().To<TelegramResidentUi>().InSingletonScope();
     container.Bind<IApplication>().To<Application>().InSingletonScope();
-        
-    container.Bind<UtilityFillableManager>().ToSelf().WhenInjectedInto<ChooseUtilityCommand>().InSingletonScope();
-    
+
     container.Bind<Command>().To<InformationCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<Command>().To<ChooseUtilityCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();
     container.Bind<Command>().To<AppealCommand>().WhenInjectedInto<CheckRegistrationCommand>().InSingletonScope();

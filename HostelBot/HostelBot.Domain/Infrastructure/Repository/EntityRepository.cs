@@ -2,7 +2,7 @@
 
 namespace HostelBot.Domain.Infrastructure.Repository;
 
-public abstract class EntityRepository<TEntity> : IEntityRepository<TEntity>
+public class EntityRepository<TEntity> : IEntityRepository<TEntity>
     where TEntity : Entity<TEntity>
 {
     protected readonly IMainDbContext context;
