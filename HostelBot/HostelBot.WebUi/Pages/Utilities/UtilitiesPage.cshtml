@@ -1,0 +1,33 @@
+@page
+@model WebUi.Pages.Utilities.UtilitiesPage
+
+@{
+    ViewData["Title"] = "Услуги";
+}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <h2>Услуги</h2>
+    <div class="row">
+        <a asp-page="/Utilities/AddPage" class="col-4 text-center align-self-center btn btn-outline-primary">
+            Добавить новую услугу
+        </a>
+    </div>
+    @foreach (var utility in Model.Utilities)
+    {
+        <div class="row">
+            <div class="col-4 text-center align-self-center">@utility.Name</div>
+            <a asp-page="/Utilities/DeletePage" asp-route-Id="@utility.Id" class="col-1 text-center m-1 btn btn-danger">
+                Удалить
+            </a>
+        </div>
+    }
+</div>
+</body>
+</html>

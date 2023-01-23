@@ -1,0 +1,75 @@
+@page
+@model WebUi.Pages.CheckIn.CheckInPage
+
+@{
+    ViewData["Title"] = "Поселение";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <h2>Заявление на добавление</h2>
+    <h3>Количество: @Model.Residents.Count</h3>
+    
+    <table class="table table-bordered table-hover table-inverse table-striped" id="residents">
+        <thead>
+        <tr>
+            <th class="col-1">Комната</th>
+            <th class="col-3">Имя</th>
+            <th class="col-4">Фамилия</th>
+            <th class="col-1"></th>
+            <th class="col-1"></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Residents)
+        {
+            <tr>
+                <td class="col-1">@item.Room?.Number</td>
+                <td class="col-3">@item.Name</td>
+                <td class="col-4">@item.Surname</td>
+                <td class="col-1">
+                    <form method="post">
+                        <button type="submit" 
+                                class="btn btn-outline-primary"
+                                asp-route-id="@item.Id"
+                                asp-page-handler="Submit">
+                            Добавить
+                        </button>
+                    </form>
+                </td>
+                <td class="col-1">
+                    <form method="post">
+                        <button type="submit"
+                                class="btn btn-outline-danger"
+                                asp-route-id="@item.Id"
+                                asp-page-handler="Decline">
+                            Отклонить
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+<script>
+    $(document).ready(function () {
+        $('#residents').DataTable();
+    });
+    $('table').dataTable({searching: true, paging: false, info: false});
+</script>
+
+</body>
+</html>

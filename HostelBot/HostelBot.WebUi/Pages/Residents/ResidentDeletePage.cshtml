@@ -1,0 +1,31 @@
+@page
+@model WebUi.Pages.Residents.ResidentDeletePage
+
+@{
+    ViewData["Title"] = "Удаление";
+}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <div class="row  text-center">
+        <h4><span class="text-primary">@Model.Resident.Name @Model.Resident.Surname</span></h4>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <h5>Вы действительно хотите удалить жителя?</h5>
+            
+            <form method="post">
+                <button type="submit" class="btn btn-danger">Да</button>
+                <a class="btn btn-success" asp-page="/Residents/ResidentsPage">Нет</a>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

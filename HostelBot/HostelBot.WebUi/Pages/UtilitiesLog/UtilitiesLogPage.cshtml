@@ -1,0 +1,83 @@
+@page
+@model WebUi.Pages.UtilitiesLog.UtilitiesLogPage 
+
+@{
+    ViewData["Title"] = "Журнал заявок";
+}
+
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <h2>Заявления</h2>
+  
+    <div class="accordion" id="printUtilities">
+        @foreach (var item in Model.Utilities)
+        {
+            var id = "id" + item.Name;
+            var dateIdStart = "dateStart" + item.Name;
+            var dateIdEnd = "dateEnd" + item.Name;
+            var collapseName = "collapse" + item.Name;
+            <div class="accordion-item">
+                <h2 class="accordion-header" id=@id>
+                    <button class="accordion-button" 
+                            type="button" 
+                            data-bs-toggle="collapse" 
+                            data-bs-target=#@collapseName
+                            aria-expanded="false" 
+                            aria-controls=@collapseName>
+                        @item.Name
+                    </button>
+                </h2>
+
+                <div id=@collapseName 
+                     class="accordion-collapse collapse" 
+                     aria-labelledby=@id 
+                     data-bs-parent="#printUtilities">
+                    <div class="accordion-body">
+                        <form method="post">
+                            <div class="row m-2">
+                                <div class="col-4">
+                                    <label for=@dateIdStart>Начало периода:</label>
+                                    <input class="form-control"
+                                           id=@dateIdStart
+                                           max=@Model.MaxChooseDate
+                                           value=@Model.MaxChooseDate
+                                           asp-for="StartDate"
+                                           type="date"/>
+                                </div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-4">
+                                    <label for=@dateIdEnd>Конец периода:</label>
+                                    <input class="form-control"
+                                           id=@dateIdEnd
+                                           max=@Model.MaxChooseDate
+                                           value=@Model.MaxChooseDate
+                                           asp-for="EndDate"
+                                           type="date"/>
+                                </div>
+                            </div>
+                            <div class="row m-2">
+                                <div class="col-2">
+                                    <button type="submit" 
+                                            class="btn btn-outline-primary"
+                                            asp-route-utilityNameId=@item.Id
+                                            asp-page-handler="PrintUtilities">
+                                        Распечатать
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+</body>
+</html>
