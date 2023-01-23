@@ -6,16 +6,14 @@ using HostelBot.Domain.Domain;
 
 namespace HostelBot.Domain.Infrastructure;
 
-public class AppealFillable : Fillable<AppealFillable>, IFillable
+public class AppealFillable : Fillable<AppealFillable>
 {
-    public override void OnFilled()
+    public override async Task OnFilled()
     {
         foreach (var observer in observers.ToArray())
-            observer.OnCompleted(this);
+            await observer.OnCompleted(this);
     }
 
-    public long ResidentId { get; set; }
-    
     [Question("Напишите ваше обращение к заведующей", ViewType.TextEnter)]
     public string Content { get; set; }
 }

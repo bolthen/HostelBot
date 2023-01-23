@@ -8,7 +8,7 @@ public class AppealRepository : EntityRepository<Appeal>
 
     public async Task AddAnswer(long id, string answer)
     {
-        var appeal = GetAsync(id).Result;
+        var appeal = await GetAsync(id);
         appeal.Answer = answer;
         var addResult = await UpdateAsync(appeal);
         

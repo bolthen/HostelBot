@@ -5,7 +5,7 @@ namespace HostelBot.Domain.Infrastructure;
 
 public static class FillableExtensions
 {
-    public static void FillClass(this IFillable fillableClass, IReadOnlyDictionary<string, string> data)
+    public static async void FillClass(this IFillable fillableClass, IReadOnlyDictionary<string, string> data)
     {
         var propertiesToFill = fillableClass
             .GetFields()
@@ -20,6 +20,6 @@ public static class FillableExtensions
             property.SetValue(fillableClass, result);
         }
         
-        fillableClass.OnFilled();
+        await fillableClass.OnFilled();
     }
 }

@@ -17,20 +17,20 @@ public class ResidentFillableManager : Manager<ResidentFillable>
         this.repositoryChangesParser = repositoryChangesParser;
     }
     
-    protected override void Handle(ResidentFillable value)
+    protected override async Task Handle(ResidentFillable value)
     {
         Room room;
         try
         {
-            room = hostelRepository.FindOrCreateRoom($"№{value.HostelNumber}", value.RoomNumber).Result;
+            room = await hostelRepository.FindOrCreateRoom($"№{value.HostelNumber}", value.RoomNumber);
         }
         catch (AggregateException e)
         {
             throw new InvalidHostelNameException(e.InnerException);
         }
 
-        var hostel = hostelRepository.GetByName($"№{value.HostelNumber}").Result;
+        var hostel = await hostelRepository.GetByName($"№{value.HostelNumber}");
         var resident = new Resident(value.ResidentId, value.Name, value.Surname, hostel, room, repositoryChangesParser);
-        residentRepository.CreateAsync(resident);
+        await residentRepository.CreateAsync(resident);
     }
 }

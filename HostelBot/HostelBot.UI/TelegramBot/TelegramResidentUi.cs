@@ -32,7 +32,7 @@ public class TelegramResidentUi : IResidentUi
         
         Console.ReadLine();
     }
-
+    
     private async Task Update(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
         await UpdateHandler.Handle(update);

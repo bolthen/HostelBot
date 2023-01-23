@@ -8,10 +8,10 @@ public class UtilityFillable : Fillable<UtilityFillable>
     
     public UtilityFillable(string name) => Name = name;
     
-    public override void OnFilled()
+    public override async Task OnFilled()
     {
         foreach (var observer in observers.ToArray())
-            observer.OnCompleted(this);
+            await observer.OnCompleted(this);
     }
     
     public string Name { get; set; }

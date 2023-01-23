@@ -13,11 +13,11 @@ public class AppealFillableManager : Manager<AppealFillable>
         this.repositoryChangesParser = repositoryChangesParser;
     }
     
-    protected override void Handle(AppealFillable value)
+    protected override async Task Handle(AppealFillable value)
     {
-        var resident = residentRepository.GetAsync(value.ResidentId).Result;
+        var resident =  await residentRepository.GetAsync(value.ResidentId);
         var appeal = new Appeal(resident, value.Content, repositoryChangesParser);
         resident.AddAppeal(appeal);
-        residentRepository.UpdateAsync(resident);
+        await residentRepository.UpdateAsync(resident);
     }
 }

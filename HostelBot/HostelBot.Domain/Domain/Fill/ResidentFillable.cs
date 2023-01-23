@@ -7,10 +7,10 @@ namespace HostelBot.Domain.Infrastructure;
 
 public class ResidentFillable : Fillable<ResidentFillable>
 {
-      public override void OnFilled()
+      public override async Task OnFilled()
      {
            foreach (var observer in observers.ToArray())
-                 observer.OnCompleted(this);
+                 await observer.OnCompleted(this);
      }
      
      [Question("Имя", ViewType.TextEnter)]

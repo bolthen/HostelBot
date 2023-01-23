@@ -9,11 +9,11 @@ public class UtilityFillableManager : Manager<UtilityFillable>
     {
     }
 
-    protected override void Handle(UtilityFillable value)
+    protected override async Task Handle(UtilityFillable value)
     {
-        var resident = residentRepository.GetAsync(value.ResidentId).Result;
+        var resident = await residentRepository.GetAsync(value.ResidentId);
         var utility = new Utility(value.Name, value.Content, resident);
         resident.AddUtility(utility);
-        residentRepository.UpdateAsync(resident);
+        await residentRepository.UpdateAsync(resident);
     }
 }

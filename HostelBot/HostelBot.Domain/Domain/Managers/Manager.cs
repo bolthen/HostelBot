@@ -19,11 +19,11 @@ public abstract class Manager<T> : IObserver<T>
         unsubscriber = observable.Subscribe(this);
     }
 
-    public void OnCompleted(T value)
+    public async Task OnCompleted(T value)
     {
         unsubscriber.Dispose();
-        Handle(value);
+        await Handle(value);
     }
 
-    protected abstract void Handle(T value);
+    protected abstract Task Handle(T value);
 }

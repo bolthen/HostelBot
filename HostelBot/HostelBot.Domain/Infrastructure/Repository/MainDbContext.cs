@@ -26,7 +26,7 @@ public sealed class MainDbContext : IMainDbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var dbPath = DirectorySearch.DeepFindSearch(DbName, "HostelBot");
-        optionsBuilder.UseSqlite($"Data Source={dbPath}");
+        optionsBuilder.UseSqlite($"Data Source={DbName}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

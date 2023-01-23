@@ -14,7 +14,7 @@ public abstract class Fillable<T> : ValueType<T>, IObservable<T>, IFillable
         return new Unsubscriber<T>(observers, observer);
     }
 
-    public abstract void OnFilled();
+    public abstract Task OnFilled();
 
     public long ResidentId { get; set; }
 }
